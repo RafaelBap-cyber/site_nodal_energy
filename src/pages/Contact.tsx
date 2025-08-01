@@ -87,23 +87,46 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background py-20">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-6">Entre em Contato</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Pronto para transformar a eficiência energética da sua empresa? 
-            Entre em contato conosco e descubra como podemos ajudar.
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+      {/* Header Section - Minimalista e Transparente */}
+      <section className="relative py-32 overflow-hidden">
+        {/* Background com gradiente sutil */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent"></div>
+        
+        {/* Elementos decorativos sutis */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-green-200/20 rounded-full blur-3xl"></div>
+        
+        <div className="relative container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            {/* Ícone minimalista */}
+            <div className="flex justify-center mb-8">
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+                <Send className="w-8 h-8 text-primary" />
+              </div>
+            </div>
+            
+            <h1 className="text-6xl font-light mb-8 text-gray-900 tracking-tight">
+              Entre em
+              <span className="block text-primary font-semibold">Contato</span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Pronto para transformar a eficiência energética da sua empresa? 
+              Entre em contato conosco e descubra como podemos ajudar.
+            </p>
+          </div>
         </div>
+      </section>
+
+      <div className="container mx-auto px-4">
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Form */}
           <div className="lg:col-span-2">
             <Card className="bg-white border-green-200">
               <CardHeader>
-                <CardTitle className="text-2xl">Solicite uma Consulta Gratuita</CardTitle>
+                <CardTitle className="text-2xl font-light text-gray-900">Solicite uma Consulta Gratuita</CardTitle>
                 <CardDescription>
                   Preencha o formulário abaixo e nossa equipe entrará em contato em até 24 horas.
                 </CardDescription>
@@ -266,7 +289,7 @@ const Contact = () => {
         <section className="mt-20 text-center">
           <Card className="bg-primary text-primary-foreground border-green-200">
             <CardContent className="p-12">
-              <h2 className="text-3xl font-bold mb-4">Consulta Gratuita</h2>
+              <h2 className="text-3xl font-light mb-4 text-white">Consulta Gratuita</h2>
               <p className="text-lg mb-6 opacity-90">
                 Oferecemos uma análise inicial gratuita do potencial de economia energética da sua empresa.
               </p>

@@ -35,11 +35,11 @@ const Home = () => {
         </div>
         
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white text-foreground">
+          <h1 className="text-5xl md:text-6xl font-light mb-6 text-white text-foreground tracking-tight">
             Eficiência Energética
-            <span className="block text-primary">para o Futuro</span>
+            <span className="block text-primary font-semibold">para o Futuro</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-gray-200">
+          <p className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed">
             Transformamos empresas através de soluções inteligentes em energia,
             reduzindo custos e impacto ambiental.
           </p>
@@ -61,8 +61,8 @@ const Home = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">Sobre a Nodal Energy</h2>
-            <p className="text-lg text-muted-foreground">
+            <h2 className="text-4xl font-light mb-6 text-gray-900">Sobre a Nodal Energy</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
               Fundada com o propósito de revolucionar o setor energético brasileiro, 
               a Nodal Energy é especializada em eficiência energética e sustentabilidade. 
               Nossa missão é ajudar empresas a reduzirem custos operacionais enquanto 
@@ -72,8 +72,8 @@ const Home = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Nossa História</h3>
-              <p className="text-muted-foreground mb-6">
+              <h3 className="text-2xl font-light mb-4 text-gray-900">Nossa História</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
                 Sendo uma das pioneiras no mercado de Energias Renováveis, 
                 desenvolvemos uma abordagem única que combina tecnologia de ponta 
                 com conhecimento profundo do setor. Nosso foco é entregar soluções 
@@ -96,7 +96,7 @@ const Home = () => {
             </div>
             
             <div className="grid grid-cols-1 gap-6">
-              <Card>
+              <Card className="transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer border-primary/20 hover:border-primary/40">
                 <CardContent className="p-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary mb-2">100+</div>
@@ -104,10 +104,10 @@ const Home = () => {
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer border-primary/20 hover:border-primary/40">
                 <CardContent className="p-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">35%</div>
+                  <div className="text-3xl font-bold text-primary mb-2">35%</div>
                     <div className="text-muted-foreground">Economia Média</div>
                   </div>
                 </CardContent>
@@ -121,8 +121,8 @@ const Home = () => {
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">Nossos Serviços</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-4xl font-light mb-6 text-gray-900">Nossos Serviços</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Oferecemos soluções completas em eficiência energética, 
               desde auditoria até implementação e monitoramento contínuo.
             </p>
@@ -130,7 +130,7 @@ const Home = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+              <Card key={index} className="text-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:-translate-y-1 cursor-pointer border-primary/20 hover:border-primary/40">
                 <CardHeader>
                   <div className="flex justify-center mb-4">
                     {service.icon}
@@ -152,22 +152,22 @@ const Home = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-8">O Setor de Eficiência Energética</h2>
+            <h2 className="text-4xl font-light mb-8 text-gray-900">O Setor de Eficiência Energética</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">R$ 200bi</div>
-                <p className="text-muted-foreground">Potencial de economia no Brasil</p>
+                <div className="text-3xl font-semibold text-primary mb-2">R$ 200bi</div>
+                <p className="text-gray-600">Potencial de economia no Brasil</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">30%</div>
-                <p className="text-muted-foreground">Redução possível no consumo</p>
+                <div className="text-3xl font-semibold text-primary mb-2">30%</div>
+                <p className="text-gray-600">Redução possível no consumo</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">2030</div>
-                <p className="text-muted-foreground">Meta Net Zero</p>
+                <div className="text-3xl font-semibold text-primary mb-2">2030</div>
+                <p className="text-gray-600">Meta Net Zero</p>
               </div>
             </div>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-gray-600 leading-relaxed">
               O Brasil possui um dos maiores potenciais mundiais para eficiência energética. 
               Com o crescimento da consciência ambiental e pressões regulatórias, 
               empresas que investem em eficiência energética hoje estarão na vanguarda 
@@ -181,23 +181,23 @@ const Home = () => {
       <section className="py-20 bg-gradient-to-br from-green-50 to-green-100">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold mb-8 text-center">Perguntas Frequentes sobre Energia</h2>
-            <p className="text-lg text-muted-foreground mb-12 text-center">
+            <h2 className="text-4xl font-light mb-8 text-center text-gray-900">Perguntas Frequentes sobre Energia</h2>
+            <p className="text-lg text-gray-600 mb-12 text-center leading-relaxed">
               Esclareça dúvidas sobre eficiência, renováveis e soluções estratégicas para seu negócio.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-3 text-primary">Como a eficiência reduz custos?</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl font-light mb-3 text-primary">Como a eficiência reduz custos?</h3>
+                  <p className="text-gray-600 leading-relaxed">
                     Projetos eficientes cortam desperdícios e despesas, elevando a competitividade e sustentabilidade empresarial.
                   </p>
                 </div>
                 
                 <div>
-                  <h3 className="text-xl font-semibold mb-3 text-primary">Quais os ganhos das renováveis?</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl font-light mb-3 text-primary">Quais os ganhos das renováveis?</h3>
+                  <p className="text-gray-600 leading-relaxed">
                     Fontes renováveis reduzem emissões, custos e dependência de combustíveis fósseis no setor corporativo.
                   </p>
                 </div>
@@ -205,15 +205,15 @@ const Home = () => {
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-3 text-primary">O que é análise tributária no setor?</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl font-light mb-3 text-primary">O que é análise tributária no setor?</h3>
+                  <p className="text-gray-600 leading-relaxed">
                     Identificamos oportunidades fiscais em energia, otimizando encargos e ampliando o retorno do investimento.
                   </p>
                 </div>
                 
                 <div>
-                  <h3 className="text-xl font-semibold mb-3 text-primary">Por que optar por projetos sob medida?</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl font-light mb-3 text-primary">Por que optar por projetos sob medida?</h3>
+                  <p className="text-gray-600 leading-relaxed">
                     Soluções personalizadas atendem demandas específicas, maximizando resultados e acelerando a transição energética.
                   </p>
                 </div>
@@ -234,8 +234,8 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Pronto para Transformar sua Empresa?</h2>
-          <p className="text-xl mb-8 opacity-90">
+          <h2 className="text-4xl font-light mb-6 text-white">Pronto para Transformar sua Empresa?</h2>
+          <p className="text-xl mb-8 opacity-90 leading-relaxed">
             Faça uma consulta gratuita e descubra como podemos reduzir seus custos energéticos.
           </p>
           <Button size="lg" variant="secondary" asChild>

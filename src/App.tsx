@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import CMSButton from "./components/CMSButton";
+import AdminRedirect from "./components/AdminRedirect";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -27,11 +29,13 @@ const App = () => (
               <Route path="/sobre" element={<About />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contatos" element={<Contact />} />
+              <Route path="/admin" element={<AdminRedirect />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />
+          <CMSButton />
         </div>
       </BrowserRouter>
     </TooltipProvider>

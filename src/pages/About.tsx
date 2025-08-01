@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Calendar, MapPin, Users, Award, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, Users, Award, ExternalLink, User } from "lucide-react";
 import fabioPortrait from "@/assets/fabio-portrait.jpg";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
@@ -75,7 +75,37 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background py-20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+      {/* Header Section - Minimalista e Transparente */}
+      <section className="relative py-32 overflow-hidden">
+        {/* Background com gradiente sutil */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent"></div>
+        
+        {/* Elementos decorativos sutis */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-green-200/20 rounded-full blur-3xl"></div>
+        
+        <div className="relative container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            {/* Ícone minimalista */}
+            <div className="flex justify-center mb-8">
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+                <User className="w-8 h-8 text-primary" />
+              </div>
+            </div>
+            
+            <h1 className="text-6xl font-light mb-8 text-gray-900 tracking-tight">
+              Sobre &
+              <span className="block text-primary font-semibold">Projetos</span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Conheça nossa história, experiência e projetos que transformaram a eficiência energética no Brasil
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div className="container mx-auto px-4">
         {/* Profile Section */}
         <section className="mb-20">
@@ -90,11 +120,11 @@ const About = () => {
             
             <div className="space-y-6">
               <div>
-                <h1 className="text-4xl font-bold mb-4">Fábio Carrasco</h1>
+                <h1 className="text-4xl font-light mb-4 text-gray-900">Fábio Carrasco</h1>
                 <p className="text-xl text-primary font-semibold mb-4">
                   CEO & Fundador da Nodal Energy
                 </p>
-                <p className="text-muted-foreground mb-6">
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   Especialista em eficiência energética com mais de 15 anos de experiência 
                   em gestão de projetos complexos no setor energético. Formado em Engenharia 
                   Elétrica pela USP e com MBA em Gestão de Projetos, Fábio combina conhecimento 
@@ -126,7 +156,7 @@ const About = () => {
 
         {/* Experience Section */}
         <section className="mb-20">
-          <h2 className="text-3xl font-bold mb-12 text-center">Experiência Profissional</h2>
+          <h2 className="text-3xl font-light mb-12 text-center text-gray-900">Experiência Profissional</h2>
           <div className="max-w-4xl mx-auto">
             {experience.map((exp, index) => (
               <div key={index} className="flex flex-col md:flex-row gap-6 mb-8 last:mb-0">
@@ -136,9 +166,9 @@ const About = () => {
                   </Badge>
                 </div>
                 <div className="md:w-3/4">
-                  <h3 className="text-xl font-bold">{exp.position}</h3>
+                  <h3 className="text-xl font-light text-gray-900">{exp.position}</h3>
                   <p className="text-primary font-semibold mb-2">{exp.company}</p>
-                  <p className="text-muted-foreground">{exp.description}</p>
+                  <p className="text-gray-600 leading-relaxed">{exp.description}</p>
                 </div>
               </div>
             ))}
@@ -147,13 +177,16 @@ const About = () => {
 
         {/* Certifications Section */}
         <section className="mb-20">
-          <h2 className="text-3xl font-bold mb-12 text-center">Certificações & Formação</h2>
+          <h2 className="text-3xl font-light mb-12 text-center text-gray-900">Certificações & Formação</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {certifications.map((cert, index) => (
-              <Card key={index} className="text-center">
+              <Card 
+                key={index} 
+                className="text-center cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:-translate-y-1 border-primary/20 hover:border-primary/40"
+              >
                 <CardContent className="p-6">
-                  <Award className="h-8 w-8 text-primary mx-auto mb-4" />
-                  <p className="font-semibold">{cert}</p>
+                  <Award className="h-8 w-8 text-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
+                  <p className="font-semibold transition-colors duration-300 hover:text-primary">{cert}</p>
                 </CardContent>
               </Card>
             ))}
@@ -162,7 +195,7 @@ const About = () => {
 
         {/* Projects Section */}
         <section>
-          <h2 className="text-3xl font-bold mb-12 text-center">Projetos em Destaque</h2>
+          <h2 className="text-3xl font-light mb-12 text-center text-gray-900">Projetos em Destaque</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {projects.map((project) => (
               <Card key={project.id} className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -220,16 +253,16 @@ const About = () => {
         {/* Testimonials Section */}
         <section className="mt-20 py-20 bg-green-100 rounded-lg">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-6">O que dizem nossos clientes</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl font-light mb-6 text-gray-900">O que dizem nossos clientes</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Depoimentos de empresas que transformaram seus processos energéticos conosco.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-white border-green-200 hover:shadow-lg transition-shadow">
+            <Card className="bg-white border-green-200 hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-102 hover:-translate-y-1 cursor-pointer">
               <CardContent className="p-6">
-                <p className="text-muted-foreground mb-6 italic">
+                <p className="text-gray-600 mb-6 italic leading-relaxed">
                   "A abordagem consultiva da Nodal Energy foi crucial para otimizar nossos processos e reduzir custos. 
                   Eles superaram as expectativas com soluções inovadoras e suporte técnico de alto nível."
                 </p>
@@ -239,15 +272,15 @@ const About = () => {
                   </div>
                   <div>
                     <div className="font-semibold">Alex Silva</div>
-                    <div className="text-sm text-muted-foreground">Operations Manager, Lumina Group</div>
+                    <div className="text-sm text-gray-600">Operations Manager, Lumina Group</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-green-200 hover:shadow-lg transition-shadow">
+            <Card className="bg-white border-green-200 hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-102 hover:-translate-y-1 cursor-pointer">
               <CardContent className="p-6">
-                <p className="text-muted-foreground mb-6 italic">
+                <p className="text-gray-600 mb-6 italic leading-relaxed">
                   "Reduzimos 40% dos nossos custos energéticos em apenas 8 meses. A expertise da Nodal Energy 
                   em projetos fotovoltaicos transformou nossa operação."
                 </p>
@@ -257,15 +290,15 @@ const About = () => {
                   </div>
                   <div>
                     <div className="font-semibold">Maria Rodriguez</div>
-                    <div className="text-sm text-muted-foreground">CEO, TechSolar Brasil</div>
+                    <div className="text-sm text-gray-600">CEO, TechSolar Brasil</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-green-200 hover:shadow-lg transition-shadow">
+            <Card className="bg-white border-green-200 hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-102 hover:-translate-y-1 cursor-pointer">
               <CardContent className="p-6">
-                <p className="text-muted-foreground mb-6 italic">
+                <p className="text-gray-600 mb-6 italic leading-relaxed">
                   "O suporte em análise tributária nos ajudou a identificar oportunidades que não víamos. 
                   Profissionalismo e resultados excepcionais."
                 </p>
@@ -275,7 +308,7 @@ const About = () => {
                   </div>
                   <div>
                     <div className="font-semibold">Carlos Ferreira</div>
-                    <div className="text-sm text-muted-foreground">CFO, Indústrias Verdes</div>
+                    <div className="text-sm text-gray-600">CFO, Indústrias Verdes</div>
                   </div>
                 </div>
               </CardContent>
@@ -286,32 +319,32 @@ const About = () => {
         {/* Stats Section */}
         <section className="mt-20 py-16 bg-green-200 rounded-lg">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-12">Números que Impressionam</h2>
+            <h2 className="text-3xl font-light mb-12 text-gray-900">Números que Impressionam</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div>
-                <div className="text-4xl font-bold text-primary mb-2">100+</div>
-                <p className="text-muted-foreground">Projetos Concluídos</p>
+                <div className="text-4xl font-semibold text-primary mb-2">100+</div>
+                <p className="text-gray-600">Projetos Concluídos</p>
               </div>
               <div>
-                <div className="text-4xl font-bold text-primary mb-2">R$ 50M</div>
-                <p className="text-muted-foreground">Em Economias Geradas</p>
+                <div className="text-4xl font-semibold text-primary mb-2">R$ 50M</div>
+                <p className="text-gray-600">Em Economias Geradas</p>
               </div>
               <div>
-                <div className="text-4xl font-bold text-primary mb-2">1000+</div>
-                <p className="text-muted-foreground">Toneladas CO₂ Evitadas</p>
+                <div className="text-4xl font-semibold text-primary mb-2">1000+</div>
+                <p className="text-gray-600">Toneladas CO₂ Evitadas</p>
               </div>
               <div>
-                <div className="text-4xl font-bold text-primary mb-2">98%</div>
-                <p className="text-muted-foreground">Satisfação do Cliente</p>
+                <div className="text-4xl font-semibold text-primary mb-2">98%</div>
+                <p className="text-gray-600">Satisfação do Cliente</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="mt-20 py-20 bg-[#606060] text-white rounded-lg">
+        <section className="mt-20 py-20 bg-gradient-to-br from-primary to-green-600 text-white rounded-lg">
           <div className="text-center">
-            <h2 className="text-4xl font-bold mb-6">Vamos Trabalhar Juntos?</h2>
+            <h2 className="text-4xl font-light mb-6 text-white">Vamos Trabalhar Juntos?</h2>
             <p className="text-xl mb-8 opacity-90">
               Entre em contato para discutir como posso contribuir com seus projetos energéticos.
             </p>

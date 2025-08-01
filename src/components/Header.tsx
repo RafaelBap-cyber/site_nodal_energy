@@ -16,7 +16,7 @@ const Header = () => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link to="/" className="flex items-center space-x-2">
           <img src="/src/assets/Corect_logo.png" alt="Logo" className="h-16 w-16" style={{ filter: 'invert(41%) sepia(97%) saturate(749%) hue-rotate(74deg) brightness(90%) contrast(90%)' }} />
-          <span className="text-xl font-bold text-primary">Nodal Energy</span>
+          <span className="text-xl font-light text-primary">Nodal Energy</span>
         </Link>
 
         {/* Desktop Navigation */}
