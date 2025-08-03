@@ -1,4 +1,5 @@
 import { Mail, Phone, Linkedin, Instagram, Leaf } from "lucide-react";
+import logo from "@/assets/Corect_logo.png";
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <img src="/src/assets/Corect_logo.png" alt="Logo" className="h-16 w-16" style={{ filter: 'invert(41%) sepia(97%) saturate(749%) hue-rotate(74deg) brightness(90%) contrast(90%)' }} />
+              <img src={logo} alt="Logo" className="h-16 w-16" style={{ filter: 'invert(41%) sepia(97%) saturate(749%) hue-rotate(74deg) brightness(90%) contrast(90%)' }} />
               <span className="text-xl font-light text-primary">Nodal Energy</span>
             </div>
             <p className="text-muted-foreground">
