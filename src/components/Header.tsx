@@ -36,7 +36,7 @@ const Header = () => {
               isActive("/sobre") ? "text-primary" : "text-muted-foreground"
             }`}
           >
-            Sobre & Projetos
+            Sobre
           </Link>
           <Link
             to="/blog"
@@ -87,7 +87,7 @@ const Header = () => {
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Sobre & Projetos
+              Sobre
             </Link>
             <Link
               to="/blog"

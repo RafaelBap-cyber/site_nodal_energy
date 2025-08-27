@@ -1,25 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Leaf, Zap, BarChart3, Shield, ArrowRight } from "lucide-react";
+import { Leaf, Zap, BarChart3, Shield, ArrowRight, MapPin } from "lucide-react";
 import heroImage from "@/assets/hero-energy-production.jpg";
 
 const Home = () => {
   const services = [
     {
       icon: <Zap className="h-8 w-8 text-primary" />,
-      title: "Soluções Energéticas Integradas",
-      description: "Consultoria estratégica para eficiência e sustentabilidade. Desenvolvemos projetos personalizados para o setor industrial e comercial, otimizando recursos e reduzindo custos operacionais."
+      title: "Negociação de usinas",
+      description: "Apoiamos na negociação e implantação de usinas fotovoltaicas, garantindo performance e sustentabilidade"
     },
     {
       icon: <Leaf className="h-8 w-8 text-primary" />,
-      title: "Projetos Fotovoltaicos sob Medida",
-      description: "Identificamos oportunidades, negociamos usinas e elaboramos pareceres de acesso para maximizar o potencial energético de cada cliente."
+      title: "Projetos Personalizados",
+      description: "Desenvolvemos soluções sob medida em energia, alinhadas às necessidades do setor industrial e comercial."
     },
     {
       icon: <BarChart3 className="h-8 w-8 text-primary" />,
-      title: "Análise Tributária Especializada",
-      description: "Reduza emissões e custos com avaliações tributárias focadas no setor de energia, promovendo performance e sustentabilidade."
+      title: "Eficiência e análise tributária",
+      description: "Implantamos projetos de eficiência energética e realizamos análises tributárias para reduzir custos e emissões."
+    },
+    {
+      icon: <MapPin className="h-8 w-8 text-primary" />,
+      title: "Prospecção de Áreas",
+      description: "Identificamos locais com alto potencial para projetos de energia renovável, otimizando recursos e resultados."
     }
   ];
 
@@ -36,8 +41,8 @@ const Home = () => {
         
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-6xl font-light mb-6 text-white text-foreground tracking-tight">
-            Eficiência Energética
-            <span className="block text-primary font-semibold">para o Futuro</span>
+            Conectando Energia
+            <span className="block text-primary font-semibold">Tecnologia e Sustentabilidade</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed">
             Transformamos empresas através de soluções inteligentes em energia,
@@ -62,12 +67,20 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-4xl font-light mb-6 text-gray-900">Sobre a Nodal Energy</h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Fundada com o propósito de revolucionar o setor energético brasileiro, 
-              a Nodal Energy é especializada em eficiência energética e sustentabilidade. 
-              Nossa missão é ajudar empresas a reduzirem custos operacionais enquanto 
-              contribuem para um futuro mais sustentável.
-            </p>
+            <div className="space-y-6">
+              <p className="text-lg text-gray-600 leading-relaxed text-justify">
+                A Nodal Energy lidera a transição energética no Brasil, oferecendo soluções inovadoras em energias renováveis e eficiência para setores industrial e comercial. Atuamos de forma estratégica, conectando recursos naturais a tecnologia para gerar valor sustentável.
+              </p>
+              <p className="text-lg text-gray-600 leading-relaxed text-justify">
+                Nosso portfólio inclui prospecção de áreas, elaboração de pareceres de acesso, negociação de usinas fotovoltaicas e implantação de projetos de eficiência energética. Também realizamos análises tributárias para reduzir custos e emissões de carbono.
+              </p>
+              <p className="text-lg text-gray-600 leading-relaxed text-justify">
+                Com abordagem consultiva e integrada, desenvolvemos projetos personalizados que aliam performance energética e sustentabilidade, sempre focados nas necessidades do cliente e no impacto positivo ao meio ambiente.
+              </p>
+              <p className="text-lg text-gray-600 leading-relaxed text-justify">
+                Conte com a Nodal Energy para identificar oportunidades, otimizar operações e impulsionar resultados sustentáveis no setor de energia.
+              </p>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -82,15 +95,15 @@ const Home = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Mais de 100 projetos concluídos</span>
+                  <span>45% de Redução de Custos na Autoprodução</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Economia média de 35% nos custos energéticos</span>
+                  <span>7% Créditos Energéticos</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Certificações internacionais</span>
+                  <span>12% Diminuição de Carbono</span>
                 </div>
               </div>
             </div>
@@ -99,8 +112,8 @@ const Home = () => {
               <Card className="transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer border-primary/20 hover:border-primary/40">
                 <CardContent className="p-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">100+</div>
-                    <div className="text-muted-foreground">Projetos Concluídos</div>
+                    <div className="text-3xl font-bold text-primary mb-2">32%</div>
+                    <div className="text-muted-foreground">Aumento de Eficiência</div>
                   </div>
                 </CardContent>
               </Card>
@@ -121,7 +134,7 @@ const Home = () => {
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-light mb-6 text-gray-900">Nossos Serviços</h2>
+            <h2 className="text-4xl font-light mb-6 text-gray-900">Soluções Energéticas para o seu Negócio</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Oferecemos soluções completas em eficiência energética, 
               desde auditoria até implementação e monitoramento contínuo.
@@ -153,7 +166,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-light mb-8 text-gray-900">O Setor de Eficiência Energética</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <div className="text-center">
                 <div className="text-3xl font-semibold text-primary mb-2">R$ 200bi</div>
                 <p className="text-gray-600">Potencial de economia no Brasil</p>
@@ -162,11 +175,7 @@ const Home = () => {
                 <div className="text-3xl font-semibold text-primary mb-2">30%</div>
                 <p className="text-gray-600">Redução possível no consumo</p>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-semibold text-primary mb-2">2030</div>
-                <p className="text-gray-600">Meta Net Zero</p>
-              </div>
-            </div>
+             </div>
             <p className="text-lg text-gray-600 leading-relaxed">
               O Brasil possui um dos maiores potenciais mundiais para eficiência energética. 
               Com o crescimento da consciência ambiental e pressões regulatórias, 

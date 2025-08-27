@@ -1,14 +1,8 @@
 backend:
   name: local
-  # name: git-gateway
-  # branch: main
+  local_backend: true
 
-# Configuração para desenvolvimento local
 local_backend: true
-
-# Configurações gerais
-site_url: http://localhost:8081
-display_url: http://localhost:8081
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -20,19 +14,16 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Autor", name: "author", widget: "string", default: "Equipe Nodal Energy" }
-      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Categoria", name: "category", widget: "select", options: ["Energia Solar", "Eficiência Energética", "Tributário", "Sustentabilidade", "Inovação"] }
-      - { label: "Tempo de Leitura", name: "readTime", widget: "string", default: "5 min" }
-      - { label: "Destaque", name: "featured", widget: "boolean", default: false }
-      - { label: "Resumo", name: "excerpt", widget: "text", hint: "Breve descrição do artigo" }
-      - { label: "Conteúdo", name: "content", widget: "markdown", hint: "Conteúdo completo do artigo" }
-      - { label: "Imagem de Capa", name: "coverImage", widget: "image", required: false }
-      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" }, required: false }
-      - { label: "SEO - Meta Description", name: "metaDescription", widget: "text", required: false }
-      - { label: "SEO - Keywords", name: "keywords", widget: "list", field: { label: "Keyword", name: "keyword", widget: "string" }, required: false }
+      - {label: "Título", name: "title", widget: "string", required: true}
+      - {label: "Autor", name: "author", widget: "string", required: true}
+      - {label: "Data", name: "date", widget: "datetime", required: true}
+      - {label: "Categoria", name: "category", widget: "select", options: ["Energia Solar", "Energia Eólica", "Eficiência Energética", "Sustentabilidade", "Tecnologia"], required: true}
+      - {label: "Resumo", name: "excerpt", widget: "text", required: true}
+      - {label: "Conteúdo", name: "content", widget: "markdown", required: true}
+      - {label: "Imagem de Capa", name: "coverImage", widget: "image", required: false}
+      - {label: "Tags", name: "tags", widget: "list", required: false}
+      - {label: "Meta Description", name: "metaDescription", widget: "text", required: false}
+      - {label: "Keywords", name: "keywords", widget: "text", required: false}
 
   - name: "config"
     label: "Configurações do Site"
@@ -41,15 +32,41 @@ collections:
         label: "Configurações Gerais"
         name: "siteConfig"
         fields:
-          - { label: "Nome do Site", name: "siteName", widget: "string", default: "Nodal Energy" }
-          - { label: "Descrição", name: "description", widget: "text" }
-          - { label: "Email de Contato", name: "contactEmail", widget: "string" }
-          - { label: "Telefone", name: "phone", widget: "string" }
-          - { label: "Endereço", name: "address", widget: "text" }
+          - {label: "Nome do Site", name: "siteName", widget: "string", required: true}
+          - {label: "Descrição", name: "description", widget: "text", required: true}
+          - {label: "Email de Contato", name: "contactEmail", widget: "string", required: true}
+          - {label: "Telefone", name: "phone", widget: "string", required: false}
+          - {label: "Endereço", name: "address", widget: "text", required: false}
           - label: "Redes Sociais"
             name: "socialMedia"
             widget: "object"
             fields:
-              - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
-              - { label: "Instagram", name: "instagram", widget: "string", required: false }
-              - { label: "Facebook", name: "facebook", widget: "string", required: false } 
+              - {label: "Facebook", name: "facebook", widget: "string", required: false}
+              - {label: "Instagram", name: "instagram", widget: "string", required: false}
+              - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
+              - {label: "YouTube", name: "youtube", widget: "string", required: false}
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - {label: "Meta Description", name: "metaDescription", widget: "text", required: false}
+              - {label: "Keywords", name: "keywords", widget: "text", required: false}
+              - {label: "Google Analytics", name: "googleAnalytics", widget: "string", required: false}
+              - {label: "Google Tag Manager", name: "googleTagManager", widget: "string", required: false}
+
+admin:
+  title: "Nodal Energy - CMS"
+  logo_url: "/images/logo.png"
+  favicon_url: "/favicon.ico"
+  css_url: "/admin/cms-custom.css"
+  js_url: "/admin/cms-custom.js"
+
+notifications:
+  - type: "success"
+    message: "Conteúdo salvo com sucesso!"
+  - type: "error"
+    message: "Erro ao salvar conteúdo. Tente novamente."
+
+backup:
+  enabled: true
+  frequency: "daily" 

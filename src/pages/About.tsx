@@ -4,46 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, Users, Award, ExternalLink, User } from "lucide-react";
 import fabioPortrait from "@/assets/fabio-portrait.jpg";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
 
 const About = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "Modernização Sistema de Iluminação Industrial",
-      client: "Indústria Metalúrgica SP",
-      image: project1,
-      status: "Concluído",
-      date: "2024",
-      savings: "45%",
-      description: "Substituição completa do sistema de iluminação por LED inteligente, resultando em economia significativa de energia e melhoria na qualidade da iluminação.",
-      technologies: ["LED Inteligente", "Sensores de Movimento", "Sistema de Controle"]
-    },
-    {
-      id: 2,
-      title: "Instalação Solar Fotovoltaica",
-      client: "Centro Comercial RJ",
-      image: project2,
-      status: "Concluído",
-      date: "2023",
-      savings: "60%",
-      description: "Projeto de energia solar com capacidade de 500kWp, incluindo sistema de monitoramento em tempo real e integração com a rede elétrica.",
-      technologies: ["Painéis Solares", "Inversores", "Monitoramento IoT"]
-    },
-    {
-      id: 3,
-      title: "Automação Predial Inteligente",
-      client: "Edifício Corporativo SP",
-      image: project3,
-      status: "Em Andamento",
-      date: "2024",
-      savings: "35%",
-      description: "Implementação de sistema de automação completo incluindo HVAC inteligente, controle de iluminação e gestão energética centralizada.",
-      technologies: ["BMS", "HVAC Inteligente", "Dashboard Analítico"]
-    }
-  ];
+
 
   const certifications = [
     "PMP - Project Management Professional",
@@ -95,8 +58,7 @@ const About = () => {
             </div>
             
             <h1 className="text-6xl font-light mb-8 text-gray-900 tracking-tight">
-              Sobre &
-              <span className="block text-primary font-semibold">Projetos</span>
+              Sobre
             </h1>
             
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -193,153 +155,172 @@ const About = () => {
           </div>
         </section>
 
-        {/* Projects Section */}
-        <section>
-          <h2 className="text-3xl font-light mb-12 text-center text-gray-900">Projetos em Destaque</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <Card key={project.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-video overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
+        {/* Business Benefits Section */}
+        <section className="py-20 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 rounded-2xl">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-3xl mb-6">
+                <svg className="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h2 className="text-4xl font-light mb-6 text-gray-900">Benefícios para o seu Negócio</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Soluções energéticas que transformam desafios em oportunidades de crescimento e sustentabilidade.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Card 1: Soluções Energéticas Integradas */}
+              <Card className="group overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 ease-in-out hover:scale-105 hover:-translate-y-2 cursor-pointer">
+                <div className="relative overflow-hidden">
+                  <div className="aspect-video relative">
+                    <img 
+                      src="/src/assets/hero-energy-production.jpg" 
+                      alt="Produção de Energia" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+
+                  </div>
+
                 </div>
                 
-                <CardHeader>
-                  <div className="flex justify-between items-start mb-2">
-                    <Badge 
-                      variant={project.status === "Concluído" ? "default" : "secondary"}
-                    >
-                      {project.status}
-                    </Badge>
-                    <span className="text-sm text-muted-foreground">{project.date}</span>
-                  </div>
-                  <CardTitle className="text-lg">{project.title}</CardTitle>
-                  <CardDescription className="text-primary font-semibold">
-                    {project.client}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {project.description}
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900 group-hover:text-primary transition-colors duration-300">
+                    Soluções Energéticas Integradas
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-4">
+                  Consultoria estratégica para eficiência e sustentabilidade. Desenvolvemos projetos personalizados para o setor industrial e comercial, otimizando recursos e reduzindo custos operacionais
                   </p>
+
+                </CardContent>
+              </Card>
+
+              {/* Card 2: Projetos Fotovoltaicos sob Medida */}
+              <Card className="group overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 ease-in-out hover:scale-105 hover:-translate-y-2 cursor-pointer">
+                <div className="relative overflow-hidden">
+                  <div className="aspect-video relative">
+                    <img 
+                      src="/src/assets/project-2.jpg" 
+                      alt="Projeto Fotovoltaico" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+
+                  </div>
+
+                </div>
+                
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900 group-hover:text-primary transition-colors duration-300">
+                    Projetos Fotovoltaicos sob Medida
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-4">
+                    Identificamos oportunidades, negociamos usinas e elaboramos pareceres de acesso para maximizar o potencial de cada cliente.
+                  </p>
+
+                </CardContent>
+              </Card>
+
+              {/* Card 3: Análise Tributária Especializada */}
+              <Card className="group overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 ease-in-out hover:scale-105 hover:-translate-y-2 cursor-pointer">
+                <div className="relative overflow-hidden">
+                  <div className="aspect-video relative">
+                    <img 
+                      src="/src/assets/project-1.jpg" 
+                      alt="Eficiência Energética" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+
+                  </div>
+
+                </div>
+                
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900 group-hover:text-primary transition-colors duration-300">
+                    Análise Tributária Especializada
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-4">
+                    Reduza emissões e custos com avaliações tributárias focadas no setor de energia, promovendo performance e sustentabilidade.
+                  </p>
+
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="mt-20 py-20 bg-gradient-to-br from-green-50 via-green-100 to-emerald-100 rounded-2xl relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute top-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-40 h-40 bg-green-300/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-primary/5 rounded-full blur-2xl"></div>
+          
+          <div className="relative z-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-6">
+                <svg className="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                </svg>
+              </div>
+              <h2 className="text-4xl font-light mb-6 text-gray-900">O que dizem nossos clientes</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Depoimentos de empresas que transformaram seus processos energéticos conosco.
+              </p>
+            </div>
+            
+            <div className="flex justify-center">
+              <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 ease-in-out hover:scale-105 hover:-translate-y-2 cursor-pointer max-w-lg transform rotate-1 hover:rotate-0">
+                <CardContent className="p-8 relative">
+                  {/* Quote marks decoration */}
+                  <div className="absolute top-4 left-4 text-6xl text-primary/20 font-serif">"</div>
+                  <div className="absolute bottom-4 right-4 text-6xl text-primary/20 font-serif">"</div>
                   
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-semibold">Economia Energética:</span>
-                      <span className="text-lg font-bold text-primary">{project.savings}</span>
-                    </div>
+                  <div className="relative z-10">
+                    <p className="text-gray-700 mb-8 italic leading-relaxed text-lg font-medium">
+                      "A abordagem consultiva da Nodal Energy foi crucial para otimizar nossos processos e reduzir custos. 
+                      Eles superaram as expectativas com soluções inovadoras e suporte técnico de alto nível."
+                    </p>
                     
-                    <div>
-                      <p className="text-sm font-semibold mb-2">Tecnologias:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {project.technologies.map((tech, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
+                    <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-primary/5 to-green-50 rounded-xl">
+                      <div className="w-16 h-16 bg-gradient-to-br from-primary to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                        AS
+                      </div>
+                      <div>
+                        <div className="font-semibold text-lg text-gray-900">Alex Silva</div>
+                        <div className="text-sm text-gray-600">Operations Manager, Lumina Group</div>
+                        <div className="flex items-center mt-2">
+                          <div className="flex space-x-1">
+                            {[...Array(5)].map((_, i) => (
+                              <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                              </svg>
+                            ))}
+                          </div>
+                          <span className="text-sm text-gray-500 ml-2">5.0</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="mt-20 py-20 bg-green-100 rounded-lg">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-light mb-6 text-gray-900">O que dizem nossos clientes</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Depoimentos de empresas que transformaram seus processos energéticos conosco.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-white border-green-200 hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-102 hover:-translate-y-1 cursor-pointer">
-              <CardContent className="p-6">
-                <p className="text-gray-600 mb-6 italic leading-relaxed">
-                  "A abordagem consultiva da Nodal Energy foi crucial para otimizar nossos processos e reduzir custos. 
-                  Eles superaram as expectativas com soluções inovadoras e suporte técnico de alto nível."
-                </p>
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
-                    AS
-                  </div>
-                  <div>
-                    <div className="font-semibold">Alex Silva</div>
-                    <div className="text-sm text-gray-600">Operations Manager, Lumina Group</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white border-green-200 hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-102 hover:-translate-y-1 cursor-pointer">
-              <CardContent className="p-6">
-                <p className="text-gray-600 mb-6 italic leading-relaxed">
-                  "Reduzimos 40% dos nossos custos energéticos em apenas 8 meses. A expertise da Nodal Energy 
-                  em projetos fotovoltaicos transformou nossa operação."
-                </p>
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
-                    MR
-                  </div>
-                  <div>
-                    <div className="font-semibold">Maria Rodriguez</div>
-                    <div className="text-sm text-gray-600">CEO, TechSolar Brasil</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white border-green-200 hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-102 hover:-translate-y-1 cursor-pointer">
-              <CardContent className="p-6">
-                <p className="text-gray-600 mb-6 italic leading-relaxed">
-                  "O suporte em análise tributária nos ajudou a identificar oportunidades que não víamos. 
-                  Profissionalismo e resultados excepcionais."
-                </p>
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
-                    CF
-                  </div>
-                  <div>
-                    <div className="font-semibold">Carlos Ferreira</div>
-                    <div className="text-sm text-gray-600">CFO, Indústrias Verdes</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* Stats Section */}
-        <section className="mt-20 py-16 bg-green-200 rounded-lg">
-          <div className="text-center">
-            <h2 className="text-3xl font-light mb-12 text-gray-900">Números que Impressionam</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div>
-                <div className="text-4xl font-semibold text-primary mb-2">100+</div>
-                <p className="text-gray-600">Projetos Concluídos</p>
-              </div>
-              <div>
-                <div className="text-4xl font-semibold text-primary mb-2">R$ 50M</div>
-                <p className="text-gray-600">Em Economias Geradas</p>
-              </div>
-              <div>
-                <div className="text-4xl font-semibold text-primary mb-2">1000+</div>
-                <p className="text-gray-600">Toneladas CO₂ Evitadas</p>
-              </div>
-              <div>
-                <div className="text-4xl font-semibold text-primary mb-2">98%</div>
-                <p className="text-gray-600">Satisfação do Cliente</p>
+            </div>
+            
+            {/* Bottom accent */}
+            <div className="text-center mt-12">
+              <div className="inline-flex items-center space-x-2 text-primary/60">
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium">Depoimento verificado</span>
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
               </div>
             </div>
           </div>
         </section>
+
+
 
         {/* CTA Section */}
         <section className="mt-20 py-20 bg-gradient-to-br from-primary to-green-600 text-white rounded-lg">

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teste Completo - CMS Nodal Energy</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .success { color: #059669; }
+    .error { color: #e74c3c; }
+    .warning { color: #f59e0b; }
+    .info { color: #3b82f6; }
+    button {
+      background: #4ade80;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover { background: #22c55e; }
+    .log {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      max-height: 200px;
+      overflow-y: auto;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Teste Completo do CMS - Nodal Energy</h1>
+  
+  <div class="test-section">
+    <h3>1. Verificação de Carregamento</h3>
+    <div id="load-status">Verificando...</div>
+    <button onclick="testLoad()">Testar Carregamento</button>
+  </div>
+
+  <div class="test-section">
+    <h3>2. Verificação de Configuração</h3>
+    <div id="config-status">Verificando...</div>
+    <button onclick="testConfig()">Testar Configuração</button>
+  </div>
+
+  <div class="test-section">
+    <h3>3. Teste de Funcionalidade</h3>
+    <button onclick="testCMSFunctions()">Testar Funções do CMS</button>
+    <button onclick="openBlogEditor()">Abrir Editor de Blog</button>
+    <button onclick="openMediaManager()">Abrir Gerenciador de Mídia</button>
+    <button onclick="openSettings()">Abrir Configurações</button>
+  </div>
+
+  <div class="test-section">
+    <h3>4. Logs de Teste</h3>
+    <div id="test-logs" class="log"></div>
+    <button onclick="clearLogs()">Limpar Logs</button>
+  </div>
+
+  <div class="test-section">
+    <h3>5. Informações do Sistema</h3>
+    <div id="system-info"></div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  
+  <script>
+    let testResults = {};
+
+    function log(message, type = 'info') {
+      const logsDiv = document.getElementById('test-logs');
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = document.createElement('div');
+      logEntry.className = type;
+      logEntry.textContent = `[${timestamp}] ${message}`;
+      logsDiv.appendChild(logEntry);
+      logsDiv.scrollTop = logsDiv.scrollHeight;
+    }
+
+    function updateStatus(elementId, message, type = 'info') {
+      const element = document.getElementById(elementId);
+      element.innerHTML = `<span class="${type}">${message}</span>`;
+    }
+
+    function testLoad() {
+      log('Iniciando teste de carregamento...');
+      
+      if (typeof CMS !== 'undefined') {
+        log('✅ CMS carregado com sucesso!', 'success');
+        updateStatus('load-status', '✅ CMS carregado com sucesso!', 'success');
+        testResults.cmsLoaded = true;
+      } else {
+        log('❌ CMS não foi carregado', 'error');
+        updateStatus('load-status', '❌ CMS não foi carregado', 'error');
+        testResults.cmsLoaded = false;
+      }
+
+      if (typeof netlifyIdentity !== 'undefined') {
+        log('✅ Netlify Identity carregado', 'success');
+        testResults.identityLoaded = true;
+      } else {
+        log('⚠️ Netlify Identity não carregado', 'warning');
+        testResults.identityLoaded = false;
+      }
+    }
+
+    function testConfig() {
+      log('Testando configuração do CMS...');
+      
+      fetch('/admin/config.yml')
+        .then(response => {
+          if (response.ok) {
+            log('✅ Arquivo config.yml acessível', 'success');
+            return response.text();
+          } else {
+            throw new Error(`HTTP ${response.status}`);
+          }
+        })
+        .then(content => {
+          log(`✅ Configuração carregada (${content.length} caracteres)`, 'success');
+          
+          // Verificar estrutura básica
+          if (content.includes('backend:')) {
+            log('✅ Seção backend encontrada', 'success');
+          }
+          if (content.includes('collections:')) {
+            log('✅ Seção collections encontrada', 'success');
+          }
+          if (content.includes('blog:')) {
+            log('✅ Coleção blog encontrada', 'success');
+          }
+          
+          updateStatus('config-status', '✅ Configuração válida', 'success');
+          testResults.configValid = true;
+        })
+        .catch(error => {
+          log(`❌ Erro ao carregar config.yml: ${error.message}`, 'error');
+          updateStatus('config-status', '❌ Erro na configuração', 'error');
+          testResults.configValid = false;
+        });
+    }
+
+    function testCMSFunctions() {
+      log('Testando funções do CMS...');
+      
+      if (typeof CMS !== 'undefined') {
+        try {
+          // Testar registro de template
+          CMS.registerPreviewTemplate('test', ({ entry }) => {
+            log('✅ Template de preview registrado com sucesso', 'success');
+            return '<div>Teste funcionando!</div>';
+          });
+          
+          log('✅ Funções básicas do CMS funcionando', 'success');
+          testResults.cmsFunctions = true;
+        } catch (error) {
+          log(`❌ Erro nas funções do CMS: ${error.message}`, 'error');
+          testResults.cmsFunctions = false;
+        }
+      } else {
+        log('❌ CMS não disponível para teste', 'error');
+        testResults.cmsFunctions = false;
+      }
+    }
+
+    function openBlogEditor() {
+      log('Tentando abrir editor de blog...');
+      
+      try {
+        const url = '/admin/#/collections/blog';
+        log(`Abrindo: ${url}`);
+        
+        // Verificar se o CMS está carregado
+        if (typeof CMS !== 'undefined') {
+          log('✅ CMS disponível, redirecionando...', 'success');
+          window.location.href = url;
+        } else {
+          log('⚠️ CMS não disponível, tentando abrir em nova aba...', 'warning');
+          window.open(url, '_blank');
+        }
+      } catch (error) {
+        log(`❌ Erro ao abrir editor: ${error.message}`, 'error');
+      }
+    }
+
+    function openMediaManager() {
+      log('Tentando abrir gerenciador de mídia...');
+      
+      try {
+        const url = '/admin/#/collections/media';
+        log(`Abrindo: ${url}`);
+        window.open(url, '_blank');
+      } catch (error) {
+        log(`❌ Erro ao abrir gerenciador de mídia: ${error.message}`, 'error');
+      }
+    }
+
+    function openSettings() {
+      log('Tentando abrir configurações...');
+      
+      try {
+        const url = '/admin/#/collections/config';
+        log(`Abrindo: ${url}`);
+        window.open(url, '_blank');
+      } catch (error) {
+        log(`❌ Erro ao abrir configurações: ${error.message}`, 'error');
+      }
+    }
+
+    function clearLogs() {
+      document.getElementById('test-logs').innerHTML = '';
+    }
+
+    function showSystemInfo() {
+      const info = {
+        'User Agent': navigator.userAgent,
+        'URL': window.location.href,
+        'Protocol': window.location.protocol,
+        'Host': window.location.host,
+        'Path': window.location.pathname,
+        'CMS Version': typeof CMS !== 'undefined' ? 'Carregado' : 'Não carregado',
+        'Identity Version': typeof netlifyIdentity !== 'undefined' ? 'Carregado' : 'Não carregado',
+        'Local Storage': typeof localStorage !== 'undefined' ? 'Disponível' : 'Não disponível',
+        'Session Storage': typeof sessionStorage !== 'undefined' ? 'Disponível' : 'Não disponível'
+      };
+
+      const infoDiv = document.getElementById('system-info');
+      let infoHTML = '<table style="width: 100%; border-collapse: collapse;">';
+      infoHTML += '<tr><th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Propriedade</th><th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Valor</th></tr>';
+      
+      for (const [key, value] of Object.entries(info)) {
+        infoHTML += `<tr><td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${key}</td><td style="padding: 8px; border: 1px solid #ddd; font-family: monospace;">${value}</td></tr>`;
+      }
+      
+      infoHTML += '</table>';
+      infoDiv.innerHTML = infoHTML;
+    }
+
+    // Inicialização automática
+    window.addEventListener('load', () => {
+      log('Página carregada, iniciando testes...');
+      
+      setTimeout(() => {
+        testLoad();
+        testConfig();
+        showSystemInfo();
+      }, 1000);
+    });
+
+    // Verificar erros globais
+    window.addEventListener('error', (event) => {
+      log(`❌ Erro global: ${event.message}`, 'error');
+    });
+  </script>
+</body>
+</html>
