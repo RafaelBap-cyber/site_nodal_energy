@@ -1,64 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Clock, Linkedin, Instagram, Send } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    message: ""
-  });
-  
-  const { toast } = useToast();
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Simulate form submission
-    toast({
-      title: "Mensagem enviada com sucesso!",
-      description: "Entraremos em contato em breve. Obrigado pelo interesse!",
-    });
-    
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      message: ""
-    });
+  const handleCall = () => {
+    window.open('tel:+5519998704240', '_self');
   };
 
   const contactInfo = [
     {
       icon: <Mail className="h-6 w-6" />,
       title: "E-mail Corporativo",
-      content: "contato@carrascoenergy.com",
+      content: "fcarrasco@nodalenergy.com.br",
       description: "Para propostas comerciais e parcerias"
-    },
-    {
-      icon: <Mail className="h-6 w-6" />,
-      title: "E-mail Pessoal",
-      content: "fabio.carrasco@carrascoenergy.com",
-      description: "Contato direto com Fábio Carrasco"
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: "Telefone/WhatsApp",
-      content: "(11) 99999-9999",
+      content: "+55 19 99870-4240",
       description: "Atendimento de segunda a sexta, 8h às 18h"
     },
     {
@@ -74,14 +33,14 @@ const Contact = () => {
       icon: <Linkedin className="h-6 w-6" />,
       title: "LinkedIn",
       subtitle: "Fábio Carrasco",
-      url: "https://linkedin.com/in/fabiocarrasco",
+      url: "https://linkedin.com/in/fabio-carrasco-baptista-7114464",
       description: "Conecte-se profissionalmente"
     },
     {
       icon: <Instagram className="h-6 w-6" />,
       title: "Instagram",
-      subtitle: "@carrascoenergy",
-      url: "https://instagram.com/carrascoenergy",
+      subtitle: "@fabiocarrascobaptista",
+      url: "https://www.instagram.com/fabiocarrascobaptista/",
       description: "Acompanhe nossos projetos"
     }
   ];
@@ -121,167 +80,100 @@ const Contact = () => {
 
       <div className="container mx-auto px-4">
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <Card className="bg-white border-green-200">
-              <CardHeader>
-                <CardTitle className="text-2xl font-light text-gray-900">Solicite uma Consulta Gratuita</CardTitle>
+        <div className="space-y-12">
+          {/* Contact Information */}
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-white border-green-200 shadow-lg">
+              <CardHeader className="text-center pb-6">
+                <CardTitle className="text-2xl">Informações de Contato</CardTitle>
                 <CardDescription>
-                  Preencha o formulário abaixo e nossa equipe entrará em contato em até 24 horas.
+                  Entre em contato conosco através dos canais abaixo
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Nome Completo *</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        placeholder="Seu nome completo"
-                        required
-                      />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {contactInfo.map((info, index) => (
+                    <div key={index} className="text-center space-y-4">
+                      <div className="flex justify-center">
+                        <div className="p-4 bg-primary/10 rounded-full text-primary">
+                          {info.icon}
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
+                        <p className="text-primary font-medium text-lg mb-1">{info.content}</p>
+                        <p className="text-sm text-muted-foreground">{info.description}</p>
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">E-mail *</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="seu@email.com"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="company">Empresa</Label>
-                      <Input
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleInputChange}
-                        placeholder="Nome da sua empresa"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Telefone</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="(11) 99999-9999"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Mensagem *</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder="Conte-nos sobre seu projeto ou necessidades em eficiência energética..."
-                      className="min-h-[120px]"
-                      required
-                    />
-                  </div>
-
-                  <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                    <Send className="mr-2 h-4 w-4" />
-                    Enviar Mensagem
-                  </Button>
-                </form>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Contact Information */}
-          <div className="space-y-6">
-            {/* Contact Details */}
-            <Card className="bg-white border-green-200">
-              <CardHeader>
-                <CardTitle>Informações de Contato</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg text-primary">
-                      {info.icon}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">{info.title}</h3>
-                      <p className="text-primary font-medium">{info.content}</p>
-                      <p className="text-sm text-muted-foreground">{info.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
+          {/* Business Hours and Social Media */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* Business Hours */}
-            <Card className="bg-white border-green-200">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Clock className="mr-2 h-5 w-5" />
-                  Horário de Atendimento
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Segunda - Sexta</span>
-                    <span className="font-medium">8:00 - 18:00</span>
+            <div>
+              <Card className="bg-white border-green-200 shadow-lg h-full">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-2xl flex items-center justify-center">
+                    <Clock className="mr-3 h-6 w-6" />
+                    Horário de Atendimento
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <div className="space-y-4 text-lg">
+                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                      <span className="font-medium">Segunda - Sexta</span>
+                      <span className="font-semibold text-primary">8:00 - 18:00</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                      <span className="font-medium">Sábado</span>
+                      <span className="font-semibold text-primary">9:00 - 13:00</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                      <span className="font-medium">Domingo</span>
+                      <span className="text-muted-foreground">Fechado</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Sábado</span>
-                    <span className="font-medium">9:00 - 13:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Domingo</span>
-                    <span className="text-muted-foreground">Fechado</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Social Media */}
-            <Card className="bg-white border-green-200">
-              <CardHeader>
-                <CardTitle>Redes Sociais</CardTitle>
-                <CardDescription>
-                  Acompanhe nossos projetos e novidades
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-4 p-3 rounded-lg border hover:bg-accent hover:text-accent-foreground transition-colors"
-                  >
-                    <div className="text-primary">
-                      {social.icon}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">{social.title}</h3>
-                      <p className="text-sm text-primary">{social.subtitle}</p>
-                      <p className="text-xs text-muted-foreground">{social.description}</p>
-                    </div>
-                  </a>
-                ))}
-              </CardContent>
-            </Card>
+            <div>
+              <Card className="bg-white border-green-200 shadow-lg h-full">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-2xl">Redes Sociais</CardTitle>
+                  <CardDescription>
+                    Acompanhe nossos projetos e novidades
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {socialLinks.map((social, index) => (
+                      <a
+                        key={index}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-4 p-4 rounded-lg border-2 border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 ease-in-out group"
+                      >
+                        <div className="text-primary group-hover:scale-110 transition-transform duration-300">
+                          {social.icon}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-lg">{social.title}</h3>
+                          <p className="text-sm text-primary font-medium">{social.subtitle}</p>
+                          <p className="text-xs text-muted-foreground">{social.description}</p>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
 
@@ -293,14 +185,15 @@ const Contact = () => {
               <p className="text-lg mb-6 opacity-90">
                 Oferecemos uma análise inicial gratuita do potencial de economia energética da sua empresa.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="secondary" size="lg" className="bg-white text-primary hover:bg-white/90">
+              <div className="flex justify-center">
+                <Button 
+                  variant="secondary" 
+                  size="lg" 
+                  className="bg-white text-primary hover:bg-white/90"
+                  onClick={handleCall}
+                >
                   <Phone className="mr-2 h-4 w-4" />
                   Ligar Agora
-                </Button>
-                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary bg-white/10 backdrop-blur-sm">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Enviar E-mail
                 </Button>
               </div>
             </CardContent>

@@ -14,7 +14,7 @@ const CMSButton = () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Se as credenciais estão corretas, abrir o CMS
-    if (credentials.username === 'admin' && credentials.password === 'nodalenergy2024') {
+    if (credentials.username === 'fábiocarrascoCEO' && credentials.password === 'Faralufe101273') {
       // Usar a nova versão do CMS
       window.open('/admin/cms.html', '_blank');
       setShowLogin(false);

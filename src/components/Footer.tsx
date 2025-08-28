@@ -43,17 +43,17 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                <span>contato@carrascoenergy.com</span>
+                <span>fcarrasco@nodalenergy.com.br</span>
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Phone className="h-4 w-4" />
-                <span>(11) 99999-9999</span>
+                <span>+55 19 99870-4240</span>
               </div>
               <div className="flex space-x-4 mt-4">
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="https://linkedin.com/in/fabio-carrasco-baptista-7114464" className="text-muted-foreground hover:text-primary transition-colors">
                   <Linkedin className="h-5 w-5" />
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="https://www.instagram.com/fabiocarrascobaptista/" className="text-muted-foreground hover:text-primary transition-colors">
                   <Instagram className="h-5 w-5" />
                 </a>
               </div>

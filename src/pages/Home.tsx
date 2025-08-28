@@ -48,13 +48,7 @@ const Home = () => {
             Transformamos empresas através de soluções inteligentes em energia,
             reduzindo custos e impacto ambiental.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
-              <Link to="/sobre">
-                Conheça Nossos Projetos
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+          <div className="flex justify-center">
             <Button size="lg" variant="outline" asChild className="border-white text-white hover:bg-white hover:text-black bg-white/10 backdrop-blur-sm">
               <Link to="/contatos">Entre em Contato</Link>
             </Button>
@@ -131,32 +125,88 @@ const Home = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-light mb-6 text-gray-900">Soluções Energéticas para o seu Negócio</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+      <section className="py-32 bg-gradient-to-br from-secondary via-green-50 to-emerald-100 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-green-300/20 rounded-full blur-3xl"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-light mb-8 text-gray-900">Soluções Energéticas para o seu Negócio</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Oferecemos soluções completas em eficiência energética, 
               desde auditoria até implementação e monitoramento contínuo.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:-translate-y-1 cursor-pointer border-primary/20 hover:border-primary/40">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    {service.icon}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-7xl mx-auto">
+            {/* Card 1: Negociação de usinas */}
+            <Card className="text-center hover:shadow-2xl transition-all duration-500 ease-in-out hover:scale-110 hover:-translate-y-3 cursor-pointer border-primary/30 hover:border-primary/60 bg-white/90 backdrop-blur-sm shadow-xl">
+              <CardHeader className="pb-6">
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 bg-primary/10 rounded-2xl">
+                    <Zap className="h-12 w-12 text-primary" />
                   </div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-sm">
-                    {service.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+                <CardTitle className="text-2xl font-semibold mb-3">Negociação de usinas</CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <CardDescription className="text-base leading-relaxed text-gray-700">
+                  Apoiamos na negociação e implantação de usinas fotovoltaicas, garantindo performance e sustentabilidade
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            {/* Card 2: Projetos Personalizados */}
+            <Card className="text-center hover:shadow-2xl transition-all duration-500 ease-in-out hover:scale-110 hover:-translate-y-3 cursor-pointer border-primary/30 hover:border-primary/60 bg-white/90 backdrop-blur-sm shadow-xl">
+              <CardHeader className="pb-6">
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 bg-primary/10 rounded-2xl">
+                    <Leaf className="h-12 w-12 text-primary" />
+                  </div>
+                </div>
+                <CardTitle className="text-2xl font-semibold mb-3">Projetos Personalizados</CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <CardDescription className="text-base leading-relaxed text-gray-700">
+                  Desenvolvemos soluções sob medida em energia, alinhadas às necessidades do setor industrial e comercial.
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            {/* Card 3: Eficiência e análise tributária */}
+            <Card className="text-center hover:shadow-2xl transition-all duration-500 ease-in-out hover:scale-110 hover:-translate-y-3 cursor-pointer border-primary/30 hover:border-primary/60 bg-white/90 backdrop-blur-sm shadow-xl">
+              <CardHeader className="pb-6">
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 bg-primary/10 rounded-2xl">
+                    <BarChart3 className="h-12 w-12 text-primary" />
+                  </div>
+                </div>
+                <CardTitle className="text-2xl font-semibold mb-3">Eficiência e análise tributária</CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <CardDescription className="text-base leading-relaxed text-gray-700">
+                  Implantamos projetos de eficiência energética e realizamos análises tributárias para reduzir custos e emissões.
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            {/* Card 4: Prospecção de Áreas */}
+            <Card className="text-center hover:shadow-2xl transition-all duration-500 ease-in-out hover:scale-110 hover:-translate-y-3 cursor-pointer border-primary/30 hover:border-primary/60 bg-white/90 backdrop-blur-sm shadow-xl">
+              <CardHeader className="pb-6">
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 bg-primary/10 rounded-2xl">
+                    <MapPin className="h-12 w-12 text-primary" />
+                  </div>
+                </div>
+                <CardTitle className="text-2xl font-semibold mb-3">Prospecção de Áreas</CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <CardDescription className="text-base leading-relaxed text-gray-700">
+                  Identificamos locais com alto potencial para projetos de energia renovável, otimizando recursos e resultados.
+                </CardDescription>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -230,31 +280,13 @@ const Home = () => {
             </div>
             
             <div className="text-center mt-12">
-              <Link to="/contatos">
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
-                  Contato
-                </Button>
-              </Link>
+              {/* Botão de contato removido */}
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-light mb-6 text-white">Pronto para Transformar sua Empresa?</h2>
-          <p className="text-xl mb-8 opacity-90 leading-relaxed">
-            Faça uma consulta gratuita e descubra como podemos reduzir seus custos energéticos.
-          </p>
-          <Button size="lg" variant="secondary" asChild>
-            <Link to="/contatos">
-              Solicitar Consulta Gratuita
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </section>
+      {/* Seção CTA removida */}
     </div>
   );
 };

@@ -26,14 +26,14 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
 
     // Credenciais padrão para desenvolvimento
     const validCredentials = {
-      username: 'admin',
-      password: 'nodalenergy2024'
+      username: 'fábiocarrascoCEO',
+      password: 'Faralufe101273'
     };
 
     if (username === validCredentials.username && password === validCredentials.password) {
       onLogin({ username, password });
     } else {
-      setError('Credenciais inválidas. Use: admin / nodalenergy2024');
+      setError('Credenciais inválidas. Use: fábiocarrascoCEO / Faralufe101273');
     }
   };
 
@@ -120,15 +120,7 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
             </Button>
           </form>
 
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
-            <h4 className="text-sm font-medium text-blue-800 mb-2">
-              Credenciais de Desenvolvimento:
-            </h4>
-            <p className="text-xs text-blue-600">
-              <strong>Usuário:</strong> admin<br />
-              <strong>Senha:</strong> nodalenergy2024
-            </p>
-          </div>
+
         </CardContent>
       </Card>
     </div>

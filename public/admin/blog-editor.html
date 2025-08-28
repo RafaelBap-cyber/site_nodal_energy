@@ -123,6 +123,49 @@
       border-color: #059669;
     }
     
+    .toolbar-select {
+      background: white;
+      border: 1px solid #d1d5db;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 120px;
+      height: 36px;
+      font-size: 0.875rem;
+    }
+    
+    .toolbar-select:hover {
+      border-color: #9ca3af;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .toolbar-select:focus {
+      outline: none;
+      border-color: #059669;
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    }
+    
+    .toolbar-separator {
+      width: 1px;
+      height: 24px;
+      background: #d1d5db;
+      margin: 0 0.25rem;
+    }
+    
+    .toolbar-info {
+      display: flex;
+      align-items: center;
+      padding: 0 0.5rem;
+    }
+    
+    .toolbar-tip {
+      font-size: 12px;
+      color: #6b7280;
+      font-style: italic;
+      white-space: nowrap;
+    }
+    
     .content-area {
       padding: 1rem;
       min-height: 400px;
@@ -135,6 +178,171 @@
     .content-area:empty::before {
       content: 'Digite o conteúdo do seu post aqui...';
       color: #9ca3af;
+    }
+    
+    /* Estilos para imagens no editor */
+    .content-area img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 1rem 0;
+      display: block;
+    }
+    
+    .content-area img:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    
+    /* Estilos para imagens editáveis */
+    .content-area .editable-image {
+      cursor: pointer;
+      position: relative;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .content-area .editable-image:hover {
+      border-color: #059669;
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.2);
+    }
+    
+    .content-area .editable-image::after {
+      content: '🖼️ Clique para editar';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #059669;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    
+    .content-area .editable-image:hover::after {
+      opacity: 1;
+    }
+    
+    .content-area .editable-image.image-edited {
+      border-color: #f59e0b;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    }
+    
+    .content-area .editable-image.image-edited::after {
+      content: '✏️ Editada';
+      background: #f59e0b;
+    }
+    
+    /* Estilos para redimensionamento de imagens */
+    .content-area .editable-image.resizing {
+      position: relative;
+      z-index: 998;
+    }
+    
+    .resize-handles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+    
+    .resize-handle {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #059669;
+      border: 2px solid white;
+      border-radius: 50%;
+      pointer-events: all;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s ease;
+    }
+    
+    .resize-handle:hover {
+      background: #047857;
+      transform: scale(1.2);
+    }
+    
+    .resize-instructions {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #059669;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Estilos para modo de movimento */
+    .move-mode-active .editable-image {
+      cursor: move;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .move-mode-active .editable-image:hover {
+      border-color: #0ea5e9;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .move-mode-active .editable-image::after {
+      content: '🚀 Alt + clique para mover';
+      background: #0ea5e9;
+    }
+    
+    /* Estilos para drag and drop */
+    .editable-image.dragging {
+      position: relative;
+      z-index: 999;
+    }
+    
+    .image-drag-preview {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10000;
+      border: 2px dashed #059669;
+      border-radius: 8px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      opacity: 0.7;
+    }
+    
+    .drop-indicator {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      background: linear-gradient(90deg, #059669, #0ea5e9);
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
+    }
+    
+    /* Indicador visual para modo de movimento ativo */
+    .toolbar-btn[data-command="toggleMoveMode"].active {
+      background: #0ea5e9;
+      color: white;
+      border-color: #0ea5e9;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     
     .actions {
@@ -390,30 +598,39 @@
               <button type="button" class="toolbar-btn" data-command="underline" title="Sublinhado (Ctrl+U)">
                 <u>U</u>
               </button>
-              <button type="button" class="toolbar-btn" data-command="insertUnorderedList" title="Lista não ordenada">
-                • Lista
-              </button>
-              <button type="button" class="toolbar-btn" data-command="insertOrderedList" title="Lista ordenada">
-                1. Lista
-              </button>
+              
+              <div class="toolbar-separator"></div>
+              
+              <select class="toolbar-select" id="fontSize" title="Tamanho da fonte">
+                <option value="1">8px</option>
+                <option value="2">10px</option>
+                <option value="3" selected>12px</option>
+                <option value="4">14px</option>
+                <option value="5">16px</option>
+                <option value="6">18px</option>
+                <option value="7">24px</option>
+              </select>
+              
+              <div class="toolbar-separator"></div>
+              
               <button type="button" class="toolbar-btn" data-command="createLink" title="Inserir link">
                 🔗 Link
               </button>
-              <button type="button" class="toolbar-btn" data-command="formatBlock" data-value="h1" title="Título 1">
-                H1
+              <button type="button" class="toolbar-btn" data-command="insertImage" title="Inserir imagem">
+                🖼️ Imagem
               </button>
-              <button type="button" class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Título 2">
-                H2
+              <button type="button" class="toolbar-btn" data-command="editSelectedImage" title="Editar imagem selecionada">
+                ✏️ Editar
               </button>
-              <button type="button" class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Título 3">
-                H3
+              <button type="button" class="toolbar-btn" data-command="toggleMoveMode" title="Alternar modo de movimento (Alt + clique para mover imagens)">
+                🚀 Mover
               </button>
-              <button type="button" class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Citação">
-                "Citação
-              </button>
-              <button type="button" class="toolbar-btn" data-command="insertCode" title="Código inline">
-                &lt;/&gt;
-              </button>
+              
+              <div class="toolbar-separator"></div>
+              
+              <div class="toolbar-info">
+                <span class="toolbar-tip">💡 Dica: Use Ctrl+V para colar imagens | Alt + clique para mover</span>
+              </div>
             </div>
             <div id="content" class="content-area" contenteditable="true"></div>
           </div>
@@ -472,13 +689,60 @@
           const command = this.dataset.command;
           const value = this.dataset.value;
           
-          if (command === 'createLink') {
+                               if (command === 'createLink') {
             const url = prompt('Digite a URL:');
             if (url) {
-              document.execCommand(command, false, url);
+              const linkText = prompt('Digite o texto do link:', url);
+              if (linkText) {
+                document.execCommand('insertHTML', false, `<a href="${url}" target="_blank">${linkText}</a>`);
+              }
             }
-          } else if (command === 'insertCode') {
-            document.execCommand('insertHTML', false, '<code>código</code>');
+          } else if (command === 'insertImage') {
+            const imageUrl = prompt('Digite a URL da imagem:');
+            if (imageUrl) {
+              const altText = prompt('Digite o texto alternativo da imagem (alt):', '');
+              const width = prompt('Digite a largura da imagem (em px, deixe vazio para automático):', '');
+              const height = prompt('Digite a altura da imagem (em px, deixe vazio para automático):', '');
+              
+              let style = 'max-width: 100%; margin: 1rem 0;';
+              if (width) style += ` width: ${width}px;`;
+              if (height) style += ` height: ${height}px;`;
+              if (!width && !height) style += ' height: auto;';
+              
+              const imageHTML = `<img src="${imageUrl}" alt="${altText}" style="${style}" class="editable-image" data-original-width="${width || 'auto'}" data-original-height="${height || 'auto'}">`;
+              document.execCommand('insertHTML', false, imageHTML);
+            }
+          } else if (command === 'editSelectedImage') {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+              const range = selection.getRangeAt(0);
+              let imgElement = range.commonAncestorContainer;
+              
+              // Procurar pela imagem mais próxima
+              while (imgElement && imgElement.nodeType !== Node.ELEMENT_NODE) {
+                imgElement = imgElement.parentElement;
+              }
+              
+              if (imgElement && imgElement.tagName === 'IMG') {
+                editImage(imgElement);
+              } else {
+                alert('Selecione uma imagem para editar');
+              }
+            } else {
+              alert('Selecione uma imagem para editar');
+            }
+          } else if (command === 'toggleMoveMode') {
+            const moveMode = !document.body.classList.contains('move-mode-active');
+            
+            if (moveMode) {
+              document.body.classList.add('move-mode-active');
+              this.classList.add('active');
+              showToast('🚀 Modo de movimento ativado! Alt + clique nas imagens para movê-las.', 'info');
+            } else {
+              document.body.classList.remove('move-mode-active');
+              this.classList.remove('active');
+              showToast('✅ Modo de movimento desativado.', 'info');
+            }
           } else {
             document.execCommand(command, false, value);
           }
@@ -486,6 +750,110 @@
           // Atualizar estado dos botões
           updateToolbarState();
         });
+      });
+      
+      // Configurar seletor de tamanho de fonte
+      const fontSize = document.getElementById('fontSize');
+      if (fontSize) {
+        fontSize.addEventListener('change', function() {
+          document.execCommand('fontSize', false, this.value);
+        });
+      }
+      
+      // Permitir edição de imagens ao clicar
+      document.getElementById('content').addEventListener('click', function(e) {
+        if (e.target.tagName === 'IMG' && e.target.classList.contains('editable-image')) {
+          editImage(e.target);
+        }
+      });
+      
+      // Permitir redimensionamento de imagens com duplo clique
+      document.getElementById('content').addEventListener('dblclick', function(e) {
+        if (e.target.tagName === 'IMG' && e.target.classList.contains('editable-image')) {
+          enableImageResize(e.target);
+        }
+      });
+      
+      // Permitir mover imagens (drag and drop)
+      document.getElementById('content').addEventListener('mousedown', function(e) {
+        if (e.target.tagName === 'IMG' && e.target.classList.contains('editable-image') && e.altKey) {
+          // Alt + clique para ativar modo de movimento
+          e.preventDefault();
+          startImageDrag(e.target, e);
+        }
+      });
+      
+      // Sistema simples de movimento: clique e arraste
+      let isDragging = false;
+      let draggedImage = null;
+      let dragOffset = { x: 0, y: 0 };
+      
+      document.getElementById('content').addEventListener('mousedown', function(e) {
+        if (e.target.tagName === 'IMG' && e.target.classList.contains('editable-image')) {
+          if (document.body.classList.contains('move-mode-active')) {
+            isDragging = true;
+            draggedImage = e.target;
+            
+            const rect = draggedImage.getBoundingClientRect();
+            dragOffset.x = e.clientX - rect.left;
+            dragOffset.y = e.clientY - rect.top;
+            
+            draggedImage.style.position = 'fixed';
+            draggedImage.style.zIndex = '10000';
+            draggedImage.style.pointerEvents = 'none';
+            draggedImage.style.opacity = '0.8';
+            
+            e.preventDefault();
+          }
+        }
+      });
+      
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging && draggedImage) {
+          draggedImage.style.left = (e.clientX - dragOffset.x) + 'px';
+          draggedImage.style.top = (e.clientY - dragOffset.y) + 'px';
+        }
+      });
+      
+      document.addEventListener('mouseup', function(e) {
+        if (isDragging && draggedImage) {
+          // Restaurar estilos da imagem
+          draggedImage.style.position = '';
+          draggedImage.style.zIndex = '';
+          draggedImage.style.pointerEvents = '';
+          draggedImage.style.opacity = '';
+          draggedImage.style.left = '';
+          draggedImage.style.top = '';
+          
+          // Mover para o final do conteúdo
+          const contentArea = document.getElementById('content');
+          if (contentArea !== draggedImage.parentNode) {
+            if (draggedImage.parentNode) {
+              draggedImage.parentNode.removeChild(draggedImage);
+            }
+            contentArea.appendChild(draggedImage);
+            
+            // Adicionar quebra de linha
+            const br = document.createElement('br');
+            contentArea.appendChild(br);
+            
+            showToast('✅ Imagem movida com sucesso!', 'success');
+          }
+          
+          isDragging = false;
+          draggedImage = null;
+        }
+      });
+      
+      // Atalhos de teclado para movimento
+      document.addEventListener('keydown', function(e) {
+        if (e.altKey && e.key === 'm') {
+          e.preventDefault();
+          const moveButton = document.querySelector('[data-command="toggleMoveMode"]');
+          if (moveButton) {
+            moveButton.click();
+          }
+        }
       });
       
       // Atalhos de teclado
@@ -507,21 +875,550 @@
           }
           updateToolbarState();
         }
+        
+        // Movimento de imagens com setas (quando modo ativo)
+        if (document.body.classList.contains('move-mode-active')) {
+          const selectedImage = document.querySelector('.editable-image:focus');
+          if (selectedImage && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            e.preventDefault();
+            moveImageWithArrows(selectedImage, e.key);
+          }
+        }
+      });
+      
+      // Permitir colar imagens (Ctrl+V)
+      document.getElementById('content').addEventListener('paste', function(e) {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        let imageFound = false;
+        
+        for (let item of items) {
+          if (item.type.indexOf('image') !== -1) {
+            e.preventDefault();
+            imageFound = true;
+            
+            const blob = item.getAsFile();
+            if (!blob) {
+              showToast('❌ Erro ao processar imagem do clipboard', 'error');
+              return;
+            }
+            
+            // Verificar tamanho do arquivo (máximo 10MB)
+            if (blob.size > 10 * 1024 * 1024) {
+              showToast('❌ Imagem muito grande. Máximo 10MB permitido.', 'error');
+              return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+              const imageData = event.target.result;
+              
+              // Criar elemento de imagem
+              const img = document.createElement('img');
+              img.src = imageData;
+              img.className = 'editable-image';
+              img.style.cssText = 'max-width: 100%; height: auto; margin: 1rem 0;';
+              img.setAttribute('data-original-width', 'auto');
+              img.setAttribute('data-original-height', 'auto');
+              img.setAttribute('alt', 'Imagem colada do clipboard');
+              
+              // Inserir no cursor atual
+              const selection = window.getSelection();
+              if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(img);
+                
+                // Mover cursor após a imagem
+                range.setStartAfter(img);
+                range.setEndAfter(img);
+                selection.removeAllRanges();
+                selection.addRange(range);
+              } else {
+                // Se não há seleção, inserir no final
+                document.getElementById('content').appendChild(img);
+              }
+              
+              // Focar na imagem inserida
+              img.focus();
+              
+              // Mostrar mensagem de sucesso
+              showToast('🖼️ Imagem colada com sucesso! Clique na imagem para editar o tamanho.', 'success');
+            };
+            
+            reader.onerror = function() {
+              showToast('❌ Erro ao ler imagem do clipboard', 'error');
+            };
+            
+            reader.readAsDataURL(blob);
+            break;
+          }
+        }
+        
+        // Se não encontrou imagem, verificar se é uma URL de imagem
+        if (!imageFound) {
+          const text = e.clipboardData.getData('text');
+          if (text && isImageUrl(text)) {
+            e.preventDefault();
+            
+            // Perguntar se quer inserir como imagem
+            if (confirm('URL de imagem detectada. Deseja inserir como imagem?\n\n' + text)) {
+              const img = document.createElement('img');
+              img.src = text;
+              img.className = 'editable-image';
+              img.style.cssText = 'max-width: 100%; height: auto; margin: 1rem 0;';
+              img.setAttribute('data-original-width', 'auto');
+              img.setAttribute('data-original-height', 'auto');
+              img.setAttribute('alt', 'Imagem de URL');
+              
+              // Inserir no cursor atual
+              const selection = window.getSelection();
+              if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(img);
+                
+                // Mover cursor após a imagem
+                range.setStartAfter(img);
+                range.setEndAfter(img);
+                selection.removeAllRanges();
+                selection.addRange(range);
+              } else {
+                // Se não há seleção, inserir no final
+                document.getElementById('content').appendChild(img);
+              }
+              
+              showToast('🖼️ Imagem de URL inserida com sucesso!', 'success');
+            }
+          }
+          // Permitir colar texto normalmente
+          return;
+        }
       });
       
       // Auto-save
       setInterval(autoSave, 30000); // Salvar a cada 30 segundos
     }
     
+    function editImage(imgElement) {
+      const currentWidth = imgElement.style.width || 'auto';
+      const currentHeight = imgElement.style.height || 'auto';
+      
+      const newWidth = prompt('Digite a nova largura da imagem (em px, deixe vazio para automático):', currentWidth === 'auto' ? '' : currentWidth.replace('px', ''));
+      const newHeight = prompt('Digite a nova altura da imagem (em px, deixe vazio para automático):', currentHeight === 'auto' ? '' : currentHeight.replace('px', ''));
+      
+      if (newWidth !== null && newHeight !== null) {
+        let style = 'max-width: 100%; margin: 1rem 0;';
+        if (newWidth) style += ` width: ${newWidth}px;`;
+        if (newHeight) style += ` height: ${newHeight}px;`;
+        if (!newWidth && !newHeight) style += ' height: auto;';
+        
+        imgElement.style.cssText = style;
+        imgElement.setAttribute('data-original-width', newWidth || 'auto');
+        imgElement.setAttribute('data-original-height', newHeight || 'auto');
+        
+        // Adicionar indicador visual de que foi editada
+        imgElement.classList.add('image-edited');
+      }
+    }
+    
+    function enableImageResize(imgElement) {
+      // Remover redimensionamento anterior se existir
+      if (imgElement.classList.contains('resizing')) {
+        disableImageResize(imgElement);
+        return;
+      }
+      
+      imgElement.classList.add('resizing');
+      
+      // Criar handles de redimensionamento
+      const handles = createResizeHandles(imgElement);
+      imgElement.parentNode.insertBefore(handles, imgElement.nextSibling);
+      
+      // Adicionar indicador visual
+      imgElement.style.border = '2px solid #059669';
+      imgElement.style.cursor = 'move';
+      
+      // Adicionar instruções
+      const instructions = document.createElement('div');
+      instructions.className = 'resize-instructions';
+      instructions.innerHTML = '🖱️ Arraste os cantos para redimensionar | Clique duplo para sair';
+      instructions.style.cssText = 'position: absolute; top: -40px; left: 50%; transform: translateX(-50%); background: #059669; color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap; z-index: 1000;';
+      imgElement.parentNode.insertBefore(instructions, imgElement.nextSibling);
+    }
+    
+    function disableImageResize(imgElement) {
+      imgElement.classList.remove('resizing');
+      imgElement.style.border = '';
+      imgElement.style.cursor = '';
+      
+      // Remover handles e instruções
+      const handles = imgElement.parentNode.querySelector('.resize-handles');
+      const instructions = imgElement.parentNode.querySelector('.resize-instructions');
+      if (handles) handles.remove();
+      if (instructions) instructions.remove();
+      
+      // Salvar dimensões finais
+      const finalWidth = imgElement.style.width;
+      const finalHeight = imgElement.style.height;
+      if (finalWidth || finalHeight) {
+        imgElement.classList.add('image-edited');
+        imgElement.setAttribute('data-original-width', finalWidth || 'auto');
+        imgElement.setAttribute('data-original-height', finalHeight || 'auto');
+      }
+    }
+    
+    function createResizeHandles(imgElement) {
+      const handles = document.createElement('div');
+      handles.className = 'resize-handles';
+      handles.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999;';
+      
+      const positions = ['nw', 'ne', 'sw', 'se'];
+      positions.forEach(pos => {
+        const handle = document.createElement('div');
+        handle.className = `resize-handle resize-${pos}`;
+        handle.style.cssText = `
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          background: #059669;
+          border: 2px solid white;
+          border-radius: 50%;
+          pointer-events: all;
+          cursor: ${pos.includes('n') ? 'n' : 's'}-${pos.includes('w') ? 'w' : 'e'}-resize;
+        `;
+        
+        // Posicionar handles
+        if (pos.includes('n')) handle.style.top = '-6px';
+        if (pos.includes('s')) handle.style.bottom = '-6px';
+        if (pos.includes('w')) handle.style.left = '-6px';
+        if (pos.includes('e')) handle.style.right = '-6px';
+        
+        // Adicionar funcionalidade de redimensionamento
+        handle.addEventListener('mousedown', (e) => startResize(e, imgElement, pos));
+        
+        handles.appendChild(handle);
+      });
+      
+      return handles;
+    }
+    
+    function startResize(e, imgElement, handle) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const startX = e.clientX;
+      const startY = e.clientY;
+      const startWidth = imgElement.offsetWidth;
+      const startHeight = imgElement.offsetHeight;
+      
+      function onMouseMove(e) {
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+        
+        let newWidth = startWidth;
+        let newHeight = startHeight;
+        
+        if (handle.includes('e')) newWidth = startWidth + deltaX;
+        if (handle.includes('w')) newWidth = startWidth - deltaX;
+        if (handle.includes('s')) newHeight = startHeight + deltaY;
+        if (handle.includes('n')) newHeight = startHeight - deltaY;
+        
+        // Manter proporção mínima
+        newWidth = Math.max(50, newWidth);
+        newHeight = Math.max(50, newHeight);
+        
+        imgElement.style.width = newWidth + 'px';
+        imgElement.style.height = newHeight + 'px';
+      }
+      
+      function onMouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      }
+      
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+    
+    function startImageDrag(imgElement, e) {
+      if (imgElement.classList.contains('dragging')) return;
+      
+      imgElement.classList.add('dragging');
+      
+      // Criar clone para preview durante o drag
+      const clone = imgElement.cloneNode(true);
+      clone.style.cssText = `
+        position: fixed;
+        top: ${e.clientY - imgElement.offsetHeight / 2}px;
+        left: ${e.clientX - imgElement.offsetWidth / 2}px;
+        width: ${imgElement.offsetWidth}px;
+        height: ${imgElement.offsetHeight}px;
+        opacity: 0.7;
+        pointer-events: none;
+        z-index: 10000;
+        border: 2px dashed #059669;
+        border-radius: 8px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      `;
+      clone.className = 'image-drag-preview';
+      document.body.appendChild(clone);
+      
+      // Marcar posição original
+      const originalRect = imgElement.getBoundingClientRect();
+      imgElement.setAttribute('data-original-position', JSON.stringify({
+        top: originalRect.top,
+        left: originalRect.left
+      }));
+      
+      // Adicionar indicador visual na imagem original
+      imgElement.style.opacity = '0.3';
+      imgElement.style.border = '2px dashed #059669';
+      
+      // Função para mover o clone
+      function onMouseMove(e) {
+        clone.style.top = (e.clientY - imgElement.offsetHeight / 2) + 'px';
+        clone.style.left = (e.clientX - imgElement.offsetWidth / 2) + 'px';
+        
+        // Mostrar indicador de posição de inserção
+        showDropIndicator(e.clientX, e.clientY);
+        
+        // Atualizar indicador em tempo real
+        updateDropIndicator(e.clientX, e.clientY);
+      }
+      
+      // Função para finalizar o drag
+      function onMouseUp(e) {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        
+        // Remover clone
+        if (clone.parentNode) {
+          clone.remove();
+        }
+        
+        // Remover indicador de drop
+        removeDropIndicator();
+        
+        // Restaurar imagem original
+        imgElement.style.opacity = '';
+        imgElement.style.border = '';
+        imgElement.classList.remove('dragging');
+        
+        // Mover imagem para nova posição
+        moveImageToPosition(imgElement, e.clientX, e.clientY);
+      }
+      
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+      
+      // Debug: mostrar informações da imagem
+      console.log('Iniciando drag da imagem:', {
+        element: imgElement,
+        position: imgElement.getBoundingClientRect(),
+        parent: imgElement.parentNode
+      });
+    }
+    
+    function showDropIndicator(x, y) {
+      removeDropIndicator();
+      
+      const indicator = document.createElement('div');
+      indicator.className = 'drop-indicator';
+      indicator.style.cssText = `
+        position: fixed;
+        top: ${y - 2}px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #059669, #0ea5e9);
+        z-index: 9999;
+        pointer-events: none;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
+      `;
+      
+      document.body.appendChild(indicator);
+    }
+    
+    function removeDropIndicator() {
+      const existingIndicator = document.querySelector('.drop-indicator');
+      if (existingIndicator) {
+        existingIndicator.remove();
+      }
+    }
+    
+    function updateDropIndicator(x, y) {
+      const existingIndicator = document.querySelector('.drop-indicator');
+      if (existingIndicator) {
+        existingIndicator.style.top = (y - 2) + 'px';
+      }
+    }
+    
+    function moveImageToPosition(imgElement, x, y) {
+      const contentArea = document.getElementById('content');
+      const contentRect = contentArea.getBoundingClientRect();
+      
+      // Verificar se está dentro da área de conteúdo
+      if (x < contentRect.left || x > contentRect.right || y < contentRect.top || y > contentRect.bottom) {
+        showToast('⚠️ Imagem movida para fora da área de edição.', 'info');
+        return;
+      }
+      
+      // Lógica simplificada: inserir no final do contentArea
+      if (contentArea !== imgElement.parentNode) {
+        // Remover a imagem de sua posição atual
+        if (imgElement.parentNode) {
+          imgElement.parentNode.removeChild(imgElement);
+        }
+        
+        // Inserir no final do contentArea
+        contentArea.appendChild(imgElement);
+        
+        // Adicionar quebra de linha após a imagem
+        const br = document.createElement('br');
+        contentArea.appendChild(br);
+        
+        showToast('✅ Imagem movida para o final do texto!', 'success');
+      } else {
+        showToast('ℹ️ Imagem já está na posição correta', 'info');
+      }
+    }
+    
+    function moveImageWithArrows(imgElement, direction) {
+      const contentArea = document.getElementById('content');
+      
+      // Lógica simplificada: mover para o final do contentArea
+      if (contentArea !== imgElement.parentNode) {
+        // Remover a imagem de sua posição atual
+        if (imgElement.parentNode) {
+          imgElement.parentNode.removeChild(imgElement);
+        }
+        
+        // Inserir no final do contentArea
+        contentArea.appendChild(imgElement);
+        
+        // Adicionar quebra de linha após a imagem
+        const br = document.createElement('br');
+        contentArea.appendChild(br);
+        
+        // Focar na imagem movida
+        imgElement.focus();
+        
+        // Mostrar feedback visual
+        imgElement.style.border = '2px solid #0ea5e9';
+        setTimeout(() => {
+          imgElement.style.border = '';
+        }, 500);
+        
+        showToast(`✅ Imagem movida ${direction === 'ArrowUp' ? 'para cima' : direction === 'ArrowDown' ? 'para baixo' : direction === 'ArrowLeft' ? 'para esquerda' : 'para direita'}!`, 'success');
+      } else {
+        showToast('ℹ️ Imagem já está na posição correta', 'info');
+      }
+    }
+    
+    function isImageUrl(url) {
+      try {
+        const urlObj = new URL(url);
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg'];
+        const pathname = urlObj.pathname.toLowerCase();
+        
+        // Verificar extensão do arquivo
+        const hasImageExtension = imageExtensions.some(ext => pathname.endsWith(ext));
+        
+        // Verificar se contém palavras-chave de imagem
+        const hasImageKeywords = url.includes('image') || url.includes('img') || url.includes('photo') || url.includes('pic');
+        
+        return hasImageExtension || hasImageKeywords;
+      } catch (e) {
+        // Se não é uma URL válida, verificar se parece ser uma URL de imagem
+        const imagePatterns = /\.(jpg|jpeg|png|gif|webp|bmp|svg)(\?|$)/i;
+        return imagePatterns.test(url);
+      }
+    }
+    
+    function showToast(message, type = 'info') {
+      // Remover toast anterior se existir
+      const existingToast = document.querySelector('.toast-message');
+      if (existingToast) {
+        existingToast.remove();
+      }
+      
+      // Criar novo toast
+      const toast = document.createElement('div');
+      toast.className = `toast-message toast-${type}`;
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#059669' : type === 'error' ? '#ef4444' : '#3b82f6'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        font-size: 14px;
+        font-weight: 500;
+        max-width: 300px;
+        word-wrap: break-word;
+        animation: slideIn 0.3s ease;
+      `;
+      
+      // Adicionar animação CSS
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes slideOut {
+          from {
+            transform: translateX(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      document.body.appendChild(toast);
+      
+      // Auto-remover após 4 segundos
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.remove();
+          }
+        }, 300);
+      }, 4000);
+      
+      // Permitir fechar clicando
+      toast.addEventListener('click', () => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.remove();
+          }
+        }, 300);
+      });
+    }
+    
     function updateToolbarState() {
       document.querySelectorAll('.toolbar-btn').forEach(btn => {
         const command = btn.dataset.command;
-        if (command === 'formatBlock') {
-          const value = btn.dataset.value;
-          btn.classList.toggle('active', document.queryCommandValue('formatBlock') === value);
-        } else {
-          btn.classList.toggle('active', document.queryCommandState(command));
-        }
+        btn.classList.toggle('active', document.queryCommandState(command));
       });
     }
     
@@ -589,6 +1486,11 @@
       
       // Limpar formulário após salvar
       clearForm();
+      
+      // Redirecionar para a área de gerenciamento de posts após 2 segundos
+      setTimeout(() => {
+        window.location.href = '/admin/posts-manager.html';
+      }, 2000);
     }
     
     function savePostToStorage(post) {
@@ -641,22 +1543,34 @@
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = post.content;
       
-      // Processar elementos HTML
+      // Processar elementos HTML de forma mais robusta
       let content = tempDiv.innerHTML
+        // Remover tags de cabeçalho
         .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '\n# $1\n')
         .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '\n## $1\n')
         .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n### $1\n')
+        // Remover tags de parágrafo
         .replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n')
+        // Remover quebras de linha
         .replace(/<br\s*\/?>/gi, '\n')
+        // Converter formatação de texto
         .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
         .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
         .replace(/<u[^>]*>(.*?)<\/u>/gi, '__$1__')
         .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`')
+        // Converter citações
         .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi, '\n> $1\n')
+        // Converter listas
         .replace(/<ul[^>]*>(.*?)<\/ul>/gi, '\n$1\n')
         .replace(/<ol[^>]*>(.*?)<\/ol>/gi, '\n$1\n')
         .replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1')
-        .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
+        // Converter links
+        .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
+        // Limpar tags HTML restantes
+        .replace(/<[^>]*>/g, '')
+        // Limpar espaços em branco extras
+        .replace(/\n\s*\n\s*\n/g, '\n\n')
+        .trim();
       
       markdown += content;
       
