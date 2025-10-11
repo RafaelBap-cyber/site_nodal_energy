@@ -162,6 +162,129 @@ export const htmlToMarkdown = (html: string): string => {
   return markdown;
 };
 
+// Função para limpar HTML indevido e converter para texto limpo (melhorada)
+export const cleanHtmlContent = (html: string): string => {
+  if (!html) return '';
+  
+  // Se o conteúdo já parece ser Markdown (não tem tags HTML), retornar como está
+  if (!/<[^>]*>/.test(html)) {
+    return html.trim();
+  }
+  
+  // Criar um elemento temporário para processar o HTML
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  
+  // Remover scripts e estilos
+  const scripts = tempDiv.querySelectorAll('script, style');
+  scripts.forEach(el => el.remove());
+  
+  // Processar o HTML de forma mais inteligente
+  let cleanContent = html;
+  
+  // 1. Primeiro, normalizar quebras de linha
+  cleanContent = cleanContent
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/p>/gi, '\n')
+    .replace(/<\/div>/gi, '\n');
+  
+  // 2. Converter tags de formatação para Markdown (uma vez só)
+  cleanContent = cleanContent
+    // Converter tags b/strong para ** (apenas se não tiver estilos problemáticos)
+    .replace(/<b[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/b>/gi, '$1')
+    .replace(/<strong[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/strong>/gi, '$1')
+    .replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
+    .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
+    
+    // Converter tags i/em para * (apenas se não tiver estilos problemáticos)
+    .replace(/<i[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/i>/gi, '$1')
+    .replace(/<em[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/em>/gi, '$1')
+    .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
+    .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
+    
+    // Converter tags u para __ (apenas se não tiver estilos problemáticos)
+    .replace(/<u[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/u>/gi, '$1')
+    .replace(/<u[^>]*>(.*?)<\/u>/gi, '__$1__');
+  
+  // 3. Remover tags de fonte problemáticas (completamente)
+  cleanContent = cleanContent
+    .replace(/<font[^>]*size\s*=\s*["']?\d+["']?[^>]*>(.*?)<\/font>/gi, '$1')
+    .replace(/<font[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/font>/gi, '$1')
+    .replace(/<font[^>]*>(.*?)<\/font>/gi, '$1');
+  
+  // 4. Remover tags span e div com estilos inline
+  cleanContent = cleanContent
+    .replace(/<span[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/span>/gi, '$1')
+    .replace(/<span[^>]*>(.*?)<\/span>/gi, '$1')
+    .replace(/<div[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/div>/gi, '\n$1\n')
+    .replace(/<div[^>]*>(.*?)<\/div>/gi, '\n$1\n');
+  
+  // 5. Converter cabeçalhos para Markdown
+  cleanContent = cleanContent
+    .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '\n# $1\n')
+    .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '\n## $1\n')
+    .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n### $1\n')
+    .replace(/<h4[^>]*>(.*?)<\/h4>/gi, '\n#### $1\n')
+    .replace(/<h5[^>]*>(.*?)<\/h5>/gi, '\n##### $1\n')
+    .replace(/<h6[^>]*>(.*?)<\/h6>/gi, '\n###### $1\n');
+  
+  // 6. Converter parágrafos
+  cleanContent = cleanContent
+    .replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n');
+  
+  // 7. Converter listas
+  cleanContent = cleanContent
+    .replace(/<ul[^>]*>(.*?)<\/ul>/gi, '\n$1\n')
+    .replace(/<ol[^>]*>(.*?)<\/ol>/gi, '\n$1\n')
+    .replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1');
+  
+  // 8. Converter links
+  cleanContent = cleanContent
+    .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
+  
+  // 9. Converter citações
+  cleanContent = cleanContent
+    .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi, '\n> $1\n');
+  
+  // 10. Converter código
+  cleanContent = cleanContent
+    .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`');
+  
+  // 11. Remover todas as outras tags HTML restantes
+  cleanContent = cleanContent.replace(/<[^>]*>/g, '');
+  
+  // 12. Limpar formatação Markdown duplicada (melhorado)
+  cleanContent = cleanContent
+    // Remover asteriscos duplicados
+    .replace(/\*\*\s*\*\*/g, '**')
+    .replace(/\*\s\*/g, ' ')
+    // Remover underscores duplicados
+    .replace(/__\s*__/g, '__')
+    .replace(/_\s_/g, ' ')
+    // Limpar espaços antes e depois de formatação
+    .replace(/\s+\*\*/g, ' **')
+    .replace(/\*\*\s+/g, '** ')
+    .replace(/\s+\*/g, ' *')
+    .replace(/\*\s+/g, '* ')
+    .replace(/\s+__/g, ' __')
+    .replace(/__\s+/g, '__ ')
+    .replace(/\s+_/g, ' _')
+    .replace(/_\s+/g, '_ ')
+    // Limpar formatação duplicada específica
+    .replace(/\*\*([^*]+)\*\*\*/g, '**$1**')
+    .replace(/\*([^*]+)\*\*/g, '*$1*')
+    .replace(/__([^_]+)___/g, '__$1__')
+    .replace(/_([^_]+)_/g, '_$1_');
+  
+  // 13. Limpar quebras de linha e espaços
+  cleanContent = cleanContent
+    .replace(/\n\s*\n\s*\n/g, '\n\n')
+    .replace(/\n\s*\n/g, '\n\n')
+    .trim();
+  
+  return cleanContent;
+};
+
 // Função para sincronizar posts com o CMS
 export const syncPostsWithCMS = async (): Promise<BlogPost[]> => {
   try {

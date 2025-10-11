@@ -38,10 +38,10 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 w-16 h-16 bg-green-600 rounded-full flex items-center justify-center">
+          <div className="mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#052b18' }}>
             <Lock className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-800">
@@ -106,7 +106,10 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
 
             <Button
               type="submit"
-              className="w-full bg-green-600 hover:bg-green-700 text-white"
+              className="w-full text-white"
+              style={{ backgroundColor: '#052b18' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0a3d26'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#052b18'}
               disabled={isLoading}
             >
               {isLoading ? (

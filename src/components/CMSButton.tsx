@@ -47,7 +47,10 @@ const CMSButton = () => {
     <div className="fixed bottom-4 right-4 z-50">
       <Button
         onClick={openLogin}
-        className="bg-green-600 hover:bg-green-700 text-white shadow-lg"
+        className="text-white shadow-lg"
+        style={{ backgroundColor: '#052b18' }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0a3d26'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#052b18'}
         size="sm"
       >
         <Settings className="w-4 h-4 mr-2" />

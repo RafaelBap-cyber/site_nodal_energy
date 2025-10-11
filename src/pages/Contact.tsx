@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Clock, Linkedin, Instagram, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Send } from "lucide-react";
 
 const Contact = () => {
   const handleCall = () => {
@@ -18,12 +18,12 @@ const Contact = () => {
       icon: <Phone className="h-6 w-6" />,
       title: "Telefone/WhatsApp",
       content: "+55 19 99870-4240",
-      description: "Atendimento de segunda a sexta, 8h às 18h"
+      description: "Atendimento de segunda a sábado"
     },
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Localização",
-      content: "São Paulo, SP",
+      content: "Campinas, SP",
       description: "Atendemos todo o território nacional"
     }
   ];
@@ -37,11 +37,18 @@ const Contact = () => {
       description: "Conecte-se profissionalmente"
     },
     {
-      icon: <Instagram className="h-6 w-6" />,
-      title: "Instagram",
-      subtitle: "@fabiocarrascobaptista",
-      url: "https://www.instagram.com/fabiocarrascobaptista/",
-      description: "Acompanhe nossos projetos"
+      icon: <Linkedin className="h-6 w-6" />,
+      title: "LinkedIn",
+      subtitle: "Loida Duarte",
+      url: "https://linkedin.com/in/loida-duarte-ba624343",
+      description: "Conecte-se profissionalmente"
+    },
+    {
+      icon: <Linkedin className="h-6 w-6" />,
+      title: "LinkedIn",
+      subtitle: "NodalEnergy",
+      url: "https://www.linkedin.com/company/nodal-energy/posts/?feedView=all",
+      description: "Acompanhe nossas atualizações"
     }
   ];
 
@@ -111,69 +118,38 @@ const Contact = () => {
             </Card>
           </div>
 
-          {/* Business Hours and Social Media */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Business Hours */}
-            <div>
-              <Card className="bg-white border-green-200 shadow-lg h-full">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl flex items-center justify-center">
-                    <Clock className="mr-3 h-6 w-6" />
-                    Horário de Atendimento
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <div className="space-y-4 text-lg">
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                      <span className="font-medium">Segunda - Sexta</span>
-                      <span className="font-semibold text-primary">8:00 - 18:00</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                      <span className="font-medium">Sábado</span>
-                      <span className="font-semibold text-primary">9:00 - 13:00</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                      <span className="font-medium">Domingo</span>
-                      <span className="text-muted-foreground">Fechado</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Social Media */}
-            <div>
-              <Card className="bg-white border-green-200 shadow-lg h-full">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl">Redes Sociais</CardTitle>
-                  <CardDescription>
-                    Acompanhe nossos projetos e novidades
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {socialLinks.map((social, index) => (
-                      <a
-                        key={index}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-4 p-4 rounded-lg border-2 border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 ease-in-out group"
-                      >
-                        <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                          {social.icon}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg">{social.title}</h3>
-                          <p className="text-sm text-primary font-medium">{social.subtitle}</p>
-                          <p className="text-xs text-muted-foreground">{social.description}</p>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          {/* Social Media */}
+          <div className="max-w-2xl mx-auto">
+            <Card className="bg-white border-green-200 shadow-lg">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">Redes Sociais</CardTitle>
+                <CardDescription>
+                  Acompanhe nossos projetos e novidades
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {socialLinks.map((social, index) => (
+                    <a
+                      key={index}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-4 p-4 rounded-lg border-2 border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 ease-in-out group"
+                    >
+                      <div className="text-primary group-hover:scale-110 transition-transform duration-300">
+                        {social.icon}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-lg">{social.title}</h3>
+                        <p className="text-sm text-primary font-medium">{social.subtitle}</p>
+                        <p className="text-xs text-muted-foreground">{social.description}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 

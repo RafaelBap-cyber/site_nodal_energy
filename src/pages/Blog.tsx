@@ -10,7 +10,8 @@ import {
   syncPostsWithCMS, 
   searchPosts, 
   getPostsByCategory,
-  calculateReadTime 
+  calculateReadTime,
+  cleanHtmlContent
 } from "@/lib/blogUtils";
 
 const Blog = () => {
@@ -21,6 +22,42 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Função para obter URL da imagem do localStorage
+  const getImageUrl = (imageId: string): string | null => {
+    try {
+      const images = JSON.parse(localStorage.getItem('nodalEnergyImages') || '{}');
+      return images[imageId] ? images[imageId].data : null;
+    } catch (error) {
+      console.error('Erro ao buscar imagem:', error);
+      return null;
+    }
+  };
+
+  // Função para processar formatação Markdown básica
+  const processMarkdownFormatting = (text: string): string => {
+    let processedText = text;
+    
+    // Converter **negrito** para <strong>
+    processedText = processedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Converter *itálico* para <em>
+    processedText = processedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Converter __sublinhado__ para <u>
+    processedText = processedText.replace(/__(.*?)__/g, '<u>$1</u>');
+    
+    // Converter `código` para <code>
+    processedText = processedText.replace(/`(.*?)`/g, '<code>$1</code>');
+    
+    // Converter [texto](link) para <a>
+    processedText = processedText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" className="text-primary hover:underline">$1</a>');
+    
+    // Converter quebras de linha simples em <br>
+    processedText = processedText.replace(/\n/g, '<br>');
+    
+    return processedText;
+  };
 
   // Carregar posts dinamicamente
   useEffect(() => {
@@ -76,12 +113,15 @@ const Blog = () => {
   // Categorias únicas
   const categories = ["Todos", ...Array.from(new Set(blogPosts.map(post => post.category)))];
 
-  // Função para renderizar conteúdo Markdown simples
+  // Função para renderizar conteúdo Markdown simples (melhorada)
   const renderMarkdownContent = (content: string) => {
     if (!content) return null;
 
+    // Limpar o HTML indevido e converter para Markdown limpo
+    const cleanContent = cleanHtmlContent(content);
+    
     // Converter quebras de linha em parágrafos
-    const paragraphs = content.split('\n\n').filter(p => p.trim());
+    const paragraphs = cleanContent.split('\n\n').filter(p => p.trim());
     
     return (
       <div className="space-y-4">
@@ -90,18 +130,71 @@ const Blog = () => {
           
           // Verificar se é um cabeçalho
           if (trimmedParagraph.startsWith('## ')) {
+            const title = trimmedParagraph.replace('## ', '');
+            const processedTitle = processMarkdownFormatting(title);
             return (
-              <h2 key={index} className="text-2xl font-light text-gray-900 mt-8 mb-4">
-                {trimmedParagraph.replace('## ', '')}
-              </h2>
+              <h2 key={index} className="text-2xl font-light text-gray-900 mt-8 mb-4"
+                  dangerouslySetInnerHTML={{ __html: processedTitle }} />
             );
           }
           
           if (trimmedParagraph.startsWith('### ')) {
+            const title = trimmedParagraph.replace('### ', '');
+            const processedTitle = processMarkdownFormatting(title);
             return (
-              <h3 key={index} className="text-xl font-light text-gray-900 mt-6 mb-3">
-                {trimmedParagraph.replace('### ', '')}
-              </h3>
+              <h3 key={index} className="text-xl font-light text-gray-900 mt-6 mb-3"
+                  dangerouslySetInnerHTML={{ __html: processedTitle }} />
+            );
+          }
+          
+          if (trimmedParagraph.startsWith('#### ')) {
+            const title = trimmedParagraph.replace('#### ', '');
+            const processedTitle = processMarkdownFormatting(title);
+            return (
+              <h4 key={index} className="text-lg font-medium text-gray-900 mt-5 mb-2"
+                  dangerouslySetInnerHTML={{ __html: processedTitle }} />
+            );
+          }
+          
+          // Verificar se é uma imagem
+          const imageMatch = trimmedParagraph.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+          if (imageMatch) {
+            const [, alt, src] = imageMatch;
+            
+            // Se é uma imagem com referência ID (imagem:ID)
+            if (src.startsWith('imagem:')) {
+              const imageId = src.replace('imagem:', '');
+              const imageUrl = getImageUrl(imageId);
+              
+              if (imageUrl) {
+                return (
+                  <div key={index} className="my-6">
+                    <img 
+                      src={imageUrl} 
+                      alt={alt || 'Imagem'} 
+                      className="max-w-full h-auto rounded-lg shadow-lg border border-gray-200"
+                    />
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index} className="my-6 p-4 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 text-center">
+                    <p className="text-gray-600">🖼️ Imagem não encontrada</p>
+                    {alt && <p className="text-sm text-gray-500 mt-1">Alt: {alt}</p>}
+                  </div>
+                );
+              }
+            }
+            
+            // Se é uma URL normal (base64 ou link)
+            return (
+              <div key={index} className="my-6">
+                <img 
+                  src={src} 
+                  alt={alt || 'Imagem'} 
+                  className="max-w-full h-auto rounded-lg shadow-lg border border-gray-200"
+                />
+              </div>
             );
           }
           
@@ -111,10 +204,11 @@ const Blog = () => {
               <ul key={index} className="list-disc list-inside space-y-2 ml-4">
                 {trimmedParagraph.split('\n').map((item, itemIndex) => {
                   if (item.trim().startsWith('- ')) {
+                    const itemText = item.trim().replace('- ', '');
+                    const processedItem = processMarkdownFormatting(itemText);
                     return (
-                      <li key={itemIndex} className="text-gray-700">
-                        {item.trim().replace('- ', '')}
-                      </li>
+                      <li key={itemIndex} className="text-gray-700"
+                          dangerouslySetInnerHTML={{ __html: processedItem }} />
                     );
                   }
                   return null;
@@ -123,12 +217,57 @@ const Blog = () => {
             );
           }
           
-          // Parágrafo normal
-          if (trimmedParagraph) {
+          // Verificar se é uma lista numerada
+          if (/^\d+\.\s/.test(trimmedParagraph)) {
+            return (
+              <ol key={index} className="list-decimal list-inside space-y-2 ml-4">
+                {trimmedParagraph.split('\n').map((item, itemIndex) => {
+                  if (/^\d+\.\s/.test(item.trim())) {
+                    const itemText = item.trim().replace(/^\d+\.\s/, '');
+                    const processedItem = processMarkdownFormatting(itemText);
+                    return (
+                      <li key={itemIndex} className="text-gray-700"
+                          dangerouslySetInnerHTML={{ __html: processedItem }} />
+                    );
+                  }
+                  return null;
+                })}
+              </ol>
+            );
+          }
+          
+          // Verificar se é uma citação
+          if (trimmedParagraph.startsWith('> ')) {
+            const quoteText = trimmedParagraph.replace('> ', '');
+            const processedQuote = processMarkdownFormatting(quoteText);
+            return (
+              <blockquote key={index} className="border-l-4 border-primary pl-4 italic text-gray-600 bg-gray-50 py-2 rounded-r"
+                          dangerouslySetInnerHTML={{ __html: processedQuote }} />
+            );
+          }
+          
+          // Verificar se é código inline
+          if (trimmedParagraph.includes('`') && trimmedParagraph.split('`').length > 2) {
+            const parts = trimmedParagraph.split('`');
             return (
               <p key={index} className="text-gray-700 leading-relaxed">
-                {trimmedParagraph}
+                {parts.map((part, partIndex) => 
+                  partIndex % 2 === 1 ? (
+                    <code key={partIndex} className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">
+                      {part}
+                    </code>
+                  ) : part
+                )}
               </p>
+            );
+          }
+          
+          // Parágrafo normal
+          if (trimmedParagraph) {
+            const processedText = processMarkdownFormatting(trimmedParagraph);
+            return (
+              <p key={index} className="text-gray-700 leading-relaxed" 
+                 dangerouslySetInnerHTML={{ __html: processedText }} />
             );
           }
           
@@ -378,7 +517,7 @@ const Blog = () => {
                   <button className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
                     <Linkedin className="w-4 h-4" />
                   </button>
-                  <button className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors">
+                  <button className="w-8 h-8 text-white rounded-full flex items-center justify-center transition-colors" style={{ backgroundColor: '#052b18' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0a3d26'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#052b18'}>
                     <MessageCircle className="w-4 h-4" />
                   </button>
                 </div>

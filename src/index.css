@@ -17,7 +17,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 210 4% 20%;
 
-    --primary: 142 76% 36%; /* verde principal */
+    --primary: 142 79% 9%; /* verde escuro principal */
     --primary-foreground: 0 0% 100%; /* branco */
 
     --secondary: 210 16% 92%; /* cinza claro */
@@ -26,7 +26,7 @@ All colors MUST be HSL.
     --muted: 210 16% 96%; /* cinza muito claro */
     --muted-foreground: 210 4% 40%;
 
-    --accent: 142 76% 36%;
+    --accent: 142 79% 9%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -34,24 +34,24 @@ All colors MUST be HSL.
 
     --border: 210 16% 92%;
     --input: 210 16% 92%;
-    --ring: 142 76% 36%;
+    --ring: 142 79% 9%;
 
     /* Custom energy theme colors */
-    --energy-green: 142 76% 36%;
+    --energy-green: 142 79% 9%;
     --energy-green-light: 142 40% 85%; /* verde claro para harmonia */
     --energy-dark: 210 4% 20%; /* cinza escuro */
-    --energy-gradient: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 40% 85%));
+    --energy-gradient: linear-gradient(135deg, hsl(142 79% 9%), hsl(142 40% 85%));
 
     --radius: 0.5rem;
 
     --sidebar-background: 210 16% 96%;
     --sidebar-foreground: 210 4% 20%;
-    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary: 142 79% 9%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 210 16% 92%;
     --sidebar-accent-foreground: 210 4% 20%;
     --sidebar-border: 210 16% 92%;
-    --sidebar-ring: 142 76% 36%;
+    --sidebar-ring: 142 79% 9%;
   }
 
   .dark {
@@ -64,7 +64,7 @@ All colors MUST be HSL.
     --popover: 210 11% 15%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 142 76% 36%;
+    --primary: 142 79% 9%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 11% 25%;
@@ -73,7 +73,7 @@ All colors MUST be HSL.
     --muted: 210 11% 25%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 142 76% 36%;
+    --accent: 142 79% 9%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
@@ -81,13 +81,13 @@ All colors MUST be HSL.
 
     --border: 210 11% 25%;
     --input: 210 11% 25%;
-    --ring: 142 76% 36%;
+    --ring: 142 79% 9%;
     
     /* Custom energy theme colors for dark mode */
-    --energy-green: 142 76% 36%;
+    --energy-green: 142 79% 9%;
     --energy-green-light: 120 60% 20%;
     --energy-dark: 210 11% 15%;
-    --energy-gradient: linear-gradient(135deg, hsl(142 76% 36%), hsl(120 60% 30%));
+    --energy-gradient: linear-gradient(135deg, hsl(142 79% 9%), hsl(120 60% 30%));
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

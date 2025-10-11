@@ -42,7 +42,6 @@ collections:
             widget: "object"
             fields:
               - {label: "Facebook", name: "facebook", widget: "string", required: false}
-              - {label: "Instagram", name: "instagram", widget: "string", required: false}
               - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
               - {label: "YouTube", name: "youtube", widget: "string", required: false}
           - label: "SEO"

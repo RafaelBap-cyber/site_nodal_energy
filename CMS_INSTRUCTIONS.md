@@ -36,7 +36,7 @@ http://localhost:8081/admin/cms.html
 
 ### **3. Configurações do Site**
 - ✅ Informações básicas (nome, descrição, contato)
-- ✅ Redes sociais (LinkedIn, Instagram, Facebook, YouTube)
+- ✅ Redes sociais (LinkedIn, Facebook, YouTube)
 - ✅ Configurações de SEO (Google Analytics, GTM, meta keywords)
 - ✅ Configurações de robots.txt
 

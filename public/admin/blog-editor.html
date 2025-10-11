@@ -25,7 +25,7 @@
     }
     
     .editor-header {
-      background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
+      background: linear-gradient(135deg, #052b18 0%, #0ea5e9 100%);
       color: white;
       padding: 2rem;
       border-radius: 12px;
@@ -76,7 +76,7 @@
     
     .form-input:focus, .form-select:focus, .form-textarea:focus {
       outline: none;
-      border-color: #059669;
+      border-color: #052b18;
       box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
     }
     
@@ -118,9 +118,9 @@
     }
     
     .toolbar-btn.active {
-      background: #059669;
+      background: #052b18;
       color: white;
-      border-color: #059669;
+      border-color: #052b18;
     }
     
     .toolbar-select {
@@ -142,7 +142,7 @@
     
     .toolbar-select:focus {
       outline: none;
-      border-color: #059669;
+      border-color: #052b18;
       box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
     }
     
@@ -205,7 +205,7 @@
     }
     
     .content-area .editable-image:hover {
-      border-color: #059669;
+      border-color: #052b18;
       box-shadow: 0 6px 20px rgba(5, 150, 105, 0.2);
     }
     
@@ -215,7 +215,7 @@
       top: -30px;
       left: 50%;
       transform: translateX(-50%);
-      background: #059669;
+      background: #052b18;
       color: white;
       padding: 4px 8px;
       border-radius: 4px;
@@ -260,7 +260,7 @@
       position: absolute;
       width: 12px;
       height: 12px;
-      background: #059669;
+      background: #052b18;
       border: 2px solid white;
       border-radius: 50%;
       pointer-events: all;
@@ -269,7 +269,7 @@
     }
     
     .resize-handle:hover {
-      background: #047857;
+      background: #0a3d26;
       transform: scale(1.2);
     }
     
@@ -278,7 +278,7 @@
       top: -40px;
       left: 50%;
       transform: translateX(-50%);
-      background: #059669;
+      background: #052b18;
       color: white;
       padding: 8px 12px;
       border-radius: 6px;
@@ -288,62 +288,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     
-    /* Estilos para modo de movimento */
-    .move-mode-active .editable-image {
-      cursor: move;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-    }
-    
-    .move-mode-active .editable-image:hover {
-      border-color: #0ea5e9;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    .move-mode-active .editable-image::after {
-      content: '🚀 Alt + clique para mover';
-      background: #0ea5e9;
-    }
-    
-    /* Estilos para drag and drop */
-    .editable-image.dragging {
-      position: relative;
-      z-index: 999;
-    }
-    
-    .image-drag-preview {
-      position: fixed;
-      pointer-events: none;
-      z-index: 10000;
-      border: 2px dashed #059669;
-      border-radius: 8px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      opacity: 0.7;
-    }
-    
-    .drop-indicator {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      background: linear-gradient(90deg, #059669, #0ea5e9);
-      border-radius: 2px;
-      box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
-    }
-    
-    /* Indicador visual para modo de movimento ativo */
-    .toolbar-btn[data-command="toggleMoveMode"].active {
-      background: #0ea5e9;
-      color: white;
-      border-color: #0ea5e9;
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
+
     
     .actions {
       display: flex;
@@ -367,7 +312,7 @@
     }
     
     .btn-primary {
-      background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
+      background: linear-gradient(135deg, #052b18 0%, #0ea5e9 100%);
       color: white;
     }
     
@@ -394,79 +339,7 @@
       background: #dc2626;
     }
     
-    .preview-container {
-      background: white;
-      border: 2px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 2rem;
-      margin-top: 2rem;
-      display: none;
-    }
-    
-    .preview-container.show {
-      display: block;
-    }
-    
-    .preview-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: #1f2937;
-    }
-    
-    .preview-meta {
-      background: #f3f4f6;
-      padding: 1rem;
-      border-radius: 6px;
-      margin-bottom: 1.5rem;
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
-    
-    .preview-content {
-      line-height: 1.8;
-      color: #374151;
-    }
-    
-    .preview-content h1, .preview-content h2, .preview-content h3 {
-      margin: 1.5rem 0 1rem 0;
-      color: #1f2937;
-    }
-    
-    .preview-content p {
-      margin-bottom: 1rem;
-    }
-    
-    .preview-content blockquote {
-      border-left: 4px solid #059669;
-      padding-left: 1rem;
-      margin: 1.5rem 0;
-      font-style: italic;
-      color: #6b7280;
-    }
-    
-    .preview-content code {
-      background: #f3f4f6;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-      font-size: 0.875rem;
-    }
-    
-    .preview-content pre {
-      background: #1f2937;
-      color: #f9fafb;
-      padding: 1rem;
-      border-radius: 6px;
-      overflow-x: auto;
-      margin: 1.5rem 0;
-    }
-    
-    .preview-content pre code {
-      background: none;
-      color: inherit;
-      padding: 0;
-    }
+
     
     .status-message {
       padding: 1rem;
@@ -478,7 +351,7 @@
     .status-success {
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
-      color: #059669;
+      color: #052b18;
     }
     
     .status-error {
@@ -619,17 +492,17 @@
               <button type="button" class="toolbar-btn" data-command="insertImage" title="Inserir imagem">
                 🖼️ Imagem
               </button>
+              <button type="button" class="toolbar-btn" data-command="uploadImage" title="Upload de imagem local">
+                📁 Upload
+              </button>
               <button type="button" class="toolbar-btn" data-command="editSelectedImage" title="Editar imagem selecionada">
                 ✏️ Editar
-              </button>
-              <button type="button" class="toolbar-btn" data-command="toggleMoveMode" title="Alternar modo de movimento (Alt + clique para mover imagens)">
-                🚀 Mover
               </button>
               
               <div class="toolbar-separator"></div>
               
               <div class="toolbar-info">
-                <span class="toolbar-tip">💡 Dica: Use Ctrl+V para colar imagens | Alt + clique para mover</span>
+                <span class="toolbar-tip">💡 Dica: Use Ctrl+V para colar imagens</span>
               </div>
             </div>
             <div id="content" class="content-area" contenteditable="true"></div>
@@ -648,11 +521,11 @@
       </div>
       
       <div class="actions">
-        <button type="button" class="btn btn-secondary" onclick="previewPost()">
-          👁️ Visualizar
-        </button>
         <button type="button" class="btn btn-primary" onclick="savePost()">
           💾 Salvar Post
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="goToPostsManager()">
+          📋 Gerenciar Posts
         </button>
         <button type="button" class="btn btn-danger" onclick="clearForm()">
           🗑️ Limpar
@@ -660,11 +533,7 @@
       </div>
     </form>
     
-    <div id="preview-container" class="preview-container">
-      <h2 class="preview-title" id="preview-title"></h2>
-      <div class="preview-meta" id="preview-meta"></div>
-      <div class="preview-content" id="preview-content"></div>
-    </div>
+
     
     <!-- Lista de Posts Existentes -->
     <div class="posts-list">
@@ -712,6 +581,83 @@
               const imageHTML = `<img src="${imageUrl}" alt="${altText}" style="${style}" class="editable-image" data-original-width="${width || 'auto'}" data-original-height="${height || 'auto'}">`;
               document.execCommand('insertHTML', false, imageHTML);
             }
+          } else if (command === 'uploadImage') {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+              const file = e.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                  const imageData = event.target.result;
+                  const altText = prompt('Digite o texto alternativo da imagem (alt):', file.name);
+                  
+                  // Redimensionar imagem para reduzir tamanho
+                  const img = new Image();
+                  img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Calcular novas dimensões (máximo 800px de largura)
+                    let newWidth = img.width;
+                    let newHeight = img.height;
+                    
+                    if (newWidth > 800) {
+                      newHeight = (newHeight * 800) / newWidth;
+                      newWidth = 800;
+                    }
+                    
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    
+                    // Desenhar imagem redimensionada
+                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                    
+                    // Converter para base64 com qualidade reduzida
+                    const resizedImageData = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    // Gerar nome único para a imagem
+                    const imageId = 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    const imageName = file.name || `upload_${imageId}.jpg`;
+                    
+                    // Salvar imagem no localStorage
+                    saveImageToStorage(imageId, resizedImageData, imageName);
+                    
+                    // Criar elemento de imagem com referência ao ID
+                    const imgElement = document.createElement('img');
+                    imgElement.src = resizedImageData;
+                    imgElement.alt = altText || file.name;
+                    imgElement.className = 'editable-image';
+                    imgElement.style.cssText = 'max-width: 100%; height: auto; margin: 1rem 0;';
+                    imgElement.setAttribute('data-original-width', 'auto');
+                    imgElement.setAttribute('data-original-height', 'auto');
+                    imgElement.setAttribute('data-image-id', imageId);
+                    
+                    // Inserir no cursor atual
+                    const selection = window.getSelection();
+                    if (selection.rangeCount > 0) {
+                      const range = selection.getRangeAt(0);
+                      range.deleteContents();
+                      range.insertNode(imgElement);
+                      
+                      // Mover cursor após a imagem
+                      range.setEndAfter(imgElement);
+                      selection.removeAllRanges();
+                      selection.addRange(range);
+                    } else {
+                      // Se não há seleção, inserir no final
+                      document.getElementById('content').appendChild(imgElement);
+                    }
+                    
+                    showToast('🖼️ Imagem enviada e otimizada com sucesso!', 'success');
+                  };
+                  img.src = imageData;
+                };
+                reader.readAsDataURL(file);
+              }
+            };
+            input.click();
           } else if (command === 'editSelectedImage') {
             const selection = window.getSelection();
             if (selection.rangeCount > 0) {
@@ -730,18 +676,6 @@
               }
             } else {
               alert('Selecione uma imagem para editar');
-            }
-          } else if (command === 'toggleMoveMode') {
-            const moveMode = !document.body.classList.contains('move-mode-active');
-            
-            if (moveMode) {
-              document.body.classList.add('move-mode-active');
-              this.classList.add('active');
-              showToast('🚀 Modo de movimento ativado! Alt + clique nas imagens para movê-las.', 'info');
-            } else {
-              document.body.classList.remove('move-mode-active');
-              this.classList.remove('active');
-              showToast('✅ Modo de movimento desativado.', 'info');
             }
           } else {
             document.execCommand(command, false, value);
@@ -774,87 +708,7 @@
         }
       });
       
-      // Permitir mover imagens (drag and drop)
-      document.getElementById('content').addEventListener('mousedown', function(e) {
-        if (e.target.tagName === 'IMG' && e.target.classList.contains('editable-image') && e.altKey) {
-          // Alt + clique para ativar modo de movimento
-          e.preventDefault();
-          startImageDrag(e.target, e);
-        }
-      });
-      
-      // Sistema simples de movimento: clique e arraste
-      let isDragging = false;
-      let draggedImage = null;
-      let dragOffset = { x: 0, y: 0 };
-      
-      document.getElementById('content').addEventListener('mousedown', function(e) {
-        if (e.target.tagName === 'IMG' && e.target.classList.contains('editable-image')) {
-          if (document.body.classList.contains('move-mode-active')) {
-            isDragging = true;
-            draggedImage = e.target;
-            
-            const rect = draggedImage.getBoundingClientRect();
-            dragOffset.x = e.clientX - rect.left;
-            dragOffset.y = e.clientY - rect.top;
-            
-            draggedImage.style.position = 'fixed';
-            draggedImage.style.zIndex = '10000';
-            draggedImage.style.pointerEvents = 'none';
-            draggedImage.style.opacity = '0.8';
-            
-            e.preventDefault();
-          }
-        }
-      });
-      
-      document.addEventListener('mousemove', function(e) {
-        if (isDragging && draggedImage) {
-          draggedImage.style.left = (e.clientX - dragOffset.x) + 'px';
-          draggedImage.style.top = (e.clientY - dragOffset.y) + 'px';
-        }
-      });
-      
-      document.addEventListener('mouseup', function(e) {
-        if (isDragging && draggedImage) {
-          // Restaurar estilos da imagem
-          draggedImage.style.position = '';
-          draggedImage.style.zIndex = '';
-          draggedImage.style.pointerEvents = '';
-          draggedImage.style.opacity = '';
-          draggedImage.style.left = '';
-          draggedImage.style.top = '';
-          
-          // Mover para o final do conteúdo
-          const contentArea = document.getElementById('content');
-          if (contentArea !== draggedImage.parentNode) {
-            if (draggedImage.parentNode) {
-              draggedImage.parentNode.removeChild(draggedImage);
-            }
-            contentArea.appendChild(draggedImage);
-            
-            // Adicionar quebra de linha
-            const br = document.createElement('br');
-            contentArea.appendChild(br);
-            
-            showToast('✅ Imagem movida com sucesso!', 'success');
-          }
-          
-          isDragging = false;
-          draggedImage = null;
-        }
-      });
-      
-      // Atalhos de teclado para movimento
-      document.addEventListener('keydown', function(e) {
-        if (e.altKey && e.key === 'm') {
-          e.preventDefault();
-          const moveButton = document.querySelector('[data-command="toggleMoveMode"]');
-          if (moveButton) {
-            moveButton.click();
-          }
-        }
-      });
+
       
       // Atalhos de teclado
       document.getElementById('content').addEventListener('keydown', function(e) {
@@ -876,14 +730,7 @@
           updateToolbarState();
         }
         
-        // Movimento de imagens com setas (quando modo ativo)
-        if (document.body.classList.contains('move-mode-active')) {
-          const selectedImage = document.querySelector('.editable-image:focus');
-          if (selectedImage && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-            e.preventDefault();
-            moveImageWithArrows(selectedImage, e.key);
-          }
-        }
+
       });
       
       // Permitir colar imagens (Ctrl+V)
@@ -913,37 +760,71 @@
             reader.onload = function(event) {
               const imageData = event.target.result;
               
-              // Criar elemento de imagem
-              const img = document.createElement('img');
-              img.src = imageData;
-              img.className = 'editable-image';
-              img.style.cssText = 'max-width: 100%; height: auto; margin: 1rem 0;';
-              img.setAttribute('data-original-width', 'auto');
-              img.setAttribute('data-original-height', 'auto');
-              img.setAttribute('alt', 'Imagem colada do clipboard');
-              
-              // Inserir no cursor atual
-              const selection = window.getSelection();
-              if (selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
-                range.deleteContents();
-                range.insertNode(img);
+              // Redimensionar imagem para reduzir tamanho
+              const img = new Image();
+              img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
                 
-                // Mover cursor após a imagem
-                range.setStartAfter(img);
-                range.setEndAfter(img);
-                selection.removeAllRanges();
-                selection.addRange(range);
-              } else {
-                // Se não há seleção, inserir no final
-                document.getElementById('content').appendChild(img);
-              }
-              
-              // Focar na imagem inserida
-              img.focus();
-              
-              // Mostrar mensagem de sucesso
-              showToast('🖼️ Imagem colada com sucesso! Clique na imagem para editar o tamanho.', 'success');
+                // Calcular novas dimensões (máximo 800px de largura)
+                let newWidth = img.width;
+                let newHeight = img.height;
+                
+                if (newWidth > 800) {
+                  newHeight = (newHeight * 800) / newWidth;
+                  newWidth = 800;
+                }
+                
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                
+                // Desenhar imagem redimensionada
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                
+                // Converter para base64 com qualidade reduzida
+                const resizedImageData = canvas.toDataURL('image/jpeg', 0.8);
+                
+                // Gerar nome único para a imagem
+                const imageId = 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                const imageName = `clipboard_${imageId}.jpg`;
+                
+                // Salvar imagem no localStorage
+                saveImageToStorage(imageId, resizedImageData, imageName);
+                
+                // Criar elemento de imagem com referência ao ID
+                const imgElement = document.createElement('img');
+                imgElement.src = resizedImageData;
+                imgElement.className = 'editable-image';
+                imgElement.style.cssText = 'max-width: 100%; height: auto; margin: 1rem 0;';
+                imgElement.setAttribute('data-original-width', 'auto');
+                imgElement.setAttribute('data-original-height', 'auto');
+                imgElement.setAttribute('alt', 'Imagem colada do clipboard');
+                imgElement.setAttribute('data-image-id', imageId);
+                
+                // Inserir no cursor atual
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0) {
+                  const range = selection.getRangeAt(0);
+                  range.deleteContents();
+                  range.insertNode(imgElement);
+                  
+                  // Mover cursor após a imagem
+                  range.setStartAfter(imgElement);
+                  range.setEndAfter(imgElement);
+                  selection.removeAllRanges();
+                  selection.addRange(range);
+                } else {
+                  // Se não há seleção, inserir no final
+                  document.getElementById('content').appendChild(imgElement);
+                }
+                
+                // Focar na imagem inserida
+                imgElement.focus();
+                
+                // Mostrar mensagem de sucesso
+                showToast('🖼️ Imagem colada e otimizada com sucesso!', 'success');
+              };
+              img.src = imageData;
             };
             
             reader.onerror = function() {
@@ -1036,14 +917,14 @@
       imgElement.parentNode.insertBefore(handles, imgElement.nextSibling);
       
       // Adicionar indicador visual
-      imgElement.style.border = '2px solid #059669';
+      imgElement.style.border = '2px solid #052b18';
       imgElement.style.cursor = 'move';
       
       // Adicionar instruções
       const instructions = document.createElement('div');
       instructions.className = 'resize-instructions';
       instructions.innerHTML = '🖱️ Arraste os cantos para redimensionar | Clique duplo para sair';
-      instructions.style.cssText = 'position: absolute; top: -40px; left: 50%; transform: translateX(-50%); background: #059669; color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap; z-index: 1000;';
+      instructions.style.cssText = 'position: absolute; top: -40px; left: 50%; transform: translateX(-50%); background: #052b18; color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap; z-index: 1000;';
       imgElement.parentNode.insertBefore(instructions, imgElement.nextSibling);
     }
     
@@ -1081,7 +962,7 @@
           position: absolute;
           width: 12px;
           height: 12px;
-          background: #059669;
+          background: #052b18;
           border: 2px solid white;
           border-radius: 50%;
           pointer-events: all;
@@ -1141,181 +1022,7 @@
       document.addEventListener('mouseup', onMouseUp);
     }
     
-    function startImageDrag(imgElement, e) {
-      if (imgElement.classList.contains('dragging')) return;
-      
-      imgElement.classList.add('dragging');
-      
-      // Criar clone para preview durante o drag
-      const clone = imgElement.cloneNode(true);
-      clone.style.cssText = `
-        position: fixed;
-        top: ${e.clientY - imgElement.offsetHeight / 2}px;
-        left: ${e.clientX - imgElement.offsetWidth / 2}px;
-        width: ${imgElement.offsetWidth}px;
-        height: ${imgElement.offsetHeight}px;
-        opacity: 0.7;
-        pointer-events: none;
-        z-index: 10000;
-        border: 2px dashed #059669;
-        border-radius: 8px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      `;
-      clone.className = 'image-drag-preview';
-      document.body.appendChild(clone);
-      
-      // Marcar posição original
-      const originalRect = imgElement.getBoundingClientRect();
-      imgElement.setAttribute('data-original-position', JSON.stringify({
-        top: originalRect.top,
-        left: originalRect.left
-      }));
-      
-      // Adicionar indicador visual na imagem original
-      imgElement.style.opacity = '0.3';
-      imgElement.style.border = '2px dashed #059669';
-      
-      // Função para mover o clone
-      function onMouseMove(e) {
-        clone.style.top = (e.clientY - imgElement.offsetHeight / 2) + 'px';
-        clone.style.left = (e.clientX - imgElement.offsetWidth / 2) + 'px';
-        
-        // Mostrar indicador de posição de inserção
-        showDropIndicator(e.clientX, e.clientY);
-        
-        // Atualizar indicador em tempo real
-        updateDropIndicator(e.clientX, e.clientY);
-      }
-      
-      // Função para finalizar o drag
-      function onMouseUp(e) {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-        
-        // Remover clone
-        if (clone.parentNode) {
-          clone.remove();
-        }
-        
-        // Remover indicador de drop
-        removeDropIndicator();
-        
-        // Restaurar imagem original
-        imgElement.style.opacity = '';
-        imgElement.style.border = '';
-        imgElement.classList.remove('dragging');
-        
-        // Mover imagem para nova posição
-        moveImageToPosition(imgElement, e.clientX, e.clientY);
-      }
-      
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-      
-      // Debug: mostrar informações da imagem
-      console.log('Iniciando drag da imagem:', {
-        element: imgElement,
-        position: imgElement.getBoundingClientRect(),
-        parent: imgElement.parentNode
-      });
-    }
-    
-    function showDropIndicator(x, y) {
-      removeDropIndicator();
-      
-      const indicator = document.createElement('div');
-      indicator.className = 'drop-indicator';
-      indicator.style.cssText = `
-        position: fixed;
-        top: ${y - 2}px;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, #059669, #0ea5e9);
-        z-index: 9999;
-        pointer-events: none;
-        border-radius: 2px;
-        box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
-      `;
-      
-      document.body.appendChild(indicator);
-    }
-    
-    function removeDropIndicator() {
-      const existingIndicator = document.querySelector('.drop-indicator');
-      if (existingIndicator) {
-        existingIndicator.remove();
-      }
-    }
-    
-    function updateDropIndicator(x, y) {
-      const existingIndicator = document.querySelector('.drop-indicator');
-      if (existingIndicator) {
-        existingIndicator.style.top = (y - 2) + 'px';
-      }
-    }
-    
-    function moveImageToPosition(imgElement, x, y) {
-      const contentArea = document.getElementById('content');
-      const contentRect = contentArea.getBoundingClientRect();
-      
-      // Verificar se está dentro da área de conteúdo
-      if (x < contentRect.left || x > contentRect.right || y < contentRect.top || y > contentRect.bottom) {
-        showToast('⚠️ Imagem movida para fora da área de edição.', 'info');
-        return;
-      }
-      
-      // Lógica simplificada: inserir no final do contentArea
-      if (contentArea !== imgElement.parentNode) {
-        // Remover a imagem de sua posição atual
-        if (imgElement.parentNode) {
-          imgElement.parentNode.removeChild(imgElement);
-        }
-        
-        // Inserir no final do contentArea
-        contentArea.appendChild(imgElement);
-        
-        // Adicionar quebra de linha após a imagem
-        const br = document.createElement('br');
-        contentArea.appendChild(br);
-        
-        showToast('✅ Imagem movida para o final do texto!', 'success');
-      } else {
-        showToast('ℹ️ Imagem já está na posição correta', 'info');
-      }
-    }
-    
-    function moveImageWithArrows(imgElement, direction) {
-      const contentArea = document.getElementById('content');
-      
-      // Lógica simplificada: mover para o final do contentArea
-      if (contentArea !== imgElement.parentNode) {
-        // Remover a imagem de sua posição atual
-        if (imgElement.parentNode) {
-          imgElement.parentNode.removeChild(imgElement);
-        }
-        
-        // Inserir no final do contentArea
-        contentArea.appendChild(imgElement);
-        
-        // Adicionar quebra de linha após a imagem
-        const br = document.createElement('br');
-        contentArea.appendChild(br);
-        
-        // Focar na imagem movida
-        imgElement.focus();
-        
-        // Mostrar feedback visual
-        imgElement.style.border = '2px solid #0ea5e9';
-        setTimeout(() => {
-          imgElement.style.border = '';
-        }, 500);
-        
-        showToast(`✅ Imagem movida ${direction === 'ArrowUp' ? 'para cima' : direction === 'ArrowDown' ? 'para baixo' : direction === 'ArrowLeft' ? 'para esquerda' : 'para direita'}!`, 'success');
-      } else {
-        showToast('ℹ️ Imagem já está na posição correta', 'info');
-      }
-    }
+
     
     function isImageUrl(url) {
       try {
@@ -1352,7 +1059,7 @@
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#059669' : type === 'error' ? '#ef4444' : '#3b82f6'};
+        background: ${type === 'success' ? '#052b18' : type === 'error' ? '#ef4444' : '#3b82f6'};
         color: white;
         padding: 12px 20px;
         border-radius: 8px;
@@ -1422,30 +1129,136 @@
       });
     }
     
-    function previewPost() {
-      const title = document.getElementById('title').value;
-      const author = document.getElementById('author').value;
-      const category = document.getElementById('category').value;
-      const excerpt = document.getElementById('excerpt').value;
-      const content = document.getElementById('content').innerHTML;
-      const tags = document.getElementById('tags').value;
+
+    
+    // Função para limpar HTML indevido (versão melhorada)
+    function cleanHtmlContent(html) {
+      if (!html) return '';
       
-      if (!title || !author || !category || !excerpt || !content.trim()) {
-        showStatus('Preencha todos os campos obrigatórios para visualizar', 'error');
-        return;
+      // Se o conteúdo já parece ser Markdown (não tem tags HTML), retornar como está
+      if (!/<[^>]*>/.test(html)) {
+        return html.trim();
       }
       
-      document.getElementById('preview-title').textContent = title;
-      document.getElementById('preview-meta').innerHTML = `
-        <strong>Autor:</strong> ${author} | 
-        <strong>Categoria:</strong> ${category} | 
-        <strong>Data:</strong> ${new Date().toLocaleDateString('pt-BR')}
-        ${tags ? ` | <strong>Tags:</strong> ${tags}` : ''}
-      `;
-      document.getElementById('preview-content').innerHTML = content;
+      // Processar o HTML de forma mais inteligente
+      let cleanContent = html;
       
-      document.getElementById('preview-container').classList.add('show');
-      document.getElementById('preview-container').scrollIntoView({ behavior: 'smooth' });
+      // 1. Primeiro, normalizar quebras de linha
+      cleanContent = cleanContent
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<\/p>/gi, '\n')
+        .replace(/<\/div>/gi, '\n');
+      
+      // 2. Converter tags de formatação para Markdown (uma vez só)
+      cleanContent = cleanContent
+        // Converter tags b/strong para ** (apenas se não tiver estilos problemáticos)
+        .replace(/<b[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/b>/gi, '$1')
+        .replace(/<strong[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/strong>/gi, '$1')
+        .replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
+        .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
+        
+        // Converter tags i/em para * (apenas se não tiver estilos problemáticos)
+        .replace(/<i[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/i>/gi, '$1')
+        .replace(/<em[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/em>/gi, '$1')
+        .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
+        .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
+        
+        // Converter tags u para __ (apenas se não tiver estilos problemáticos)
+        .replace(/<u[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/u>/gi, '$1')
+        .replace(/<u[^>]*>(.*?)<\/u>/gi, '__$1__');
+      
+      // 3. Remover tags de fonte problemáticas (completamente)
+      cleanContent = cleanContent
+        .replace(/<font[^>]*size\s*=\s*["']?\d+["']?[^>]*>(.*?)<\/font>/gi, '$1')
+        .replace(/<font[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/font>/gi, '$1')
+        .replace(/<font[^>]*>(.*?)<\/font>/gi, '$1');
+      
+      // 4. Remover tags span e div com estilos inline
+      cleanContent = cleanContent
+        .replace(/<span[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/span>/gi, '$1')
+        .replace(/<span[^>]*>(.*?)<\/span>/gi, '$1')
+        .replace(/<div[^>]*style\s*=\s*["'][^"']*["'][^>]*>(.*?)<\/div>/gi, '\n$1\n')
+        .replace(/<div[^>]*>(.*?)<\/div>/gi, '\n$1\n');
+      
+      // 5. Converter cabeçalhos para Markdown
+      cleanContent = cleanContent
+        .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '\n# $1\n')
+        .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '\n## $1\n')
+        .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n### $1\n')
+        .replace(/<h4[^>]*>(.*?)<\/h4>/gi, '\n#### $1\n')
+        .replace(/<h5[^>]*>(.*?)<\/h5>/gi, '\n##### $1\n')
+        .replace(/<h6[^>]*>(.*?)<\/h6>/gi, '\n###### $1\n');
+      
+      // 6. Converter parágrafos
+      cleanContent = cleanContent
+        .replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n');
+      
+      // 7. Converter listas
+      cleanContent = cleanContent
+        .replace(/<ul[^>]*>(.*?)<\/ul>/gi, '\n$1\n')
+        .replace(/<ol[^>]*>(.*?)<\/ol>/gi, '\n$1\n')
+        .replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1');
+      
+      // 8. Converter links
+      cleanContent = cleanContent
+        .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
+      
+      // 9. Converter citações
+      cleanContent = cleanContent
+        .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi, '\n> $1\n');
+      
+      // 10. Converter código
+      cleanContent = cleanContent
+        .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`');
+      
+      // 11. Converter imagens para Markdown (com tratamento especial para imagens com ID)
+      cleanContent = cleanContent
+        .replace(/<img[^>]*data-image-id="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/gi, (match, imageId, alt) => {
+          return `![${alt}](imagem:${imageId})`;
+        })
+        .replace(/<img[^>]*alt="([^"]*)"[^>]*data-image-id="([^"]*)"[^>]*>/gi, (match, alt, imageId) => {
+          return `![${alt}](imagem:${imageId})`;
+        })
+        .replace(/<img[^>]*data-image-id="([^"]*)"[^>]*>/gi, (match, imageId) => {
+          return `![](${imageId})`;
+        })
+        .replace(/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/gi, '![$2]($1)')
+        .replace(/<img[^>]*alt="([^"]*)"[^>]*src="([^"]*)"[^>]*>/gi, '![$1]($2)')
+        .replace(/<img[^>]*src="([^"]*)"[^>]*>/gi, '![]($1)');
+      
+      // 12. Remover todas as outras tags HTML restantes (exceto imagens já convertidas)
+      cleanContent = cleanContent.replace(/<[^>]*>/g, '');
+      
+      // 13. Limpar formatação Markdown duplicada (melhorado)
+      cleanContent = cleanContent
+        // Remover asteriscos duplicados
+        .replace(/\*\*\s*\*\*/g, '**')
+        .replace(/\*\s\*/g, ' ')
+        // Remover underscores duplicados
+        .replace(/__\s*__/g, '__')
+        .replace(/_\s_/g, ' ')
+        // Limpar espaços antes e depois de formatação
+        .replace(/\s+\*\*/g, ' **')
+        .replace(/\*\*\s+/g, '** ')
+        .replace(/\s+\*/g, ' *')
+        .replace(/\*\s+/g, '* ')
+        .replace(/\s+__/g, ' __')
+        .replace(/__\s+/g, '__ ')
+        .replace(/\s+_/g, ' _')
+        .replace(/_\s+/g, '_ ')
+        // Limpar formatação duplicada específica
+        .replace(/\*\*([^*]+)\*\*\*/g, '**$1**')
+        .replace(/\*([^*]+)\*\*/g, '*$1*')
+        .replace(/__([^_]+)___/g, '__$1__')
+        .replace(/_([^_]+)_/g, '_$1_');
+      
+      // 14. Limpar quebras de linha e espaços
+      cleanContent = cleanContent
+        .replace(/\n\s*\n\s*\n/g, '\n\n')
+        .replace(/\n\s*\n/g, '\n\n')
+        .trim();
+      
+      return cleanContent;
     }
     
     function savePost() {
@@ -1458,18 +1271,25 @@
         return;
       }
       
+      // Limpar o conteúdo antes de salvar
+      const cleanContent = cleanHtmlContent(content);
+      
+      // Debug: mostrar o conteúdo limpo no console
+      console.log('Conteúdo original:', content);
+      console.log('Conteúdo limpo:', cleanContent);
+      
       const post = {
         id: currentPost ? currentPost.id : Date.now().toString(),
         title: formData.get('title'),
         author: formData.get('author'),
         category: formData.get('category'),
         excerpt: formData.get('excerpt'),
-        content: content,
+        content: cleanContent, // Usar conteúdo limpo
         tags: formData.get('tags') ? formData.get('tags').split(',').map(t => t.trim()) : [],
         date: new Date().toISOString(),
         slug: generateSlug(formData.get('title')),
         coverImage: formData.get('coverImage') ? formData.get('coverImage').name : null,
-        readTime: calculateReadTime(content)
+        readTime: calculateReadTime(cleanContent)
       };
       
       // Salvar no localStorage
@@ -1478,7 +1298,7 @@
       // Salvar arquivo Markdown
       savePostToFile(post);
       
-      showStatus('Post salvo com sucesso!', 'success');
+      showStatus('Post salvo com sucesso! Redirecionando para gerenciamento de posts em 2 segundos...', 'success');
       currentPost = post;
       
       // Atualizar lista de posts existentes
@@ -1487,10 +1307,27 @@
       // Limpar formulário após salvar
       clearForm();
       
-      // Redirecionar para a área de gerenciamento de posts após 2 segundos
-      setTimeout(() => {
-        window.location.href = '/admin/posts-manager.html';
-      }, 2000);
+      // Mostrar contagem regressiva
+      let countdown = 2;
+      const countdownInterval = setInterval(() => {
+        countdown--;
+        if (countdown > 0) {
+          showStatus(`Post salvo com sucesso! Redirecionando em ${countdown} segundo${countdown > 1 ? 's' : ''}...`, 'success');
+        } else {
+          clearInterval(countdownInterval);
+          showStatus('Redirecionando...', 'success');
+          // Redirecionar para a área de gerenciamento de posts
+          setTimeout(() => {
+            try {
+              window.location.href = './posts-manager.html';
+            } catch (error) {
+              console.error('Erro no redirecionamento:', error);
+              // Fallback: tentar caminho absoluto
+              window.location.href = '/admin/posts-manager.html';
+            }
+          }, 500);
+        }
+      }, 1000);
     }
     
     function savePostToStorage(post) {
@@ -1539,40 +1376,52 @@
       markdown += `${post.excerpt}\n\n`;
       markdown += `---\n\n`;
       
-      // Converter HTML para Markdown simples
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = post.content;
-      
-      // Processar elementos HTML de forma mais robusta
-      let content = tempDiv.innerHTML
-        // Remover tags de cabeçalho
-        .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '\n# $1\n')
-        .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '\n## $1\n')
-        .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n### $1\n')
-        // Remover tags de parágrafo
-        .replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n')
-        // Remover quebras de linha
-        .replace(/<br\s*\/?>/gi, '\n')
-        // Converter formatação de texto
-        .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
-        .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
-        .replace(/<u[^>]*>(.*?)<\/u>/gi, '__$1__')
-        .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`')
-        // Converter citações
-        .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi, '\n> $1\n')
-        // Converter listas
-        .replace(/<ul[^>]*>(.*?)<\/ul>/gi, '\n$1\n')
-        .replace(/<ol[^>]*>(.*?)<\/ol>/gi, '\n$1\n')
-        .replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1')
-        // Converter links
-        .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
-        // Limpar tags HTML restantes
-        .replace(/<[^>]*>/g, '')
-        // Limpar espaços em branco extras
-        .replace(/\n\s*\n\s*\n/g, '\n\n')
-        .trim();
-      
-      markdown += content;
+      // Se o conteúdo já é Markdown, usar diretamente
+      if (!/<[^>]*>/.test(post.content)) {
+        markdown += post.content;
+      } else {
+        // Apenas se ainda houver HTML, converter uma vez
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = post.content;
+        
+        // Processar elementos HTML de forma mais robusta
+        let content = tempDiv.innerHTML
+          // Remover tags de cabeçalho
+          .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '\n# $1\n')
+          .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '\n## $1\n')
+          .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '\n### $1\n')
+          // Remover tags de parágrafo
+          .replace(/<p[^>]*>(.*?)<\/p>/gi, '\n$1\n')
+          // Remover quebras de linha
+          .replace(/<br\s*\/?>/gi, '\n')
+          // Converter formatação de texto
+          .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
+          .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
+          .replace(/<u[^>]*>(.*?)<\/u>/gi, '__$1__')
+          .replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`')
+          // Converter citações
+          .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi, '\n> $1\n')
+          // Converter listas
+          .replace(/<ul[^>]*>(.*?)<\/ul>/gi, '\n$1\n')
+          .replace(/<ol[^>]*>(.*?)<\/ol>/gi, '\n$1\n')
+          .replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1')
+          // Converter links
+          .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
+                  // Converter imagens para Markdown (com tratamento especial para imagens com ID)
+        .replace(/<img[^>]*data-image-id="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/gi, '\n![$2](imagem:$1)\n')
+        .replace(/<img[^>]*alt="([^"]*)"[^>]*data-image-id="([^"]*)"[^>]*>/gi, '\n![$1](imagem:$2)\n')
+        .replace(/<img[^>]*data-image-id="([^"]*)"[^>]*>/gi, '\n![]($1)\n')
+        .replace(/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/gi, '\n![$2]($1)\n')
+        .replace(/<img[^>]*alt="([^"]*)"[^>]*src="([^"]*)"[^>]*>/gi, '\n![$1]($2)\n')
+        .replace(/<img[^>]*src="([^"]*)"[^>]*>/gi, '\n![]($1)\n')
+          // Limpar tags HTML restantes
+          .replace(/<[^>]*>/g, '')
+          // Limpar espaços em branco extras
+          .replace(/\n\s*\n\s*\n/g, '\n\n')
+          .trim();
+        
+        markdown += content;
+      }
       
       return markdown;
     }
@@ -1622,7 +1471,9 @@
         document.getElementById('author').value = post.author;
         document.getElementById('category').value = post.category;
         document.getElementById('excerpt').value = post.excerpt;
-        document.getElementById('content').innerHTML = post.content;
+        // Converter Markdown de volta para HTML editável
+        const editableContent = markdownToHtml(post.content);
+        document.getElementById('content').innerHTML = editableContent;
         document.getElementById('tags').value = post.tags ? post.tags.join(', ') : '';
         
         showStatus(`Post "${post.title}" carregado para edição`, 'info');
@@ -1632,15 +1483,131 @@
       }
     }
     
+    // Função para converter Markdown de volta para HTML editável
+    function markdownToHtml(markdown) {
+      if (!markdown) return '';
+      
+      let html = markdown;
+      
+      // Converter cabeçalhos
+      html = html
+        .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+        .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+        .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+        .replace(/^##### (.*$)/gm, '<h5>$1</h5>')
+        .replace(/^###### (.*$)/gm, '<h6>$1</h6>');
+      
+      // Converter formatação de texto
+      html = html
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/__(.*?)__/g, '<u>$1</u>')
+        .replace(/`(.*?)`/g, '<code>$1</code>');
+      
+      // Converter citações
+      html = html.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+      
+      // Converter listas
+      html = html
+        .replace(/^- (.*$)/gm, '<li>$1</li>')
+        .replace(/^(\d+)\. (.*$)/gm, '<li>$2</li>');
+      
+      // Envolver listas em ul/ol
+      html = html
+        .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+        .replace(/<\/ul>\s*<ul>/g, '');
+      
+      // Converter links
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+      
+      // Converter imagens (com tratamento especial para imagens com ID)
+      html = html
+        .replace(/!\[([^\]]*)\]\(imagem:([^)]+)\)/g, (match, alt, imageId) => {
+          const imageUrl = getImageUrl(imageId);
+          if (imageUrl) {
+            return `<img src="${imageUrl}" alt="${alt}" class="editable-image" style="max-width: 100%; height: auto; margin: 1rem 0;">`;
+          }
+          return `<div style="background: #f3f4f6; padding: 1rem; text-align: center; border-radius: 8px; border: 2px dashed #d1d5db;">
+            <p style="color: #6b7280; margin: 0;">🖼️ Imagem não encontrada</p>
+            <p style="color: #9ca3af; font-size: 0.875rem; margin: 0.5rem 0 0 0;">Alt: ${alt || 'Sem descrição'}</p>
+          </div>`;
+        })
+        .replace(/!\[\]\(imagem:([^)]+)\)/g, (match, imageId) => {
+          const imageUrl = getImageUrl(imageId);
+          if (imageUrl) {
+            return `<img src="${imageUrl}" alt="" class="editable-image" style="max-width: 100%; height: auto; margin: 1rem 0;">`;
+          }
+          return `<div style="background: #f3f4f6; padding: 1rem; text-align: center; border-radius: 8px; border: 2px dashed #d1d5db;">
+            <p style="color: #6b7280; margin: 0;">🖼️ Imagem não encontrada</p>
+          </div>`;
+        })
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="editable-image" style="max-width: 100%; height: auto; margin: 1rem 0;">')
+        .replace(/!\[\]\(([^)]+)\)/g, '<img src="$1" alt="" class="editable-image" style="max-width: 100%; height: auto; margin: 1rem 0;">');
+      
+      // Converter parágrafos (envolver texto não processado em <p>)
+      html = html
+        .replace(/(?<!<[^>]*>)([^<>\n]+)(?!<[^>]*>)/g, '<p>$1</p>')
+        .replace(/<p><\/p>/g, '')
+        .replace(/<p>(<h[1-6]>.*<\/h[1-6]>)<\/p>/g, '$1')
+        .replace(/<p>(<blockquote>.*<\/blockquote>)<\/p>/g, '$1')
+        .replace(/<p>(<ul>.*<\/ul>)<\/p>/g, '$1')
+        .replace(/<p>(<img[^>]*>)<\/p>/g, '$1');
+      
+      // Limpar HTML extra
+      html = html
+        .replace(/<p><p>/g, '<p>')
+        .replace(/<\/p><\/p>/g, '</p>')
+        .replace(/\n/g, '<br>');
+      
+      return html;
+    }
+    
     function clearForm() {
       if (confirm('Tem certeza que deseja limpar o formulário?')) {
         document.getElementById('blog-form').reset();
         document.getElementById('content').innerHTML = '';
-        document.getElementById('preview-container').classList.remove('show');
         currentPost = null;
         showStatus('Formulário limpo', 'info');
       }
     }
+    
+    function goToPostsManager() {
+      try {
+        window.location.href = './posts-manager.html';
+      } catch (error) {
+        console.error('Erro no redirecionamento:', error);
+        // Fallback: tentar caminho absoluto
+        window.location.href = '/admin/posts-manager.html';
+      }
+    }
+    
+    function saveImageToStorage(imageId, imageData, imageName) {
+      try {
+        const images = JSON.parse(localStorage.getItem('nodalEnergyImages') || '{}');
+        images[imageId] = {
+          data: imageData,
+          name: imageName,
+          timestamp: Date.now()
+        };
+        localStorage.setItem('nodalEnergyImages', JSON.stringify(images));
+        console.log(`Imagem salva: ${imageId} - ${imageName}`);
+      } catch (error) {
+        console.error('Erro ao salvar imagem:', error);
+      }
+    }
+    
+    function getImageUrl(imageId) {
+      try {
+        const images = JSON.parse(localStorage.getItem('nodalEnergyImages') || '{}');
+        return images[imageId] ? images[imageId].data : null;
+      } catch (error) {
+        console.error('Erro ao buscar imagem:', error);
+        return null;
+      }
+    }
+    
+
     
     function autoSave() {
       const title = document.getElementById('title').value;
