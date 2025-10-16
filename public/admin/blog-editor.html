@@ -422,6 +422,18 @@
 </head>
 <body>
   <div class="editor-container">
+    <div id="auth-box" style="display:none; max-width:480px; margin: 0 auto 16px; background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px;">
+      <h3 style="margin-bottom:12px;">Login do CMS</h3>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <input id="cms-username" class="form-input" placeholder="Usuário" />
+        <input id="cms-password" class="form-input" placeholder="Senha" type="password" />
+        <button id="cms-login-btn" class="btn btn-primary" type="button">Entrar</button>
+      </div>
+    </div>
+
+    <div id="auth-actions" style="display:none; text-align:right; margin-bottom:12px;">
+      <button id="cms-logout-btn" class="btn btn-secondary" type="button">Sair</button>
+    </div>
     <div class="editor-header">
       <h1 class="editor-title">Editor de Blog - Nodal Energy</h1>
       <p class="editor-subtitle">Crie e edite posts para o seu site</p>
@@ -547,8 +559,45 @@
     
     // Inicializar editor
     document.addEventListener('DOMContentLoaded', function() {
+      checkAuthAndInit();
+    });
+
+    async function checkAuthAndInit() {
+      // Autenticação removida - usando apenas armazenamento local
+      toggleAuthUI(true);
       initializeEditor();
       loadExistingPosts();
+    }
+
+    function toggleAuthUI(isAuth) {
+      const authBox = document.getElementById('auth-box');
+      const authActions = document.getElementById('auth-actions');
+      const form = document.getElementById('blog-form');
+      if (isAuth) {
+        if (authBox) authBox.style.display = 'none';
+        if (authActions) authActions.style.display = 'block';
+        if (form) Array.from(form.elements).forEach(el => el.disabled = false);
+      } else {
+        if (authBox) authBox.style.display = 'block';
+        if (authActions) authActions.style.display = 'none';
+        if (form) Array.from(form.elements).forEach(el => el.disabled = true);
+        // reabilitar inputs de login
+        document.getElementById('cms-username').disabled = false;
+        document.getElementById('cms-password').disabled = false;
+        document.getElementById('cms-login-btn').disabled = false;
+      }
+    }
+
+    // Login/Logout handlers
+    document.addEventListener('click', async (e) => {
+      // Funcionalidades de autenticação removidas - usando apenas armazenamento local
+      if (e.target && e.target.id === 'cms-login-btn') {
+        showStatus('Sistema configurado para uso local', 'info');
+      }
+
+      if (e.target && e.target.id === 'cms-logout-btn') {
+        showStatus('Sistema em modo local', 'info');
+      }
     });
     
     function initializeEditor() {
@@ -1261,7 +1310,7 @@
       return cleanContent;
     }
     
-    function savePost() {
+    async function savePost() {
       const formData = new FormData(document.getElementById('blog-form'));
       const content = document.getElementById('content').innerHTML;
       
@@ -1288,14 +1337,20 @@
         tags: formData.get('tags') ? formData.get('tags').split(',').map(t => t.trim()) : [],
         date: new Date().toISOString(),
         slug: generateSlug(formData.get('title')),
-        coverImage: formData.get('coverImage') ? formData.get('coverImage').name : null,
+        coverImage: null,
         readTime: calculateReadTime(cleanContent)
       };
       
-      // Salvar no localStorage
+      // Sistema de upload removido - usando apenas armazenamento local
+      const file = document.getElementById('coverImage').files && document.getElementById('coverImage').files[0];
+      if (file) {
+        console.warn('Upload de imagens não disponível em modo local');
+      }
+
+      // Salvar apenas localmente
       savePostToStorage(post);
-      
-      // Salvar arquivo Markdown
+
+      // Oferecer download do arquivo Markdown
       savePostToFile(post);
       
       showStatus('Post salvo com sucesso! Redirecionando para gerenciamento de posts em 2 segundos...', 'success');

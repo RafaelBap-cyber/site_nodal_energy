@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { Calendar, User, Clock, Search, ArrowRight, BookOpen, ChevronLeft, ChevronRight, X, Linkedin, MessageCircle, MessageSquare, Phone, Mail, RefreshCw } from "lucide-react";
+import { Calendar, User, Clock, Search, ArrowRight, BookOpen, ChevronLeft, ChevronRight, X, Linkedin, Phone, Mail, RefreshCw } from "lucide-react";
 import { 
   BlogPost, 
   syncPostsWithCMS, 
@@ -514,12 +514,9 @@ const Blog = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <span className="text-sm text-gray-500">Compartilhar:</span>
-                  <button className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                  <a href="https://linkedin.com/in/fabio-carrasco-baptista-7114464" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
                     <Linkedin className="w-4 h-4" />
-                  </button>
-                  <button className="w-8 h-8 text-white rounded-full flex items-center justify-center transition-colors" style={{ backgroundColor: '#052b18' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0a3d26'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#052b18'}>
-                    <MessageCircle className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
                 <Button onClick={closeArticle} variant="outline">
                   Fechar

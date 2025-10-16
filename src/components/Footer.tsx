@@ -1,5 +1,5 @@
 import { Mail, Phone, Linkedin, Leaf } from "lucide-react";
-import logo from "@/assets/Corect_logo.png";
+import logo from "@/assets/correct_logo.png";
 
 const Footer = () => {
   return (
@@ -9,7 +9,18 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <img src={logo} alt="Logo" className="h-16 w-16" />
+              <img 
+                src={logo} 
+                alt="Logo" 
+                className="h-16 w-16 object-contain"
+                style={{
+                  background: 'transparent',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  outline: 'none',
+                  boxShadow: 'none'
+                }}
+              />
               <span className="text-xl font-light text-primary">Nodal Energy</span>
             </div>
             <p className="text-muted-foreground">

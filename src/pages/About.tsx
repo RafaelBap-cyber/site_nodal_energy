@@ -166,7 +166,7 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
               <img
-                src="/lovable-uploads/Loida Duarte.jpeg"
+                src="/lovable-uploads/Loida_img.jpg"
                 alt="Loida Duarte"
                 className="w-80 h-80 rounded-full object-cover shadow-xl border-4 border-primary/20"
               />
