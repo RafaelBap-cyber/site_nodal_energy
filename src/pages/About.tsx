@@ -87,7 +87,7 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
               <img
-                src="/lovable-uploads/0e0b9015-b6c5-4541-a41d-221d6efc3500.png"
+                src="/lovable-uploads/Fábio_img.png"
                 alt="Fábio Carrasco"
                 className="w-80 h-80 rounded-full object-cover shadow-xl border-4 border-primary/20"
               />
