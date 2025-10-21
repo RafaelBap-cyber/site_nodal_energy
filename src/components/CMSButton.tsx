@@ -13,10 +13,15 @@ const CMSButton = () => {
     // Simular delay de autenticação
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Se as credenciais estão corretas, abrir o CMS
-    if (credentials.username === 'fábiocarrascoCEO' && credentials.password === 'Faralufe101273') {
-      // Usar a nova versão do CMS
-      window.open('/admin/cms.html', '_blank');
+    // Validar credenciais
+    const validCredentials = {
+      username: 'FábioCarrascoCEO',
+      password: 'Faralufe'
+    };
+
+    if (credentials.username === validCredentials.username && credentials.password === validCredentials.password) {
+      // Redirecionar para o CMS online
+      window.location.href = '/admin';
       setShowLogin(false);
     }
     

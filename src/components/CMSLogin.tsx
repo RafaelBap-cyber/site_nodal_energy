@@ -24,16 +24,16 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
       return;
     }
 
-    // Credenciais padrão para desenvolvimento
+    // Validação de credenciais
     const validCredentials = {
-      username: 'fábiocarrascoCEO',
-      password: 'Faralufe101273'
+      username: 'FábioCarrascoCEO',
+      password: 'Faralufe'
     };
 
     if (username === validCredentials.username && password === validCredentials.password) {
       onLogin({ username, password });
     } else {
-      setError('Credenciais inválidas. Use: fábiocarrascoCEO / Faralufe101273');
+      setError('Credenciais inválidas');
     }
   };
 
@@ -53,7 +53,7 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
         </CardHeader>
         
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
             <div className="space-y-2">
               <label htmlFor="username" className="text-sm font-medium text-gray-700">
                 Usuário
@@ -68,6 +68,10 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
                   onChange={(e) => setUsername(e.target.value)}
                   className="pl-10"
                   disabled={isLoading}
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
                 />
               </div>
             </div>
@@ -86,6 +90,10 @@ const CMSLogin = ({ onLogin, isLoading = false }: CMSLoginProps) => {
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 pr-10"
                   disabled={isLoading}
+                  autoComplete="new-password"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
                 />
                 <button
                   type="button"

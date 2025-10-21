@@ -1,10 +1,48 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Leaf, Zap, BarChart3, Shield, ArrowRight, MapPin } from "lucide-react";
+import { Leaf, Zap, BarChart3, Shield, ArrowRight, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import heroImage from "@/assets/hero-energy-production.jpg";
 
 const Home = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const aboutCards = [
+    {
+      title: "Quem Somos",
+      content: [
+        "A Nodal Energy atua na transição energética no Brasil, oferecendo soluções claras e eficientes em energias renováveis e eficiência energética para os setores industrial e comercial. Nosso objetivo é conectar conhecimento técnico, tecnologia e recursos naturais para gerar valor sustentável aos nossos clientes.",
+        "Nosso portfólio inclui prospecção de áreas, elaboração de pareceres de acesso, negociação de usinas fotovoltaicas e implantação de projetos de eficiência energética, além de análises tributárias voltadas à redução de custos e otimização de resultados.",
+        "Com uma abordagem consultiva e integrada, desenvolvemos projetos personalizados que unem desempenho energético, sustentabilidade e segurança regulatória, sempre alinhados às necessidades e estratégias de cada cliente. Atuamos também na resolução de impasses e questões regulatórias, assegurando os direitos dos clientes no setor de energia, com profissionalismo e colaboração.",
+        "Contamos com assessoria jurídica especializada, disponível sempre que necessário, garantindo que as soluções estejam alinhadas às exigências legais e regulatórias. Nossa atuação integra aspectos técnicos, regulatórios e jurídicos, proporcionando uma visão completa e estratégica do setor elétrico para os clientes.",
+        "A equipe da Nodal Energy combina experiência técnica, regulatória e jurídica, sendo fundada e liderada por Fábio Carrasco, engenheiro eletricista com mais de 25 anos de experiência no setor elétrico, e contando com Loida Duarte, advogada com formação em Direito e Ciências Contábeis, MBA em Controladoria, com foco em tributação e experiência em gestão industrial e comercial em distribuidora de energia.",
+        "Juntos, combinamos conhecimento técnico e jurídico-tributário para entregar soluções completas, seguras e sustentáveis no setor de energia."
+      ]
+    },
+    {
+      title: "Nossa História",
+      content: [
+        "A Nodal Energy nasceu do desejo de Fábio Carrasco de empreender após anos de experiência no setor elétrico corporativo. Fábio atuou na gestão de soluções técnicas e comerciais para grandes clientes, incluindo ligações novas, geração distribuída e mercado livre, com participação em análises de projetos e resolução de impasses regulatórios, além de profundo conhecimento em operação, perdas não técnicas e faturamento.",
+        "Percebendo que o setor elétrico exige soluções que considerem aspectos regulatórios e jurídicos, Fábio convidou a Dra. Loida Duarte para integrar a empresa. Loida trouxe sua expertise tributária, experiência no setor elétrico com atuação no comercial, incluindo faturamento, vivência em grandes clientes e serviços técnico-comerciais, e 10 anos de gestão no setor industrial, fortalecendo a abordagem integrada da Nodal Energy.",
+        "Hoje, a Nodal Energy combina conhecimento técnico, regulatório e jurídico para entregar soluções personalizadas e estratégicas, apoiando clientes industriais e comerciais a reduzir custos, otimizar processos e gerar valor sustentável, sempre com segurança e confiança.",
+        "O diferencial da Nodal Energy está na abordagem prática e integrada, que une conhecimento técnico, experiência regulatória e visão jurídica, garantindo que cada solução seja eficiente, segura e alinhada às necessidades de cada cliente."
+      ]
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % aboutCards.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + aboutCards.length) % aboutCards.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
   const services = [
     {
       icon: <Zap className="h-8 w-8 text-primary" />,
@@ -61,98 +99,111 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section - Carrossel */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          {/* Grid com Quem Somos e Nossa História lado a lado */}
-          <div className="max-w-7xl mx-auto mb-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Card Quem Somos */}
-              <Card className="bg-white border-primary/20 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardHeader className="pb-6">
-                  <CardTitle className="text-4xl font-light text-gray-900">Quem Somos</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      A Nodal Energy atua na transição energética no Brasil, oferecendo soluções claras e eficientes em energias renováveis e eficiência energética para os setores industrial e comercial. Nosso objetivo é conectar conhecimento técnico, tecnologia e recursos naturais para gerar valor sustentável aos nossos clientes.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      Nosso portfólio inclui prospecção de áreas, elaboração de pareceres de acesso, negociação de usinas fotovoltaicas e implantação de projetos de eficiência energética, além de análises tributárias voltadas à redução de custos e otimização de resultados.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      Com uma abordagem consultiva e integrada, desenvolvemos projetos personalizados que unem desempenho energético, sustentabilidade e segurança regulatória, sempre alinhados às necessidades e estratégias de cada cliente. Atuamos também na resolução de impasses e questões regulatórias, assegurando os direitos dos clientes no setor de energia, com profissionalismo e colaboração.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      Contamos com assessoria jurídica especializada, disponível sempre que necessário, garantindo que as soluções estejam alinhadas às exigências legais e regulatórias. Nossa atuação integra aspectos técnicos, regulatórios e jurídicos, proporcionando uma visão completa e estratégica do setor elétrico para os clientes.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      A equipe da Nodal Energy combina experiência técnica, regulatória e jurídica, sendo fundada e liderada por Fábio Carrasco, engenheiro eletricista com mais de 25 anos de experiência no setor elétrico, e contando com Loida Duarte, advogada com formação em Direito e Ciências Contábeis, MBA em Controladoria, com foco em tributação e experiência em gestão industrial e comercial em distribuidora de energia.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      Juntos, combinamos conhecimento técnico e jurídico-tributário para entregar soluções completas, seguras e sustentáveis no setor de energia.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="max-w-5xl mx-auto mb-20">
+            {/* Carrossel Container */}
+            <div className="relative">
+              {/* Navegação por setas */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 md:p-3 transition-all duration-300 hover:scale-110 border border-primary/20 hover:border-primary/40"
+                aria-label="Slide anterior"
+              >
+                <ChevronLeft className="h-4 w-4 md:h-6 md:w-6 text-primary" />
+              </button>
+              
+              <button
+                onClick={nextSlide}
+                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 md:p-3 transition-all duration-300 hover:scale-110 border border-primary/20 hover:border-primary/40"
+                aria-label="Próximo slide"
+              >
+                <ChevronRight className="h-4 w-4 md:h-6 md:w-6 text-primary" />
+              </button>
 
-              {/* Card Nossa História */}
-              <Card className="bg-white border-primary/20 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardHeader className="pb-6">
-                  <CardTitle className="text-4xl font-light text-gray-900">Nossa História</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      A Nodal Energy nasceu do desejo de Fábio Carrasco de empreender após anos de experiência no setor elétrico corporativo. Fábio atuou na gestão de soluções técnicas e comerciais para grandes clientes, incluindo ligações novas, geração distribuída e mercado livre, com participação em análises de projetos e resolução de impasses regulatórios, além de profundo conhecimento em operação, perdas não técnicas e faturamento.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      Percebendo que o setor elétrico exige soluções que considerem aspectos regulatórios e jurídicos, Fábio convidou a Dra. Loida Duarte para integrar a empresa. Loida trouxe sua expertise tributária, experiência no setor elétrico com atuação no comercial, incluindo faturamento, vivência em grandes clientes e serviços técnico-comerciais, e 10 anos de gestão no setor industrial, fortalecendo a abordagem integrada da Nodal Energy.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      Hoje, a Nodal Energy combina conhecimento técnico, regulatório e jurídico para entregar soluções personalizadas e estratégicas, apoiando clientes industriais e comerciais a reduzir custos, otimizar processos e gerar valor sustentável, sempre com segurança e confiança.
-                    </p>
-                    <p className="text-base text-gray-600 leading-relaxed text-justify">
-                      O diferencial da Nodal Energy está na abordagem prática e integrada, que une conhecimento técnico, experiência regulatória e visão jurídica, garantindo que cada solução seja eficiente, segura e alinhada às necessidades de cada cliente.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Card Atual */}
+              <div className="overflow-hidden rounded-2xl">
+                <div 
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                  {aboutCards.map((card, index) => (
+                    <div key={index} className="w-full flex-shrink-0">
+                      <Card className="bg-white border-primary/20 shadow-xl hover:shadow-2xl transition-all duration-500 mx-2 md:mx-4">
+                        <CardHeader className="pb-4 md:pb-6 px-4 md:px-6">
+                          <CardTitle className="text-2xl md:text-4xl font-light text-gray-900 text-center">
+                            {card.title}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="px-4 md:px-6">
+                          <div className="space-y-3 md:space-y-4">
+                            {card.content.map((paragraph, pIndex) => (
+                              <p key={pIndex} className="text-sm md:text-base text-gray-600 leading-relaxed text-justify">
+                                {paragraph}
+                              </p>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Indicadores */}
+              <div className="flex justify-center mt-8 space-x-3">
+                {aboutCards.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentSlide
+                        ? 'bg-primary scale-125'
+                        : 'bg-primary/30 hover:bg-primary/60'
+                    }`}
+                    aria-label={`Ir para slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
           
           {/* Cards de Estatísticas */}
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="max-w-6xl mx-auto mt-16">
+            <h2 className="text-3xl md:text-4xl font-light text-gray-900 text-center mb-12">
+              Nossos Resultados
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               <Card className="transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer border-primary/20 hover:border-primary/40">
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">45%</div>
-                    <div className="text-muted-foreground">Redução de Custos na Autoprodução</div>
+                    <div className="text-2xl md:text-3xl font-bold text-primary mb-2">45%</div>
+                    <div className="text-sm md:text-base text-muted-foreground">Redução de Custos na Autoprodução</div>
                   </div>
                 </CardContent>
               </Card>
               <Card className="transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer border-primary/20 hover:border-primary/40">
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">7%</div>
-                    <div className="text-muted-foreground">Créditos Energéticos</div>
+                    <div className="text-2xl md:text-3xl font-bold text-primary mb-2">7%</div>
+                    <div className="text-sm md:text-base text-muted-foreground">Créditos Energéticos</div>
                   </div>
                 </CardContent>
               </Card>
               <Card className="transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer border-primary/20 hover:border-primary/40">
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">12%</div>
-                    <div className="text-muted-foreground">Diminuição de Carbono</div>
+                    <div className="text-2xl md:text-3xl font-bold text-primary mb-2">12%</div>
+                    <div className="text-sm md:text-base text-muted-foreground">Diminuição de Carbono</div>
                   </div>
                 </CardContent>
               </Card>
               <Card className="transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg cursor-pointer border-primary/20 hover:border-primary/40">
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">32%</div>
-                    <div className="text-muted-foreground">Aumento de Eficiência</div>
+                    <div className="text-2xl md:text-3xl font-bold text-primary mb-2">32%</div>
+                    <div className="text-sm md:text-base text-muted-foreground">Aumento de Eficiência</div>
                   </div>
                 </CardContent>
               </Card>
