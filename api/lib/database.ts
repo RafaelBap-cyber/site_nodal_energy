@@ -12,7 +12,7 @@ if (typeof window === 'undefined') {
 function getDatabasePath(): string {
   // Em produção no Vercel, usar /tmp para armazenamento temporário
   if (process.env.NODE_ENV === 'production') {
-    return '/tmp/blog.db';
+    return '/tmp/nodal_energy_blog.db';
   }
   // Em desenvolvimento, usar pasta local
   return join(process.cwd(), 'data', 'blog.db');
@@ -28,15 +28,20 @@ export function getDatabase(): any {
   
   if (!db) {
     const dbPath = getDatabasePath();
+    console.log('Criando conexão com banco em:', dbPath);
     db = new Database(dbPath);
+    console.log('Banco de dados criado com sucesso');
     
     // Criar tabelas se não existirem
     initializeDatabase(db);
+    console.log('Tabelas inicializadas com sucesso');
   }
   return db;
 }
 
 function initializeDatabase(database: any) {
+  console.log('Inicializando banco de dados...');
+  
   // Criar tabela de posts
   database.exec(`
     CREATE TABLE IF NOT EXISTS posts (
@@ -72,11 +77,15 @@ function initializeDatabase(database: any) {
   // Inserir usuário padrão se não existir
   const userExists = database.prepare('SELECT id FROM users WHERE username = ?').get('FábioCEO');
   if (!userExists) {
+    console.log('Criando usuário admin...');
     // Senha: Faralufe101273 (hash em produção)
     database.prepare(`
       INSERT INTO users (username, password) 
       VALUES ('FábioCEO', 'Faralufe101273')
     `).run();
+    console.log('Usuário admin criado com sucesso');
+  } else {
+    console.log('Usuário admin já existe');
   }
 
   // Inserir posts de exemplo se não existirem
