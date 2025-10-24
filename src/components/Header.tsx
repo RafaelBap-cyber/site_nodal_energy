@@ -65,6 +65,14 @@ const Header = () => {
           >
             Contatos
           </Link>
+          <Link
+            to="/admin"
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              isActive("/admin") ? "text-primary" : "text-muted-foreground"
+            }`}
+          >
+            Admin
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -117,6 +125,15 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Contatos
+            </Link>
+            <Link
+              to="/admin"
+              className={`text-sm font-medium transition-colors hover:text-primary py-2 ${
+                isActive("/admin") ? "text-primary" : "text-muted-foreground"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Admin
             </Link>
           </nav>
         </div>
