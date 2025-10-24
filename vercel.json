@@ -1,9 +1,4 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build",
-  "installCommand": "npm install --legacy-peer-deps",
-  "framework": "vite",
-  "outputDirectory": "dist",
   "functions": {
     "api/**/*.ts": {
       "runtime": "nodejs22.x"
