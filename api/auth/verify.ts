@@ -1,44 +1,46 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Pool } from 'pg';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import jwt from 'jsonwebtoken';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+const JWT_SECRET = process.env.JWT_SECRET || 'sua-chave-secreta-aqui';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Configurar CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Método não permitido' });
   }
 
   try {
     const { token } = req.body;
 
     if (!token) {
-      return res.status(401).json({ error: 'Token não fornecido' });
+      return res.status(400).json({ error: 'Token é obrigatório' });
     }
 
-    // Verificar token
+    // Verificar token JWT
     const decoded = jwt.verify(token, JWT_SECRET) as any;
-    
-    // Verificar se a sessão ainda existe no Postgres
-    const { rows } = await pool.query(`
-      SELECT * FROM admin_sessions 
-      WHERE username = $1 AND token = $2 AND expires_at > $3
-    `, [decoded.username, token, new Date().toISOString()]);
-    
-    if (rows.length === 0) {
-      return res.status(401).json({ error: 'Sessão inválida' });
-    }
 
-    res.status(200).json({
-      valid: true,
-      user: { username: decoded.username, role: decoded.role }
+    return res.status(200).json({
+      success: true,
+      user: {
+        id: decoded.userId,
+        username: decoded.username
+      }
     });
+
   } catch (error) {
-    console.error('Erro na verificação:', error);
-    res.status(401).json({ error: 'Token inválido' });
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ error: 'Token inválido' });
+    }
+    
+    console.error('Erro na verificação do token:', error);
+    return res.status(500).json({ error: 'Erro interno do servidor' });
   }
 }

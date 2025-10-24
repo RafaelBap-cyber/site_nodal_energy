@@ -1,76 +1,154 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Pool } from 'pg';
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { getDatabase } from '../lib/database';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Configurar CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   const { id } = req.query;
 
-  if (req.method === 'GET') {
-    try {
-      const { rows } = await pool.query('SELECT * FROM blog_posts WHERE id = $1', [id]);
-      
-      if (rows.length === 0) {
-        return res.status(404).json({ error: 'Post não encontrado' });
-      }
-      
-      res.status(200).json(rows[0]);
-    } catch (error) {
-      console.error('Erro ao buscar post:', error);
-      res.status(500).json({ error: 'Erro ao buscar post' });
-    }
-  } else if (req.method === 'PUT') {
-    try {
-      const { title, content, author, category, excerpt, tags, coverImage, metaDescription, keywords, featured } = req.body;
-      
-      // Verificar se o post existe
-      const { rows: existingPost } = await pool.query('SELECT * FROM blog_posts WHERE id = $1', [id]);
-      
-      if (existingPost.length === 0) {
+  if (!id || typeof id !== 'string') {
+    return res.status(400).json({ error: 'ID do post é obrigatório' });
+  }
+
+  try {
+    const db = getDatabase();
+
+    if (req.method === 'GET') {
+      // Buscar post específico
+      const post = db.prepare(`
+        SELECT 
+          id,
+          title,
+          content,
+          excerpt,
+          author,
+          category,
+          date,
+          slug,
+          readTime,
+          featured,
+          coverImage,
+          metaDescription,
+          keywords,
+          tags,
+          createdAt,
+          updatedAt
+        FROM posts 
+        WHERE id = ?
+      `).get(parseInt(id));
+
+      if (!post) {
         return res.status(404).json({ error: 'Post não encontrado' });
       }
 
+      // Converter tags e keywords de JSON string para array
+      const formattedPost = {
+        ...post,
+        tags: post.tags ? JSON.parse(post.tags) : [],
+        keywords: post.keywords ? JSON.parse(post.keywords) : [],
+        featured: Boolean(post.featured)
+      };
+
+      return res.status(200).json(formattedPost);
+    }
+
+    if (req.method === 'PUT') {
       // Atualizar post
-      const { rows } = await pool.query(`
-        UPDATE blog_posts 
-        SET 
-          title = COALESCE($1, title),
-          content = COALESCE($2, content),
-          author = COALESCE($3, author),
-          category = COALESCE($4, category),
-          excerpt = COALESCE($5, excerpt),
-          tags = COALESCE($6, tags),
-          cover_image = COALESCE($7, cover_image),
-          meta_description = COALESCE($8, meta_description),
-          keywords = COALESCE($9, keywords),
-          featured = COALESCE($10, featured),
-          updated_at = $11
-        WHERE id = $12
-        RETURNING *
-      `, [title, content, author, category, excerpt, JSON.stringify(tags), coverImage, metaDescription, JSON.stringify(keywords), featured, new Date().toISOString(), id]);
+      const {
+        title,
+        content,
+        excerpt,
+        author,
+        category,
+        tags,
+        keywords,
+        coverImage,
+        metaDescription,
+        featured
+      } = req.body;
 
-      res.status(200).json(rows[0]);
-    } catch (error) {
-      console.error('Erro ao atualizar post:', error);
-      res.status(500).json({ error: 'Erro ao atualizar post' });
-    }
-  } else if (req.method === 'DELETE') {
-    try {
-      const { rows } = await pool.query('DELETE FROM blog_posts WHERE id = $1 RETURNING *', [id]);
-      
-      if (rows.length === 0) {
+      // Verificar se o post existe
+      const existingPost = db.prepare('SELECT id FROM posts WHERE id = ?').get(parseInt(id));
+      if (!existingPost) {
         return res.status(404).json({ error: 'Post não encontrado' });
       }
-      
-      res.status(200).json({ message: 'Post deletado com sucesso' });
-    } catch (error) {
-      console.error('Erro ao deletar post:', error);
-      res.status(500).json({ error: 'Erro ao deletar post' });
+
+      // Gerar slug se o título mudou
+      let slug = existingPost.slug;
+      if (title && title !== existingPost.title) {
+        slug = title
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .trim();
+      }
+
+      // Calcular tempo de leitura se o conteúdo mudou
+      let readTime = existingPost.readTime;
+      if (content && content !== existingPost.content) {
+        readTime = Math.ceil(content.length / 1000) + ' min';
+      }
+
+      const updatePost = db.prepare(`
+        UPDATE posts SET
+          title = COALESCE(?, title),
+          content = COALESCE(?, content),
+          excerpt = COALESCE(?, excerpt),
+          author = COALESCE(?, author),
+          category = COALESCE(?, category),
+          slug = COALESCE(?, slug),
+          readTime = COALESCE(?, readTime),
+          featured = COALESCE(?, featured),
+          coverImage = COALESCE(?, coverImage),
+          metaDescription = COALESCE(?, metaDescription),
+          tags = COALESCE(?, tags),
+          keywords = COALESCE(?, keywords),
+          updatedAt = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `);
+
+      updatePost.run(
+        title || null,
+        content || null,
+        excerpt || null,
+        author || null,
+        category || null,
+        slug || null,
+        readTime || null,
+        featured !== undefined ? (featured ? 1 : 0) : null,
+        coverImage || null,
+        metaDescription || null,
+        tags ? JSON.stringify(tags) : null,
+        keywords ? JSON.stringify(keywords) : null,
+        parseInt(id)
+      );
+
+      return res.status(200).json({ message: 'Post atualizado com sucesso' });
     }
-  } else {
-    res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+
+    if (req.method === 'DELETE') {
+      // Deletar post
+      const deletePost = db.prepare('DELETE FROM posts WHERE id = ?');
+      const result = deletePost.run(parseInt(id));
+
+      if (result.changes === 0) {
+        return res.status(404).json({ error: 'Post não encontrado' });
+      }
+
+      return res.status(200).json({ message: 'Post deletado com sucesso' });
+    }
+
+    return res.status(405).json({ error: 'Método não permitido' });
+
+  } catch (error) {
+    console.error('Erro na API de posts:', error);
+    return res.status(500).json({ error: 'Erro interno do servidor' });
   }
 }

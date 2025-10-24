@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye, Save, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, Save, X, Download, Upload } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface BlogPost {
@@ -25,51 +25,27 @@ interface BlogPost {
 
 const Admin = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  // Verificar autenticação
+  // Carregar posts da API
   useEffect(() => {
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-      verifyToken(token);
-    } else {
-      setIsLoading(false);
-    }
+    loadPosts();
   }, []);
-
-  const verifyToken = async (token: string) => {
-    try {
-      const response = await fetch('/api/auth/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token })
-      });
-
-      if (response.ok) {
-        setIsAuthenticated(true);
-        loadPosts();
-      } else {
-        localStorage.removeItem('admin_token');
-        setIsAuthenticated(false);
-      }
-    } catch (error) {
-      console.error('Erro ao verificar token:', error);
-      setIsAuthenticated(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const loadPosts = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch('/api/posts');
-      const data = await response.json();
-      setPosts(data);
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data);
+      } else {
+        throw new Error('Erro ao carregar posts');
+      }
     } catch (error) {
       console.error('Erro ao carregar posts:', error);
       toast({
@@ -77,54 +53,20 @@ const Admin = () => {
         description: "Erro ao carregar posts",
         variant: "destructive"
       });
-    }
-  };
-
-  const handleLogin = async (username: string, password: string) => {
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        localStorage.setItem('admin_token', data.token);
-        setIsAuthenticated(true);
-        loadPosts();
-        toast({
-          title: "Sucesso",
-          description: "Login realizado com sucesso!"
-        });
-      } else {
-        toast({
-          title: "Erro",
-          description: data.error || "Credenciais inválidas",
-          variant: "destructive"
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Erro",
-        description: "Erro ao fazer login",
-        variant: "destructive"
-      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSavePost = async (postData: Partial<BlogPost>) => {
     try {
-      const token = localStorage.getItem('admin_token');
       const url = editingPost ? `/api/posts/${editingPost.id}` : '/api/posts';
       const method = editingPost ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(postData)
       });
@@ -137,7 +79,7 @@ const Admin = () => {
         setShowEditor(false);
         setEditingPost(null);
         setIsEditing(false);
-        loadPosts();
+        loadPosts(); // Recarregar posts
       } else {
         throw new Error('Erro ao salvar post');
       }
@@ -154,10 +96,8 @@ const Admin = () => {
     if (!confirm('Tem certeza que deseja deletar este post?')) return;
 
     try {
-      const token = localStorage.getItem('admin_token');
       const response = await fetch(`/api/posts/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        method: 'DELETE'
       });
 
       if (response.ok) {
@@ -165,7 +105,7 @@ const Admin = () => {
           title: "Sucesso",
           description: "Post deletado!"
         });
-        loadPosts();
+        loadPosts(); // Recarregar posts
       } else {
         throw new Error('Erro ao deletar post');
       }
@@ -178,34 +118,48 @@ const Admin = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('admin_token');
-    setIsAuthenticated(false);
-    setPosts([]);
+  const handleExportPosts = () => {
+    const dataStr = JSON.stringify(posts, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'blog-posts.json';
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <LoginForm onLogin={handleLogin} />;
-  }
+  const handleImportPosts = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const importedPosts = JSON.parse(e.target?.result as string);
+          savePostsToStorage(importedPosts);
+          toast({
+            title: "Sucesso",
+            description: "Posts importados com sucesso!"
+          });
+        } catch (error) {
+          toast({
+            title: "Erro",
+            description: "Erro ao importar posts",
+            variant: "destructive"
+          });
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">CMS Nodal Energy</h1>
-            <p className="text-gray-600">Gerencie o conteúdo do seu blog</p>
+            <h1 className="text-3xl font-bold text-gray-900">Editor de Blog Local</h1>
+            <p className="text-gray-600">Gerencie o conteúdo do seu blog localmente</p>
           </div>
           <div className="flex gap-4">
             <Button
@@ -219,9 +173,27 @@ const Admin = () => {
               <Plus className="w-4 h-4 mr-2" />
               Novo Post
             </Button>
-            <Button variant="outline" onClick={handleLogout}>
-              Sair
+            <Button
+              variant="outline"
+              onClick={handleExportPosts}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Exportar
             </Button>
+            <label className="cursor-pointer">
+              <Button variant="outline" asChild>
+                <span>
+                  <Upload className="w-4 h-4 mr-2" />
+                  Importar
+                </span>
+              </Button>
+              <input
+                type="file"
+                accept=".json"
+                onChange={handleImportPosts}
+                className="hidden"
+              />
+            </label>
           </div>
         </div>
 
@@ -303,52 +275,6 @@ const Admin = () => {
   );
 };
 
-// Componente de Login
-const LoginForm = ({ onLogin }: { onLogin: (username: string, password: string) => void }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onLogin(username, password);
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Acesso Administrativo</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Usuário</label>
-              <Input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Digite seu usuário"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Senha</label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Digite sua senha"
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full">
-              Entrar
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
 
 // Componente Editor de Blog
 const BlogEditor = ({ 

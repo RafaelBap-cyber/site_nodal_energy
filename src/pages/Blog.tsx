@@ -5,14 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { Calendar, User, Clock, Search, ArrowRight, BookOpen, ChevronLeft, ChevronRight, X, Linkedin, Phone, Mail, RefreshCw } from "lucide-react";
-import { 
-  BlogPost, 
-  syncPostsWithCMS, 
-  searchPosts, 
-  getPostsByCategory,
-  calculateReadTime,
-  cleanHtmlContent
-} from "@/lib/blogUtils";
+import { BlogPost } from "@/lib/blogUtils";
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,7 +52,7 @@ const Blog = () => {
     return processedText;
   };
 
-  // Carregar posts dinamicamente
+  // Carregar posts da API
   useEffect(() => {
     loadBlogPosts();
   }, []);
@@ -67,8 +60,13 @@ const Blog = () => {
   const loadBlogPosts = async () => {
     try {
       setLoading(true);
-      const posts = await syncPostsWithCMS();
-      setBlogPosts(posts);
+      const response = await fetch('/api/posts');
+      if (response.ok) {
+        const data = await response.json();
+        setBlogPosts(data);
+      } else {
+        throw new Error('Erro ao carregar posts');
+      }
     } catch (error) {
       console.error('Erro ao carregar posts:', error);
       setBlogPosts([]);
@@ -77,14 +75,11 @@ const Blog = () => {
     }
   };
 
-  // Sincronizar posts com o CMS
+  // Recarregar posts
   const handleSyncPosts = async () => {
-    try {
-      setSyncing(true);
-      await loadBlogPosts();
-    } finally {
-      setSyncing(false);
-    }
+    setSyncing(true);
+    await loadBlogPosts();
+    setSyncing(false);
   };
 
   // Função para abrir artigo

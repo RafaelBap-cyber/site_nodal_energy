@@ -285,51 +285,36 @@ export const cleanHtmlContent = (html: string): string => {
   return cleanContent;
 };
 
-// Função para sincronizar posts com o CMS
-export const syncPostsWithCMS = async (): Promise<BlogPost[]> => {
-  try {
-    // Aqui você pode implementar a sincronização com uma API real
-    // Por enquanto, vamos usar o localStorage
-    const posts = loadPostsFromStorage();
-    
-    // Se não houver posts, criar alguns de exemplo
-    if (posts.length === 0) {
-      const examplePosts: BlogPost[] = [
-        {
-          id: "1",
-          title: "O Futuro da Energia Solar no Brasil",
-          excerpt: "Análise das tendências e oportunidades no mercado de energia solar brasileiro para os próximos anos.",
-          content: "O Brasil está vivenciando uma revolução no setor de energia solar. Com o aumento da demanda por energia limpa e renovável, o país tem se destacado como um dos principais mercados para investimentos em energia solar.\n\n## Principais Tendências\n\n- Crescimento exponencial da capacidade instalada\n- Redução dos custos de equipamentos\n- Novas políticas de incentivo governamental\n- Aumento da conscientização ambiental\n\n## Oportunidades de Mercado\n\nO setor solar brasileiro oferece diversas oportunidades para investidores, empresas e consumidores que buscam reduzir custos energéticos e contribuir para a sustentabilidade.",
-          author: "Equipe Nodal Energy",
-          date: "2024-01-15",
-          readTime: "5 min",
-          category: "Energia Solar",
-          featured: true,
-          tags: ["energia solar", "brasil", "sustentabilidade"]
-        },
-        {
-          id: "2",
-          title: "Como Reduzir Custos Energéticos em 30%",
-          excerpt: "Estratégias práticas para empresas que buscam eficiência energética e redução de custos operacionais.",
-          content: "A eficiência energética é uma das principais preocupações das empresas modernas. Com o aumento dos custos de energia, implementar estratégias de otimização se tornou essencial para manter a competitividade.\n\n## Estratégias de Eficiência\n\n### 1. Auditoria Energética\nRealize uma análise completa do consumo energético da sua empresa para identificar pontos de melhoria.\n\n### 2. Automação de Sistemas\nImplemente sistemas inteligentes que otimizem o uso de energia automaticamente.\n\n### 3. Treinamento da Equipe\nCapacite seus colaboradores para práticas mais eficientes de uso energético.\n\n## Resultados Esperados\n\nCom a implementação dessas estratégias, é possível alcançar uma redução significativa nos custos energéticos, contribuindo para a sustentabilidade e lucratividade da empresa.",
-          author: "Equipe Nodal Energy",
-          date: "2024-01-10",
-          readTime: "7 min",
-          category: "Eficiência Energética",
-          featured: false,
-          tags: ["eficiência energética", "custos", "empresas"]
-        }
-      ];
-      
-      savePostsToStorage(examplePosts);
-      return examplePosts;
+// Função para criar posts de exemplo
+export const createExamplePosts = (): BlogPost[] => {
+  const examplePosts: BlogPost[] = [
+    {
+      id: "1",
+      title: "O Futuro da Energia Solar no Brasil",
+      excerpt: "Análise das tendências e oportunidades no mercado de energia solar brasileiro para os próximos anos.",
+      content: "O Brasil está vivenciando uma revolução no setor de energia solar. Com o aumento da demanda por energia limpa e renovável, o país tem se destacado como um dos principais mercados para investimentos em energia solar.\n\n## Principais Tendências\n\n- Crescimento exponencial da capacidade instalada\n- Redução dos custos de equipamentos\n- Novas políticas de incentivo governamental\n- Aumento da conscientização ambiental\n\n## Oportunidades de Mercado\n\nO setor solar brasileiro oferece diversas oportunidades para investidores, empresas e consumidores que buscam reduzir custos energéticos e contribuir para a sustentabilidade.",
+      author: "Equipe Nodal Energy",
+      date: "2024-01-15",
+      readTime: "5 min",
+      category: "Energia Solar",
+      featured: true,
+      tags: ["energia solar", "brasil", "sustentabilidade"]
+    },
+    {
+      id: "2",
+      title: "Como Reduzir Custos Energéticos em 30%",
+      excerpt: "Estratégias práticas para empresas que buscam eficiência energética e redução de custos operacionais.",
+      content: "A eficiência energética é uma das principais preocupações das empresas modernas. Com o aumento dos custos de energia, implementar estratégias de otimização se tornou essencial para manter a competitividade.\n\n## Estratégias de Eficiência\n\n### 1. Auditoria Energética\nRealize uma análise completa do consumo energético da sua empresa para identificar pontos de melhoria.\n\n### 2. Automação de Sistemas\nImplemente sistemas inteligentes que otimizem o uso de energia automaticamente.\n\n### 3. Treinamento da Equipe\nCapacite seus colaboradores para práticas mais eficientes de uso energético.\n\n## Resultados Esperados\n\nCom a implementação dessas estratégias, é possível alcançar uma redução significativa nos custos energéticos, contribuindo para a sustentabilidade e lucratividade da empresa.",
+      author: "Equipe Nodal Energy",
+      date: "2024-01-10",
+      readTime: "7 min",
+      category: "Eficiência Energética",
+      featured: false,
+      tags: ["eficiência energética", "custos", "empresas"]
     }
-    
-    return posts;
-  } catch (error) {
-    console.error('Erro ao sincronizar posts:', error);
-    return [];
-  }
+  ];
+  
+  return examplePosts;
 };
 
 // Função para exportar posts como Markdown

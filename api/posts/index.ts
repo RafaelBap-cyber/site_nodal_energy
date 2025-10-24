@@ -1,47 +1,115 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Pool } from 'pg';
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { getDatabase } from '../lib/database';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Configurar CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    try {
-      // Buscar todos os posts
-      const { rows } = await pool.query('SELECT * FROM blog_posts ORDER BY date DESC');
-      res.status(200).json(rows);
-    } catch (error) {
-      console.error('Erro ao buscar posts:', error);
-      res.status(500).json({ error: 'Erro ao buscar posts' });
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  try {
+    const db = getDatabase();
+
+    if (req.method === 'GET') {
+      // Listar todos os posts
+      const posts = db.prepare(`
+        SELECT 
+          id,
+          title,
+          content,
+          excerpt,
+          author,
+          category,
+          date,
+          slug,
+          readTime,
+          featured,
+          coverImage,
+          metaDescription,
+          keywords,
+          tags,
+          createdAt,
+          updatedAt
+        FROM posts 
+        ORDER BY createdAt DESC
+      `).all();
+
+      // Converter tags e keywords de JSON string para array
+      const formattedPosts = posts.map(post => ({
+        ...post,
+        tags: post.tags ? JSON.parse(post.tags) : [],
+        keywords: post.keywords ? JSON.parse(post.keywords) : [],
+        featured: Boolean(post.featured)
+      }));
+
+      return res.status(200).json(formattedPosts);
     }
-  } else if (req.method === 'POST') {
-    try {
-      const { title, content, author, category, excerpt, tags, coverImage, metaDescription, keywords } = req.body;
-      
-      // Validar dados obrigatórios
-      if (!title || !content || !author || !category) {
-        return res.status(400).json({ error: 'Dados obrigatórios não fornecidos' });
+
+    if (req.method === 'POST') {
+      // Criar novo post
+      const {
+        title,
+        content,
+        excerpt,
+        author = 'Equipe Nodal Energy',
+        category = 'Energia Solar',
+        tags = [],
+        keywords = [],
+        coverImage,
+        metaDescription,
+        featured = false
+      } = req.body;
+
+      if (!title || !content || !excerpt) {
+        return res.status(400).json({ error: 'Título, conteúdo e resumo são obrigatórios' });
       }
 
-      // Criar slug
-      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      const readTime = Math.ceil(content.split(' ').length / 200) + ' min';
+      // Gerar slug único
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .trim();
 
-      // Inserir novo post
-      const { rows } = await pool.query(`
-        INSERT INTO blog_posts (title, content, author, category, excerpt, tags, cover_image, meta_description, keywords, date, slug, read_time, featured)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-        RETURNING *
-      `, [title, content, author, category, excerpt || '', JSON.stringify(tags || []), coverImage || '', metaDescription || '', JSON.stringify(keywords || []), new Date().toISOString(), slug, readTime, false]);
+      // Calcular tempo de leitura
+      const readTime = Math.ceil(content.length / 1000) + ' min';
 
-      res.status(201).json(rows[0]);
-    } catch (error) {
-      console.error('Erro ao criar post:', error);
-      res.status(500).json({ error: 'Erro ao criar post' });
+      const insertPost = db.prepare(`
+        INSERT INTO posts (
+          title, content, excerpt, author, category, slug, readTime, 
+          featured, coverImage, metaDescription, tags, keywords
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      const result = insertPost.run(
+        title,
+        content,
+        excerpt,
+        author,
+        category,
+        slug,
+        readTime,
+        featured ? 1 : 0,
+        coverImage || null,
+        metaDescription || null,
+        JSON.stringify(tags),
+        JSON.stringify(keywords)
+      );
+
+      return res.status(201).json({
+        id: result.lastInsertRowid,
+        message: 'Post criado com sucesso'
+      });
     }
-  } else {
-    res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+
+    return res.status(405).json({ error: 'Método não permitido' });
+
+  } catch (error) {
+    console.error('Erro na API de posts:', error);
+    return res.status(500).json({ error: 'Erro interno do servidor' });
   }
 }

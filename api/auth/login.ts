@@ -1,54 +1,65 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Pool } from 'pg';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import jwt from 'jsonwebtoken';
+import { getDatabase } from '../lib/database';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+const JWT_SECRET = process.env.JWT_SECRET || 'sua-chave-secreta-aqui';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Configurar CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Método não permitido' });
   }
 
   try {
     const { username, password } = req.body;
 
-    // Credenciais válidas
-    const validCredentials = {
-      username: 'FábioCarrascoCEO',
-      password: 'Faralufe'
-    };
-
-    if (username === validCredentials.username && password === validCredentials.password) {
-      // Gerar token JWT
-      const token = jwt.sign(
-        { username, role: 'admin' },
-        JWT_SECRET,
-        { expiresIn: '24h' }
-      );
-
-      // Salvar sessão no Postgres
-      await pool.query(`
-        INSERT INTO admin_sessions (username, token, expires_at)
-        VALUES ($1, $2, $3)
-        ON CONFLICT (username) DO UPDATE SET
-        token = $2,
-        expires_at = $3
-      `, [username, token, new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()]);
-
-      res.status(200).json({
-        success: true,
-        token,
-        user: { username, role: 'admin' }
-      });
-    } else {
-      res.status(401).json({ error: 'Credenciais inválidas' });
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Usuário e senha são obrigatórios' });
     }
+
+    const db = getDatabase();
+    
+    // Buscar usuário no banco
+    const user = db.prepare('SELECT id, username, password FROM users WHERE username = ?').get(username);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Credenciais inválidas' });
+    }
+
+    // Verificar senha (em produção, usar hash)
+    if (user.password !== password) {
+      return res.status(401).json({ error: 'Credenciais inválidas' });
+    }
+
+    // Gerar token JWT
+    const token = jwt.sign(
+      { 
+        userId: user.id, 
+        username: user.username 
+      },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    return res.status(200).json({
+      success: true,
+      token,
+      user: {
+        id: user.id,
+        username: user.username
+      }
+    });
+
   } catch (error) {
     console.error('Erro no login:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ error: 'Erro interno do servidor' });
   }
 }
