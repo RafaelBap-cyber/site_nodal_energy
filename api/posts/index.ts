@@ -12,7 +12,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    console.log('Iniciando API de posts...');
     const db = getDatabase();
+    console.log('Banco de dados conectado com sucesso');
 
     if (req.method === 'GET') {
       // Listar todos os posts
@@ -50,6 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === 'POST') {
+      console.log('Criando novo post...', req.body);
       // Criar novo post
       const {
         title,
@@ -81,10 +84,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const insertPost = db.prepare(`
         INSERT INTO posts (
           title, content, excerpt, author, category, slug, readTime, 
-          featured, coverImage, metaDescription, tags, keywords
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          featured, coverImage, metaDescription, tags, keywords, date
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
+      const currentDate = new Date().toISOString().split('T')[0];
+      
       const result = insertPost.run(
         title,
         content,
@@ -97,8 +102,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         coverImage || null,
         metaDescription || null,
         JSON.stringify(tags),
-        JSON.stringify(keywords)
+        JSON.stringify(keywords),
+        currentDate
       );
+      
+      console.log('Post inserido com sucesso:', result);
 
       return res.status(201).json({
         id: result.lastInsertRowid,

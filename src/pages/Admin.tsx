@@ -44,13 +44,49 @@ const Admin = () => {
   const loadPosts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/posts');
-      if (response.ok) {
-        const data = await response.json();
-        setPosts(data);
-      } else {
-        throw new Error('Erro ao carregar posts');
-      }
+      
+      // Em desenvolvimento, usar dados mockados
+      const mockPosts = [
+        {
+          id: "1",
+          title: "O Futuro da Energia Solar no Brasil",
+          content: "O Brasil está vivenciando uma revolução no setor de energia solar...",
+          author: "Equipe Nodal Energy",
+          category: "Energia Solar",
+          excerpt: "Análise das tendências e oportunidades no mercado de energia solar brasileiro.",
+          tags: ["energia solar", "brasil", "sustentabilidade"],
+          coverImage: "/images/hero-energy-production.jpg",
+          metaDescription: "Análise do futuro da energia solar no Brasil",
+          keywords: ["energia solar", "brasil", "sustentabilidade"],
+          date: "2024-01-15",
+          slug: "o-futuro-da-energia-solar-no-brasil",
+          readTime: "5 min",
+          featured: true
+        },
+        {
+          id: "2",
+          title: "Como Reduzir Custos Energéticos em 30%",
+          content: "A eficiência energética é uma das principais preocupações das empresas...",
+          author: "Equipe Nodal Energy",
+          category: "Eficiência Energética",
+          excerpt: "Estratégias práticas para empresas que buscam eficiência energética.",
+          tags: ["eficiência energética", "custos", "empresas"],
+          coverImage: "/images/project-1.jpg",
+          metaDescription: "Estratégias para reduzir custos energéticos em empresas",
+          keywords: ["eficiência energética", "custos", "empresas"],
+          date: "2024-01-10",
+          slug: "como-reduzir-custos-energeticos-em-30",
+          readTime: "7 min",
+          featured: false
+        }
+      ];
+      
+      // Simular delay de API
+      setTimeout(() => {
+        setPosts(mockPosts);
+        setIsLoading(false);
+      }, 500);
+      
     } catch (error) {
       console.error('Erro ao carregar posts:', error);
       toast({
@@ -58,7 +94,6 @@ const Admin = () => {
         description: "Erro ao carregar posts",
         variant: "destructive"
       });
-    } finally {
       setIsLoading(false);
     }
   };
