@@ -9,9 +9,6 @@
       "runtime": "nodejs20.x"
     }
   },
-  "env": {
-    "JWT_SECRET": "@jwt_secret"
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
