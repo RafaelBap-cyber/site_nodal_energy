@@ -120,6 +120,7 @@ const Blog = () => {
 
   // Função para abrir artigo
   const openArticle = (post: BlogPost) => {
+    console.log('Abrindo artigo:', post);
     setSelectedArticle(post);
     document.body.style.overflow = 'hidden';
   };
@@ -521,8 +522,10 @@ const Blog = () => {
                   {selectedArticle.excerpt}
                 </p>
                 
-                {/* Renderizar conteúdo Markdown */}
-                {renderMarkdownContent(selectedArticle.content)}
+                {/* Conteúdo simples primeiro */}
+                <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
+                  {selectedArticle.content}
+                </div>
                 
                 {/* Tags */}
                 {selectedArticle.tags && selectedArticle.tags.length > 0 && (
