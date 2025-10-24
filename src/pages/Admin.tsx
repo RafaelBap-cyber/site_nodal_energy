@@ -45,20 +45,26 @@ const Admin = () => {
     try {
       setIsLoading(true);
       
-      // Tentar carregar da API primeiro
-      try {
-        const response = await fetch('/api/posts');
-        if (response.ok) {
-          const data = await response.json();
-          setPosts(data);
-          setIsLoading(false);
-          return;
-        }
-      } catch (apiError) {
-        console.log('API não disponível, usando localStorage');
+      // Sempre tentar carregar da API primeiro
+      const response = await fetch('/api/posts');
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data);
+        setIsLoading(false);
+        return;
+      } else {
+        throw new Error('API não disponível');
       }
       
-      // Fallback: usar localStorage
+    } catch (error) {
+      console.error('Erro ao carregar posts da API:', error);
+      toast({
+        title: "Aviso",
+        description: "Usando dados locais. Posts não serão compartilhados entre dispositivos.",
+        variant: "destructive"
+      });
+      
+      // Fallback: usar localStorage apenas em caso de erro
       const savedPosts = localStorage.getItem('blog_posts');
       if (savedPosts) {
         setPosts(JSON.parse(savedPosts));
@@ -87,88 +93,42 @@ const Admin = () => {
       }
       
       setIsLoading(false);
-      
-    } catch (error) {
-      console.error('Erro ao carregar posts:', error);
-      toast({
-        title: "Erro",
-        description: "Erro ao carregar posts",
-        variant: "destructive"
-      });
-      setIsLoading(false);
     }
   };
 
   const handleSavePost = async (postData: Partial<BlogPost>) => {
     try {
-      // Tentar salvar via API primeiro
-      try {
-        const url = editingPost ? `/api/posts/${editingPost.id}` : '/api/posts';
-        const method = editingPost ? 'PUT' : 'POST';
+      // Sempre tentar salvar via API primeiro
+      const url = editingPost ? `/api/posts/${editingPost.id}` : '/api/posts';
+      const method = editingPost ? 'PUT' : 'POST';
 
-        const response = await fetch(url, {
-          method,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(postData)
-        });
-
-        if (response.ok) {
-          toast({
-            title: "Sucesso",
-            description: editingPost ? "Post atualizado!" : "Post criado!"
-          });
-          setShowEditor(false);
-          setEditingPost(null);
-          setIsEditing(false);
-          loadPosts(); // Recarregar posts
-          return;
-        }
-      } catch (apiError) {
-        console.log('API não disponível, usando localStorage');
-      }
-
-      // Fallback: usar localStorage
-      const currentPosts = [...posts];
-      const newPost = {
-        ...postData,
-        id: editingPost ? editingPost.id : Date.now().toString(),
-        date: new Date().toISOString().split('T')[0],
-        slug: postData.title?.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim() || 'novo-post',
-        readTime: postData.content ? Math.ceil(postData.content.length / 1000) + ' min' : '1 min',
-        author: postData.author || 'Equipe Nodal Energy',
-        category: postData.category || 'Energia Solar',
-        tags: postData.tags || [],
-        keywords: postData.keywords || [],
-        featured: postData.featured || false
-      };
-
-      if (editingPost) {
-        const index = currentPosts.findIndex(p => p.id === editingPost.id);
-        if (index !== -1) {
-          currentPosts[index] = newPost;
-        }
-      } else {
-        currentPosts.unshift(newPost);
-      }
-
-      setPosts(currentPosts);
-      localStorage.setItem('blog_posts', JSON.stringify(currentPosts));
-
-      toast({
-        title: "Sucesso",
-        description: editingPost ? "Post atualizado!" : "Post criado!"
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
       });
-      setShowEditor(false);
-      setEditingPost(null);
-      setIsEditing(false);
+
+      if (response.ok) {
+        toast({
+          title: "Sucesso",
+          description: editingPost ? "Post atualizado!" : "Post criado!"
+        });
+        setShowEditor(false);
+        setEditingPost(null);
+        setIsEditing(false);
+        loadPosts(); // Recarregar posts
+        return;
+      } else {
+        throw new Error('Erro na API');
+      }
 
     } catch (error) {
-      console.error('Erro ao salvar post:', error);
+      console.error('Erro ao salvar post na API:', error);
       toast({
         title: "Erro",
-        description: "Erro ao salvar post",
+        description: "Não foi possível salvar o post. Verifique a conexão com o servidor.",
         variant: "destructive"
       });
     }

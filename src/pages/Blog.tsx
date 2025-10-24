@@ -61,51 +61,19 @@ const Blog = () => {
     try {
       setLoading(true);
       
-      // Tentar carregar da API primeiro
-      try {
-        const response = await fetch('/api/posts');
-        if (response.ok) {
-          const data = await response.json();
-          setBlogPosts(data);
-          setLoading(false);
-          return;
-        }
-      } catch (apiError) {
-        console.log('API não disponível, usando localStorage');
-      }
-      
-      // Fallback: usar localStorage
-      const savedPosts = localStorage.getItem('blog_posts');
-      if (savedPosts) {
-        setBlogPosts(JSON.parse(savedPosts));
+      // Sempre tentar carregar da API primeiro
+      const response = await fetch('/api/posts');
+      if (response.ok) {
+        const data = await response.json();
+        setBlogPosts(data);
+        setLoading(false);
+        return;
       } else {
-        // Posts padrão se não houver dados salvos
-        const defaultPosts = [
-          {
-            id: "1",
-            title: "O Futuro da Energia Solar no Brasil",
-            content: "O Brasil está vivenciando uma revolução no setor de energia solar. Com o aumento da demanda por energia limpa e renovável, o país tem se destacado como um dos principais mercados para investimentos em energia solar.\n\n## Principais Tendências\n\n- Crescimento exponencial da capacidade instalada\n- Redução dos custos de equipamentos\n- Novas políticas de incentivo governamental\n- Aumento da conscientização ambiental\n\n## Oportunidades de Mercado\n\nO setor solar brasileiro oferece diversas oportunidades para investidores, empresas e consumidores que buscam reduzir custos energéticos e contribuir para a sustentabilidade.",
-            author: "Equipe Nodal Energy",
-            category: "Energia Solar",
-            excerpt: "Análise das tendências e oportunidades no mercado de energia solar brasileiro para os próximos anos.",
-            tags: ["energia solar", "brasil", "sustentabilidade"],
-            coverImage: "/images/hero-energy-production.jpg",
-            metaDescription: "Análise do futuro da energia solar no Brasil",
-            keywords: ["energia solar", "brasil", "sustentabilidade"],
-            date: "2024-01-15",
-            slug: "o-futuro-da-energia-solar-no-brasil",
-            readTime: "5 min",
-            featured: true
-          }
-        ];
-        setBlogPosts(defaultPosts);
-        localStorage.setItem('blog_posts', JSON.stringify(defaultPosts));
+        throw new Error('API não disponível');
       }
-      
-      setLoading(false);
       
     } catch (error) {
-      console.error('Erro ao carregar posts:', error);
+      console.error('Erro ao carregar posts da API:', error);
       setBlogPosts([]);
       setLoading(false);
     }
