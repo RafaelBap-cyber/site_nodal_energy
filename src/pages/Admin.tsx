@@ -45,47 +45,48 @@ const Admin = () => {
     try {
       setIsLoading(true);
       
-      // Em desenvolvimento, usar dados mockados
-      const mockPosts = [
-        {
-          id: "1",
-          title: "O Futuro da Energia Solar no Brasil",
-          content: "O Brasil está vivenciando uma revolução no setor de energia solar...",
-          author: "Equipe Nodal Energy",
-          category: "Energia Solar",
-          excerpt: "Análise das tendências e oportunidades no mercado de energia solar brasileiro.",
-          tags: ["energia solar", "brasil", "sustentabilidade"],
-          coverImage: "/images/hero-energy-production.jpg",
-          metaDescription: "Análise do futuro da energia solar no Brasil",
-          keywords: ["energia solar", "brasil", "sustentabilidade"],
-          date: "2024-01-15",
-          slug: "o-futuro-da-energia-solar-no-brasil",
-          readTime: "5 min",
-          featured: true
-        },
-        {
-          id: "2",
-          title: "Como Reduzir Custos Energéticos em 30%",
-          content: "A eficiência energética é uma das principais preocupações das empresas...",
-          author: "Equipe Nodal Energy",
-          category: "Eficiência Energética",
-          excerpt: "Estratégias práticas para empresas que buscam eficiência energética.",
-          tags: ["eficiência energética", "custos", "empresas"],
-          coverImage: "/images/project-1.jpg",
-          metaDescription: "Estratégias para reduzir custos energéticos em empresas",
-          keywords: ["eficiência energética", "custos", "empresas"],
-          date: "2024-01-10",
-          slug: "como-reduzir-custos-energeticos-em-30",
-          readTime: "7 min",
-          featured: false
+      // Tentar carregar da API primeiro
+      try {
+        const response = await fetch('/api/posts');
+        if (response.ok) {
+          const data = await response.json();
+          setPosts(data);
+          setIsLoading(false);
+          return;
         }
-      ];
+      } catch (apiError) {
+        console.log('API não disponível, usando localStorage');
+      }
       
-      // Simular delay de API
-      setTimeout(() => {
-        setPosts(mockPosts);
-        setIsLoading(false);
-      }, 500);
+      // Fallback: usar localStorage
+      const savedPosts = localStorage.getItem('blog_posts');
+      if (savedPosts) {
+        setPosts(JSON.parse(savedPosts));
+      } else {
+        // Posts padrão se não houver dados salvos
+        const defaultPosts = [
+          {
+            id: "1",
+            title: "O Futuro da Energia Solar no Brasil",
+            content: "O Brasil está vivenciando uma revolução no setor de energia solar...",
+            author: "Equipe Nodal Energy",
+            category: "Energia Solar",
+            excerpt: "Análise das tendências e oportunidades no mercado de energia solar brasileiro.",
+            tags: ["energia solar", "brasil", "sustentabilidade"],
+            coverImage: "/images/hero-energy-production.jpg",
+            metaDescription: "Análise do futuro da energia solar no Brasil",
+            keywords: ["energia solar", "brasil", "sustentabilidade"],
+            date: "2024-01-15",
+            slug: "o-futuro-da-energia-solar-no-brasil",
+            readTime: "5 min",
+            featured: true
+          }
+        ];
+        setPosts(defaultPosts);
+        localStorage.setItem('blog_posts', JSON.stringify(defaultPosts));
+      }
+      
+      setIsLoading(false);
       
     } catch (error) {
       console.error('Erro ao carregar posts:', error);
@@ -100,30 +101,71 @@ const Admin = () => {
 
   const handleSavePost = async (postData: Partial<BlogPost>) => {
     try {
-      const url = editingPost ? `/api/posts/${editingPost.id}` : '/api/posts';
-      const method = editingPost ? 'PUT' : 'POST';
+      // Tentar salvar via API primeiro
+      try {
+        const url = editingPost ? `/api/posts/${editingPost.id}` : '/api/posts';
+        const method = editingPost ? 'PUT' : 'POST';
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Sucesso",
-          description: editingPost ? "Post atualizado!" : "Post criado!"
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(postData)
         });
-        setShowEditor(false);
-        setEditingPost(null);
-        setIsEditing(false);
-        loadPosts(); // Recarregar posts
-      } else {
-        throw new Error('Erro ao salvar post');
+
+        if (response.ok) {
+          toast({
+            title: "Sucesso",
+            description: editingPost ? "Post atualizado!" : "Post criado!"
+          });
+          setShowEditor(false);
+          setEditingPost(null);
+          setIsEditing(false);
+          loadPosts(); // Recarregar posts
+          return;
+        }
+      } catch (apiError) {
+        console.log('API não disponível, usando localStorage');
       }
+
+      // Fallback: usar localStorage
+      const currentPosts = [...posts];
+      const newPost = {
+        ...postData,
+        id: editingPost ? editingPost.id : Date.now().toString(),
+        date: new Date().toISOString().split('T')[0],
+        slug: postData.title?.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim() || 'novo-post',
+        readTime: postData.content ? Math.ceil(postData.content.length / 1000) + ' min' : '1 min',
+        author: postData.author || 'Equipe Nodal Energy',
+        category: postData.category || 'Energia Solar',
+        tags: postData.tags || [],
+        keywords: postData.keywords || [],
+        featured: postData.featured || false
+      };
+
+      if (editingPost) {
+        const index = currentPosts.findIndex(p => p.id === editingPost.id);
+        if (index !== -1) {
+          currentPosts[index] = newPost;
+        }
+      } else {
+        currentPosts.unshift(newPost);
+      }
+
+      setPosts(currentPosts);
+      localStorage.setItem('blog_posts', JSON.stringify(currentPosts));
+
+      toast({
+        title: "Sucesso",
+        description: editingPost ? "Post atualizado!" : "Post criado!"
+      });
+      setShowEditor(false);
+      setEditingPost(null);
+      setIsEditing(false);
+
     } catch (error) {
+      console.error('Erro ao salvar post:', error);
       toast({
         title: "Erro",
         description: "Erro ao salvar post",
@@ -136,20 +178,36 @@ const Admin = () => {
     if (!confirm('Tem certeza que deseja deletar este post?')) return;
 
     try {
-      const response = await fetch(`/api/posts/${id}`, {
-        method: 'DELETE'
+      // Tentar deletar via API primeiro
+      try {
+        const response = await fetch(`/api/posts/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          toast({
+            title: "Sucesso",
+            description: "Post deletado!"
+          });
+          loadPosts(); // Recarregar posts
+          return;
+        }
+      } catch (apiError) {
+        console.log('API não disponível, usando localStorage');
+      }
+
+      // Fallback: usar localStorage
+      const currentPosts = posts.filter(p => p.id !== id);
+      setPosts(currentPosts);
+      localStorage.setItem('blog_posts', JSON.stringify(currentPosts));
+
+      toast({
+        title: "Sucesso",
+        description: "Post deletado!"
       });
 
-      if (response.ok) {
-        toast({
-          title: "Sucesso",
-          description: "Post deletado!"
-        });
-        loadPosts(); // Recarregar posts
-      } else {
-        throw new Error('Erro ao deletar post');
-      }
     } catch (error) {
+      console.error('Erro ao deletar post:', error);
       toast({
         title: "Erro",
         description: "Erro ao deletar post",
