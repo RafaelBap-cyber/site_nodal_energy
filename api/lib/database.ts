@@ -70,12 +70,12 @@ function initializeDatabase(database: any) {
   `);
 
   // Inserir usuário padrão se não existir
-  const userExists = database.prepare('SELECT id FROM users WHERE username = ?').get('admin');
+  const userExists = database.prepare('SELECT id FROM users WHERE username = ?').get('FábioCEO');
   if (!userExists) {
-    // Senha: admin123 (hash em produção)
+    // Senha: Faralufe101273 (hash em produção)
     database.prepare(`
       INSERT INTO users (username, password) 
-      VALUES ('admin', 'admin123')
+      VALUES ('FábioCEO', 'Faralufe101273')
     `).run();
   }
 

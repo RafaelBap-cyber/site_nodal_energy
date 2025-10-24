@@ -3,8 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye, Save, X, Download, Upload } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, Save, X, Download, Upload, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
+import AdminLogin from '@/components/AdminLogin';
 
 interface BlogPost {
   id: string;
@@ -30,11 +32,14 @@ const Admin = () => {
   const [showEditor, setShowEditor] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const { isAuthenticated, isLoading: authLoading, login, logout } = useAuth();
 
   // Carregar posts da API
   useEffect(() => {
-    loadPosts();
-  }, []);
+    if (isAuthenticated) {
+      loadPosts();
+    }
+  }, [isAuthenticated]);
 
   const loadPosts = async () => {
     try {
@@ -153,6 +158,23 @@ const Admin = () => {
     }
   };
 
+  // Mostrar loading enquanto verifica autenticação
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-2 text-gray-600">Verificando autenticação...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar login se não autenticado
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={login} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -172,6 +194,14 @@ const Admin = () => {
             >
               <Plus className="w-4 h-4 mr-2" />
               Novo Post
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={logout}
+              className="flex items-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Sair
             </Button>
             <Button
               variant="outline"
